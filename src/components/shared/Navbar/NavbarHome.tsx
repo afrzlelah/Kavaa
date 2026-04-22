@@ -1,11 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Menu, X, Search, Bell } from "lucide-react";
 
-export default function NavbarHome() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+import { NavProps } from "@/type";
+import Link from "next/link";
+import ButtonNonColorLink from "@/components/Atom/ButtonNonColorLink";
+import ButtonColorLink from "@/components/Atom/ButtonColorLink";
+import BtnFullWidthNonColorLink from "@/components/Atom/BtnFullWidthNonColorLink";
+import BtnFullWidthColorLink from "@/components/Atom/BtnFullWidthColorLink";
 
+export default function NavbarHome({ lists, isLive }: NavProps) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 shadow-sm">
       <nav className="container mx-auto px-4 md:px-12 py-4">
@@ -26,34 +32,27 @@ export default function NavbarHome() {
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-8">
-            <a
-              href="#learn"
-              className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors"
-            >
-              Belajar
-            </a>
-            <a
-              href="#build"
-              className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors"
-            >
-              Membangun
-            </a>
-            <a
-              href="#grow"
-              className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors"
-            >
-              Berkembang
-            </a>
-            <a
-              href="#live"
-              className="text-sm font-bold text-red-500 flex items-center gap-1.5 hover:text-red-600 transition-colors"
-            >
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-              Kavaa Live
-            </a>
+            {lists?.map((list, index) => (
+              <Link
+                key={index}
+                href={list.href}
+                className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors"
+              >
+                {list.label}
+              </Link>
+            ))}
+            {isLive && (
+              <a
+                href="#live"
+                className="text-sm font-bold text-red-500 flex items-center gap-1.5 hover:text-red-600 transition-colors"
+              >
+                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                Kavaa Live
+              </a>
+            )}
           </div>
 
-          {/* Search & Actions (Desktop) */}
+          {/* Search button (Desktop) */}
           <div className="hidden lg:flex items-center gap-4">
             <div className="relative group">
               <input
@@ -74,12 +73,8 @@ export default function NavbarHome() {
               <Bell size={20} />
             </button>
             <div className="flex items-center gap-3 border-l border-slate-200 pl-4">
-              <button className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">
-                Masuk
-              </button>
-              <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-[0_4px_14px_0_rgba(79,70,229,0.39)] hover:shadow-[0_6px_20px_rgba(79,70,229,0.23)] hover:-translate-y-0.5 transition-all">
-                Daftar
-              </button>
+              <ButtonNonColorLink name="Login" href="/login" />
+              <ButtonColorLink name="Register" href="/register" />
             </div>
           </div>
 
@@ -108,38 +103,27 @@ export default function NavbarHome() {
                 size={18}
               />
             </div>
-            <a
-              href="#learn"
-              className="text-base font-semibold text-slate-700 py-2 border-b border-slate-50"
-            >
-              Belajar
-            </a>
-            <a
-              href="#build"
-              className="text-base font-semibold text-slate-700 py-2 border-b border-slate-50"
-            >
-              Membangun
-            </a>
-            <a
-              href="#grow"
-              className="text-base font-semibold text-slate-700 py-2 border-b border-slate-50"
-            >
-              Berkembang
-            </a>
-            <a
-              href="#live"
-              className="text-base font-bold text-red-500 py-2 flex items-center gap-2"
-            >
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>{" "}
-              Kavaa Live
-            </a>
+            {lists?.map((list, index) => (
+              <Link
+                key={index}
+                href={list.href}
+                className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors"
+              >
+                {list.label}
+              </Link>
+            ))}
+            {isLive && (
+              <a
+                href="#live"
+                className="text-sm font-bold text-red-500 flex items-center gap-1.5 hover:text-red-600 transition-colors"
+              >
+                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                Kavaa Live
+              </a>
+            )}
             <div className="flex flex-col gap-3 mt-4">
-              <button className="w-full py-3 text-center text-sm font-semibold text-slate-700 border border-slate-200 rounded-xl hover:bg-slate-50">
-                Masuk
-              </button>
-              <button className="w-full py-3 text-center bg-indigo-600 text-white rounded-xl text-sm font-semibold shadow-md">
-                Daftar Sekarang
-              </button>
+              <BtnFullWidthNonColorLink name="Login" href="/login" />
+              <BtnFullWidthColorLink name="Register" href="/register" />
             </div>
           </div>
         )}
