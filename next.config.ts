@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**", // Mengizinkan semua gambar dari domain ini
       },
+      {
+        protocol: "https",
+        hostname: "www.gstatic.com/",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   // Catatan: allowedDevOrigins bukanlah konfigurasi standar Next.js.

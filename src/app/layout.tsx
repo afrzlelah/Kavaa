@@ -13,8 +13,9 @@ const interMono = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "TENAGA",
-  description: "",
+  title: "Kavaa",
+  description:
+    "Temukan jalur belajar yang dipersonalisasi dari ribuan kursus, sertifikasi global, dan program dari institusi ternama untuk mencapai potensi penuh Anda.",
 };
 
 export default function RootLayout({

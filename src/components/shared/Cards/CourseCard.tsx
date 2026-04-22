@@ -1,4 +1,3 @@
-import React from "react";
 import { Clock, Star, BrainCircuit } from "lucide-react";
 import { CourseCardProps } from "@/type";
 

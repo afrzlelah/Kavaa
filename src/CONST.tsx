@@ -4,6 +4,6 @@ export const assets = {
 };
 
 export const COLOR = {
-  primaryTint: "#00B49B",
+  primaryTint: "#1661DE",
   secondaryTint: "#057469",
 };

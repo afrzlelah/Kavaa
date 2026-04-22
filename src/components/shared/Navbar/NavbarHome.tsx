@@ -9,6 +9,7 @@ import ButtonNonColorLink from "@/components/Atom/ButtonNonColorLink";
 import ButtonColorLink from "@/components/Atom/ButtonColorLink";
 import BtnFullWidthNonColorLink from "@/components/Atom/BtnFullWidthNonColorLink";
 import BtnFullWidthColorLink from "@/components/Atom/BtnFullWidthColorLink";
+import Image from "next/image";
 
 export default function NavbarHome({ lists, isLive }: NavProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -17,18 +18,24 @@ export default function NavbarHome({ lists, isLive }: NavProps) {
       <nav className="container mx-auto px-4 md:px-12 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a
-            href="#"
+          <Link
+            href="/"
             className="flex items-center gap-2 cursor-pointer"
             aria-label="Beranda Kavaa"
           >
             <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-lg md:text-xl text-white shadow-md">
-              K
+              <Image
+                src={"/assets/icon.ico"}
+                height={250}
+                width={250}
+                alt="Logo Kavaa"
+                className="w-full rounded-full"
+              />
             </div>
             <span className="text-xl md:text-2xl font-bold text-indigo-950 tracking-tight">
               Kavaa
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-8">
