@@ -333,7 +333,7 @@ export default function ChatApp() {
           `}
         >
           {/* Chat Header */}
-          <div className="bg-white border-b border-gray-100 px-4 md:px-6 py-4 flex-shrink-0 flex items-center gap-3">
+          <div className="bg-white mt-20 border-b border-gray-100 px-4 md:px-6 py-4 flex-shrink-0 flex items-center gap-3">
             {/* Back button — mobile only */}
             <button
               onClick={() => setActiveChat(null)}
