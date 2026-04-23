@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 import SidebarKiri from "@/components/layouts/dashboard/SidebarKiri";
 import SidebarKanan from "@/components/layouts/dashboard/SidebarKanan";
 import DashboardPage from "@/components/layouts/dashboard/DashboardPage";
+import InboxPage from "@/components/layouts/dashboard/InboxPage";
 
 export default function Dashboard() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -45,13 +46,16 @@ export default function Dashboard() {
       )}
 
       {/* KOLOM TENGAH: Konten Utama */}
-      {activeTab === "Dashboard" && <DashboardPage />}
-      {activeTab === "Kotak Masuk" && <h1>Inbox</h1>}
+      {activeTab === "Dashboard" && (
+        <>
+          <DashboardPage /> <SidebarKanan />
+        </>
+      )}
+      {activeTab === "Kotak Masuk" && <InboxPage />}
       {activeTab === "Pembelajaran" && <h1>Pembelajaran</h1>}
       {activeTab === "Grup" && <h1>Grup</h1>}
       {activeTab === "Tugas" && <h1>Tugas</h1>}
       {/* Sidebar kanan */}
-      <SidebarKanan />
     </div>
   );
 }

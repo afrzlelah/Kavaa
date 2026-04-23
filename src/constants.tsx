@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   Users,
 } from "lucide-react";
+import { Contact, Message } from "./type";
 
 export const stats = [
   {
@@ -224,3 +225,162 @@ export const yourMentorsList = Array(5).fill({
   avatar:
     "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&q=80",
 });
+
+export const groups: Contact[] = [
+  {
+    id: "g1",
+    name: "BakulMac",
+    initials: "AD",
+    color: "bg-purple-500",
+    avatar: "",
+    lastMessage: "Apik boss😊",
+    unread: 3,
+    type: "group",
+  },
+  {
+    id: "g2",
+    name: "Project Web Pecel Mbok Darmi",
+    initials: "MS",
+    color: "bg-blue-400",
+    avatar: "",
+    lastMessage: "Suwun bos!",
+    type: "group",
+  },
+  {
+    id: "g3",
+    name: "Omah Guyup",
+    initials: "OG",
+    color: "bg-orange-400",
+    avatar: "",
+    lastMessage: "Iyoo mas, bener, web e seng simple...",
+    unread: 12,
+    type: "group",
+  },
+  {
+    id: "g4",
+    name: "Sugih Manteb",
+    initials: "SM",
+    color: "bg-red-400",
+    avatar: "",
+    lastMessage: "RevenueUpdates.pdf",
+    hasFile: true,
+    unread: 7,
+    type: "group",
+  },
+  {
+    id: "g5",
+    name: "Para Habib",
+    initials: "PH",
+    color: "bg-emerald-500",
+    avatar: "",
+    lastMessage: "Okay, joss!",
+    type: "group",
+  },
+];
+
+export const persons: Contact[] = [
+  {
+    id: "p1",
+    name: "Rizal Plenger",
+    initials: "RP",
+    color: "bg-blue-500",
+    avatar: "/avatars/rizal.jpg",
+    lastMessage: "kicau kicauu...",
+    unread: 2,
+    type: "person",
+  },
+  {
+    id: "p2",
+    name: "Nia Slebeww",
+    initials: "NS",
+    color: "bg-pink-400",
+    avatar: "/avatars/nia.jpg",
+    lastMessage: "okee, bentar yaa",
+    type: "person",
+  },
+  {
+    id: "p3",
+    name: "Kucing Kicau Mania",
+    initials: "KK",
+    color: "bg-amber-500",
+    avatar: "/avatars/kucing.jpg",
+    lastMessage: "miawww, miaww, miaww...",
+    unread: 14,
+    type: "person",
+  },
+  {
+    id: "p4",
+    name: "Mas Leclerc",
+    initials: "ML",
+    color: "bg-red-500",
+    avatar: "/avatars/mas.jpg",
+    lastMessage: "Thank you Apip 👋",
+    unread: 4,
+    type: "person",
+  },
+  {
+    id: "p5",
+    name: "Pakde Lewis",
+    initials: "PL",
+    color: "bg-gray-600",
+    avatar: "/avatars/pakde.jpg",
+    lastMessage: "FerrariOTWSragen.pdf",
+    hasFile: true,
+    type: "person",
+  },
+];
+
+export const messages: Message[] = [
+  {
+    id: "m1",
+    sender: "Apip",
+    content: "Apip nih bos",
+    time: "3:21 PM",
+    isMine: false,
+    type: "text",
+    subMessages: [
+      { content: "piyhe web e?, info progress pakkk", isMine: false },
+    ],
+  },
+  {
+    id: "m2",
+    sender: "amannnnn",
+    content: "kurang design bagian ikii iku trus wlelelelelelel besok jadi.",
+    time: "3:23 PM",
+    isMine: true,
+    type: "text",
+  },
+  {
+    id: "m3",
+    sender: "Nia Slebeww",
+    content: "",
+    time: "3:15 PM",
+    isMine: false,
+    type: "audio",
+    subMessages: [
+      {
+        content: "kalo aku sih kurang minta ini itu yaaa......",
+        isMine: false,
+      },
+    ],
+  },
+  {
+    id: "m4",
+    sender: "Rizal Plenger",
+    content: "file project pecel mbok darmi",
+    time: "3:25 PM",
+    isMine: false,
+    type: "files",
+    files: [
+      { name: "RevenueUpdates.pdf", size: "13Mb", type: "pdf" },
+      { name: "TrackingUpdates.doc", size: "13Mb", type: "doc" },
+    ],
+    subMessages: [
+      {
+        content: "Itu beberapa file dah ku kirim yaaa, kalo butuh lagi kabarin",
+        isMine: false,
+      },
+      { content: "semangatt", isMine: false },
+    ],
+  },
+];
