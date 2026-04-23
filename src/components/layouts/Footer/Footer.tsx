@@ -12,7 +12,7 @@ export default function FooterHome() {
               className="flex items-center gap-2 mb-6"
               aria-label="Beranda Kavaa"
             >
-              <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-xl text-white shadow-md">
+              <div className="w-10 h-10 rounded-full bg-primaryTint flex items-center justify-center font-bold text-xl text-white shadow-md">
                 K
               </div>
               <span className="text-2xl font-black text-slate-900 tracking-tight">
@@ -28,14 +28,14 @@ export default function FooterHome() {
               <a
                 href="#"
                 aria-label="LinkedIn"
-                className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 transition-all"
+                className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center hover:bg-indigo-50 hover:text-primaryTint hover:border-indigo-200 transition-all"
               >
                 <Globe size={18} />
               </a>
               <a
                 href="#"
                 aria-label="Twitter"
-                className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200 transition-all"
+                className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center hover:bg-indigo-50 hover:text-primaryTint hover:border-indigo-200 transition-all"
               >
                 <MessageSquare size={18} />
               </a>
@@ -48,22 +48,34 @@ export default function FooterHome() {
             </h4>
             <ul className="flex flex-col gap-4 text-sm font-semibold text-slate-500">
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Tentang Kami
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Karier
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Blog & Artikel
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Hubungi Kami
                 </a>
               </li>
@@ -76,22 +88,34 @@ export default function FooterHome() {
             </h4>
             <ul className="flex flex-col gap-4 text-sm font-semibold text-slate-500">
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Semua Kursus
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Sertifikasi Profesional
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Kavaa Live Sessions
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Kavaa untuk Bisnis
                 </a>
               </li>
@@ -104,22 +128,34 @@ export default function FooterHome() {
             </h4>
             <ul className="flex flex-col gap-4 text-sm font-semibold text-slate-500">
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Pusat Bantuan
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Syarat & Ketentuan
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Kebijakan Privasi
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-600 transition-colors">
+                <a
+                  href="#"
+                  className="hover:text-primaryTint transition-colors"
+                >
                   Peta Situs
                 </a>
               </li>

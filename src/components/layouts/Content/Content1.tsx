@@ -20,14 +20,14 @@ export default function Content1() {
       <div className="container mx-auto px-4 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Text Content */}
         <div className="lg:col-span-6 relative z-10 text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-indigo-100 shadow-sm text-xs md:text-sm font-semibold text-indigo-600 mb-6 md:mb-8">
-            <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>{" "}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-primaryTint shadow-sm text-xs md:text-sm font-semibold text-primaryTint mb-6 md:mb-8">
+            <span className="w-2 h-2 rounded-full bg-primaryTint animate-pulse"></span>{" "}
             Masa Depan Pembelajaran
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1] text-slate-900">
             Kembangkan Keahlian, <br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryTint to-primaryTint/60">
               Evolusi Karier Anda
             </span>
           </h1>
@@ -41,7 +41,7 @@ export default function Content1() {
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10">
             <button
               aria-label="Mulai Belajar Sekarang"
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold flex items-center justify-center gap-2 shadow-[0_8px_20px_-6px_rgba(79,70,229,0.5)] hover:-translate-y-1 transition-transform duration-300"
+              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-primaryTint hover:bg-primaryTint/90 text-white font-bold flex items-center justify-center gap-2 shadow-[0_8px_20px_-6px_rgba(79,70,229,0.5)] hover:-translate-y-1 transition-transform duration-300"
             >
               Mulai Belajar Sekarang <ChevronRight size={20} />
             </button>
@@ -49,21 +49,21 @@ export default function Content1() {
               aria-label="Lihat Cara Kerja"
               className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold flex items-center justify-center gap-2 shadow-sm transition-colors"
             >
-              <CheckCircle size={20} className="text-indigo-500" /> Cara Kerja
+              <CheckCircle size={20} className="text-primaryTint" /> Cara Kerja
             </button>
           </div>
 
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-6 text-slate-600 text-sm font-medium">
             <span className="flex items-center gap-2">
-              <CheckCircle size={18} className="text-indigo-500" /> Jalur
+              <CheckCircle size={18} className="text-primaryTint" /> Jalur
               personal
             </span>
             <span className="flex items-center gap-2">
-              <CheckCircle size={18} className="text-indigo-500" /> Mentor
+              <CheckCircle size={18} className="text-primaryTint" /> Mentor
               global
             </span>
             <span className="flex items-center gap-2">
-              <CheckCircle size={18} className="text-indigo-500" /> Sertifikasi
+              <CheckCircle size={18} className="text-primaryTint" /> Sertifikasi
               resmi
             </span>
           </div>
@@ -82,7 +82,7 @@ export default function Content1() {
 
           {/* Floating Elements */}
           <div className="hidden md:flex absolute top-10 -right-8 bg-white/90 border border-slate-100 p-4 rounded-2xl shadow-xl items-center gap-4 backdrop-blur-md animate-bounce-slow">
-            <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+            <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-primaryTint">
               <Award size={24} />
             </div>
             <div>
@@ -104,7 +104,7 @@ export default function Content1() {
                 Evolusi Keahlian AI
               </p>
               <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                <div className="w-[78%] h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"></div>
+                <div className="w-[78%] h-full bg-gradient-to-r from-primaryTint to-purple-500 rounded-full"></div>
               </div>
             </div>
             <span className="text-sm font-black text-slate-800">78%</span>

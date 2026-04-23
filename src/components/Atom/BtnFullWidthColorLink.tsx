@@ -8,7 +8,7 @@ export default function BtnFullWidthColorLink({
   return (
     <Link
       href={href}
-      className="w-full py-3 text-center bg-indigo-600 text-white rounded-xl text-sm font-semibold shadow-md "
+      className="w-full py-3 text-center bg-primaryTint text-white rounded-xl text-sm font-semibold shadow-md "
     >
       {name}
     </Link>

@@ -14,7 +14,7 @@ export default function Home() {
           { label: "Berkembang", href: "/login" },
           { label: "Membangun", href: "/login" },
         ]}
-        isLive={true}
+        isLive={false}
       />
       <main id="main-content">
         <Content1 />

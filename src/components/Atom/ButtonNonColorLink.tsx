@@ -8,7 +8,7 @@ export default function ButtonNonColorLink({
   return (
     <Link
       href={href}
-      className="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors"
+      className="text-sm font-semibold text-slate-600 hover:text-primaryTint transition-colors"
     >
       {name}
     </Link>

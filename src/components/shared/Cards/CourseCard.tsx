@@ -47,7 +47,7 @@ export default function CourseCard({
       <div className="p-6 space-y-4">
         {/* Badges */}
         <div className="flex items-center gap-3">
-          <span className="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-bold rounded-full">
+          <span className="px-3 py-1 bg-indigo-50 text-primaryTint text-[10px] font-bold rounded-full">
             {level}
           </span>
           <div className="flex items-center gap-1 text-slate-400 text-[10px] font-medium">
@@ -58,7 +58,7 @@ export default function CourseCard({
 
         {/* Title & Description */}
         <div className="space-y-2">
-          <h3 className="text-lg font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-indigo-600 transition-colors">
+          <h3 className="text-lg font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-primaryTint transition-colors">
             {title}
           </h3>
           <p className="text-[12px] text-slate-500 leading-relaxed line-clamp-3">
@@ -86,19 +86,16 @@ export default function CourseCard({
           </div>
           <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-linear-to-r from-indigo-500 to-cyan-400 transition-all duration-1000"
+              className="h-full bg-linear-to-r from-primaryTint to-cyan-400 transition-all duration-1000"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
         </div>
 
         {/* Footer: Price & Action */}
-        <div className="flex items-center justify-between pt-4 border-t border-slate-50">
-          <span className="text-xl font-black text-slate-900">
-            {isFree ? "Free" : "Premium"}
-          </span>
-          <button className="px-6 py-2 border border-slate-200 rounded-full text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors">
-            {price}
+        <div className="flex  items-center justify-end pt-4 border-t border-slate-50">
+          <button className="px-8 py-3 border border-slate-200 rounded-full text-xs font-bold text-white hover:bg-primaryTint/80  transition-colors bg-primaryTint">
+            Mulai
           </button>
         </div>
       </div>

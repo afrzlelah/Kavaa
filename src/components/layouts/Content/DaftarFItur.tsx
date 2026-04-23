@@ -39,15 +39,15 @@ export default function DaftarFitur() {
           {stats.map((stat, idx) => (
             <article
               key={idx}
-              className="bg-slate-50 hover:bg-white p-8 rounded-3xl border border-slate-100 hover:border-indigo-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center group cursor-default"
+              className="bg-slate-50 hover:bg-white p-8 rounded-3xl border border-slate-100 hover:border-primaryTint/10 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center group cursor-default"
             >
-              <div className="w-16 h-16 rounded-2xl bg-white shadow-sm border border-slate-100 text-indigo-600 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+              <div className="w-16 h-16 rounded-2xl bg-white shadow-sm border border-slate-100 text-primaryTint flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primaryTint group-hover:text-white transition-all duration-300">
                 <stat.icon size={32} strokeWidth={1.5} />
               </div>
               <h2 className="text-3xl md:text-4xl font-black mb-2 text-slate-900 tracking-tight">
                 {stat.value}
               </h2>
-              <h3 className="text-sm md:text-base font-bold text-indigo-600 mb-2">
+              <h3 className="text-sm md:text-base font-bold text-primaryTint mb-2">
                 {stat.label}
               </h3>
               <p className="text-sm text-slate-500 leading-relaxed font-medium">

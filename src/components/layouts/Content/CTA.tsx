@@ -13,13 +13,14 @@ export default function CTA() {
         aria-hidden="true"
       >
         <div className="absolute -top-[20%] -right-[10%] w-[70%] h-[70%] rounded-full bg-gradient-to-b from-indigo-500/20 to-purple-500/10 blur-3xl"></div>
-        <div className="absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-gradient-to-t from-cyan-500/20 to-blue-500/10 blur-3xl"></div>
+        <div className="absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-gradient-to-t from-primaryTint/20 to-blue-500/10 blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
         <div className="lg:col-span-6 text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-xs md:text-sm font-bold text-cyan-400 mb-6">
-            <Star size={16} className="fill-cyan-400" /> Khusus Pakar Industri
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-xs md:text-sm font-bold text-white mb-6">
+            <Star size={16} className="fill-primaryTint" /> Khusus Pakar
+            Industri
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-6 leading-tight text-white">
@@ -35,7 +36,7 @@ export default function CTA() {
 
           <button
             aria-label="Mulai Mengajar Hari Ini"
-            className="w-full sm:w-auto px-8 py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-black text-base flex items-center justify-center gap-3 transition-all shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:-translate-y-1 mx-auto lg:mx-0"
+            className="w-full sm:w-auto px-8 py-4 rounded-xl bg-primaryTint hover:bg-primaryTint/80 text-white font-black text-base flex items-center justify-center gap-3 transition-all shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:-translate-y-1 mx-auto lg:mx-0"
           >
             Mulai Mengajar Hari Ini <ChevronRight size={20} strokeWidth={3} />
           </button>
@@ -54,7 +55,7 @@ export default function CTA() {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
 
             <div className="absolute bottom-6 left-6 right-6 bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-2xl flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-cyan-500 text-slate-900 flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-full bg-primaryTint text-white flex items-center justify-center shrink-0">
                 <Award size={24} strokeWidth={2.5} />
               </div>
               <div>

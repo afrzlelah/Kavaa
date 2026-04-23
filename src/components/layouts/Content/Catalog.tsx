@@ -14,7 +14,7 @@ const courses = [
     duration: "8 jam",
     level: "Beginner",
     progress: 0,
-    isFree: false,
+    isFree: true,
     theme: " from-rose-500 via-orange-400 to-amber-300",
     price: "free",
   },
@@ -113,8 +113,8 @@ export default function Catalog() {
               onClick={() => setActiveTab(tab)}
               className={`snap-start shrink-0 text-sm md:text-base font-bold px-6 py-3 rounded-full transition-all duration-300 ${
                 activeTab === tab
-                  ? "bg-indigo-600 text-white shadow-[0_4px_14px_0_rgba(79,70,229,0.39)]"
-                  : "bg-white text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 border border-slate-200"
+                  ? "bg-primaryTint text-white shadow-[0_4px_14px_0_rgba(79,70,229,0.39)]"
+                  : "bg-white text-slate-600 hover:text-primaryTint hover:bg-primaryTint/10 border border-slate-200"
               }`}
             >
               {tab}

@@ -2,6 +2,7 @@
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { ChevronRight, Star } from "lucide-react";
+import KavaaBanner from "@/components/Atom/KavaaBanner";
 
 // Mendefinisikan interface untuk data formulir agar type-safe
 interface FormData {
@@ -51,14 +52,7 @@ const RegisterPage: React.FC = () => {
 
         <div>
           {/* Logo */}
-          <div className="flex items-center gap-2 mb-16">
-            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-lg">
-              <div className="w-6 h-6 border-4 border-[#1D61D8] rounded-sm transform rotate-45"></div>
-            </div>
-            <div className="font-black text-2xl tracking-tighter italic">
-              KAVA
-            </div>
-          </div>
+          <KavaaBanner color="white" src="/assets/icon.ico" />
 
           {/* Headline */}
           <h1 className="text-4xl md:text-6xl font-bold leading-[1.1] mb-6">
