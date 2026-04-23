@@ -3,6 +3,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { ChevronRight, Star } from "lucide-react";
 import KavaaBanner from "@/components/Atom/KavaaBanner";
+import Link from "next/link";
 
 // Mendefinisikan interface untuk data formulir agar type-safe
 interface FormData {
@@ -78,11 +79,9 @@ const RegisterPage: React.FC = () => {
           </p>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-linear-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center font-bold text-[10px] uppercase shadow-inner tracking-tighter">
-                Face
-              </div>
+              <div className="w-10 h-10 bg-linear-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center font-bold text-[10px] uppercase shadow-inner tracking-tighter"></div>
               <div>
-                <p className="text-sm font-bold">Farhan Rizky</p>
+                <p className="text-sm font-bold">Apip Alay kyubi rawwrr</p>
                 <div className="flex text-yellow-400">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={14} fill="currentColor" />
@@ -248,6 +247,12 @@ const RegisterPage: React.FC = () => {
                 className="group-hover:translate-x-1 transition-transform"
               />
             </button>
+            <Link
+              href="/login"
+              className="text-sm text-primaryTint/80 hover:text-primaryTint transition-colors"
+            >
+              Already have an account? Sign in
+            </Link>
           </form>
         </div>
       </div>
