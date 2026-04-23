@@ -17,46 +17,49 @@ export default function NavbarHome({ lists, isLive }: NavProps) {
     <header className="bg-white/60 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-100 shadow-sm">
       <nav className="container mx-auto px-4 md:px-12 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 cursor-pointer"
-            aria-label="Beranda Kavaa"
-          >
-            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primaryTint flex items-center justify-center font-bold text-lg md:text-xl text-white shadow-md">
-              <Image
-                src={"/assets/icon.ico"}
-                height={250}
-                width={250}
-                alt="Logo Kavaa"
-                className="w-full rounded-full"
-              />
-            </div>
-            <span className="text-xl md:text-2xl font-bold text-primaryTint tracking-tight">
-              Kavaa
-            </span>
-          </Link>
+          <div className="flex gap-4  items-center">
+            {/* Logo */}
+            <Link
+              href="/"
+              className="flex items-center gap-2 cursor-pointer"
+              aria-label="Beranda Kavaa"
+            >
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primaryTint flex items-center justify-center font-bold text-lg md:text-xl text-white shadow-md">
+                <Image
+                  src={"/assets/icon.ico"}
+                  height={250}
+                  width={250}
+                  alt="Logo Kavaa"
+                  className="w-full rounded-full"
+                />
+              </div>
+              <span className="text-xl md:text-2xl font-bold text-primaryTint tracking-tight">
+                Kavaa
+              </span>
+            </Link>
+            <div className=" hidden lg:block ">|</div>
 
-          {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center gap-8">
-            {lists?.map((list, index) => (
-              <Link
-                key={index}
-                href={list.href}
-                className="text-sm font-semibold text-slate-600 hover:text-primaryTint transition-colors"
-              >
-                {list.label}
-              </Link>
-            ))}
-            {isLive && (
-              <a
-                href="#live"
-                className="text-sm font-bold text-red-500 flex items-center gap-1.5 hover:text-red-600 transition-colors"
-              >
-                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                Kavaa Live
-              </a>
-            )}
+            {/* Desktop Menu */}
+            <div className="hidden lg:flex items-center  gap-8">
+              {lists?.map((list, index) => (
+                <Link
+                  key={index}
+                  href={list.href}
+                  className="text-sm font-semibold text-slate-600 hover:text-primaryTint transition-colors"
+                >
+                  {list.label}
+                </Link>
+              ))}
+              {isLive && (
+                <a
+                  href="#live"
+                  className="text-sm font-bold text-red-500 flex items-center gap-1.5 hover:text-red-600 transition-colors"
+                >
+                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                  Kavaa Live
+                </a>
+              )}
+            </div>
           </div>
 
           {/* Search button (Desktop) */}

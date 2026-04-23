@@ -79,36 +79,6 @@ export default function Content1() {
               loading="eager"
             />
           </div>
-
-          {/* Floating Elements */}
-          <div className="hidden md:flex absolute top-10 -right-8 bg-white/90 border border-slate-100 p-4 rounded-2xl shadow-xl items-center gap-4 backdrop-blur-md animate-bounce-slow">
-            <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-primaryTint">
-              <Award size={24} />
-            </div>
-            <div>
-              <h3 className="font-bold text-slate-800 text-sm">
-                Target Mingguan
-              </h3>
-              <p className="text-xs font-medium text-slate-500">
-                3 dari 4 kelas selesai
-              </p>
-            </div>
-          </div>
-
-          <div className="hidden md:flex absolute -bottom-6 left-10 bg-white border border-slate-100 p-5 rounded-2xl shadow-xl items-center gap-4 w-72 backdrop-blur-md">
-            <div className="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
-              <CheckCircle size={24} />
-            </div>
-            <div className="flex-grow">
-              <p className="text-xs font-bold text-slate-500 mb-2">
-                Evolusi Keahlian AI
-              </p>
-              <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                <div className="w-[78%] h-full bg-gradient-to-r from-primaryTint to-purple-500 rounded-full"></div>
-              </div>
-            </div>
-            <span className="text-sm font-black text-slate-800">78%</span>
-          </div>
         </div>
       </div>
     </section>
