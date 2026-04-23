@@ -4,27 +4,17 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import { ChevronRight, Star } from "lucide-react";
 import KavaaBanner from "@/components/Atom/KavaaBanner";
 import Link from "next/link";
-
-// Mendefinisikan interface untuk data formulir agar type-safe
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  country: string;
-  state: string;
-  phone: string;
-  password: string;
-}
+import { FormData } from "@/type";
 
 const RegisterPage: React.FC = () => {
   // Inisialisasi state dengan tipe data yang sudah didefinisikan
   const [formData, setFormData] = useState<FormData>({
-    firstName: "apip",
-    lastName: "jederr",
-    email: "apip@example.com",
+    firstName: "",
+    lastName: "",
+    email: "",
     country: "",
     state: "",
-    phone: "+62 478729",
+    phone: "",
     password: "",
   });
 
@@ -70,7 +60,7 @@ const RegisterPage: React.FC = () => {
         {/* Testimonial Card */}
         <div className="mt-12 bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl relative z-10 shadow-2xl">
           <p className="font-semibold text-lg mb-2 italic">
-            &quot;Solusi terbaik buat yang mau naik level&quot;
+            &quot;Solusi terbaik buat yang mau stress&quot;
           </p>
           <p className="text-sm text-blue-50 leading-relaxed mb-6 opacity-90">
             Berhasil menyelesaikan proyek bareng tim lewat platform ini.
@@ -208,15 +198,16 @@ const RegisterPage: React.FC = () => {
                 Phone number
               </label>
               <div className="relative flex items-center">
-                <div className="absolute left-4 flex items-center gap-2 pointer-events-none border-r pr-3 border-slate-200">
+                {/* <div className="absolute left-4 flex items-center gap-2 pointer-events-none border-r pr-3 border-slate-200">
                   <span className="text-lg">🇮🇩</span>
-                </div>
+                </div> */}
                 <input
                   type="tel"
                   name="phone"
+                  placeholder="+6281234567891"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full pl-20 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
+                  className="w-full pl-5  py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
                 />
               </div>
             </div>
@@ -241,7 +232,7 @@ const RegisterPage: React.FC = () => {
               type="submit"
               className="w-full bg-[#1D61D8] hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-200 flex items-center justify-center gap-2 transition-all transform active:scale-[0.98] mt-8 group"
             >
-              GET STARTED
+              Daftar
               <ChevronRight
                 size={20}
                 className="group-hover:translate-x-1 transition-transform"

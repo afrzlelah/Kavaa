@@ -8,7 +8,7 @@ export default function SocialLogin({
   icons?: React.ReactNode[];
 }) {
   return (
-    <div className="grid grid-cols-3 gap-2 mb-8">
+    <div className="grid grid-cols-2 xl:grid-cols-3 gap-2 mb-8">
       {platforms.map((platform, index) => (
         <LoginWith key={platform} name={platform} icons={icons?.[index]} />
       ))}

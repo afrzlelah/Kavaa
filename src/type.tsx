@@ -23,3 +23,13 @@ export interface CourseCardProps {
   theme: string;
   price: number | string;
 }
+
+export interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  country: string;
+  state: string;
+  phone: string;
+  password: string;
+}

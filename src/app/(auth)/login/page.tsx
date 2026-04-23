@@ -7,60 +7,23 @@ import { FaFacebook } from "react-icons/fa";
 import SocialLogin from "@/components/layouts/SocialLogin";
 import KavaaBanner from "@/components/Atom/KavaaBanner";
 import Link from "next/link";
-
-/**
- * KOMPONEN INTERNAL (Mencegah error unresolved path)
- * Kita satukan komponen pendukung agar file ini bersifat mandiri (self-contained).
- */
-
-// Komponen Banner/Logo Kavaa
+import { useRouter } from "next/navigation";
+import { brandFeatures } from "@/constants";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const route = useRouter();
 
-  // State untuk mengontrol slide aktif di sisi kanan
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const brandFeatures = [
-    {
-      id: 1,
-      title: "Platform kolaborasi yang dirancang khusus",
-      subtitle:
-        "agar bisa belajar, terhubung, dan tumbuh lebih cepat di dunia profesional.",
-      description:
-        "Kami membantu kamu menentukan target karier dan mendapatkan pengalaman nyata dalam tim. Bangun portofolio profesionalmu lebih awal dan jadilah yang terdepan.",
-    },
-    {
-      id: 2,
-      title: "Asah Skill Secara Nyata",
-      subtitle: "bekerja dalam tim menyelesaikan tantangan industri.",
-      description:
-        "Bukan sekadar teori, di sini kamu akan mengerjakan proyek yang memberikan dampak nyata bagi portofoliomu.",
-    },
-    {
-      id: 3,
-      title: "Bangun Portofolio Profesional",
-      subtitle: "tunjukkan keahlianmu kepada dunia industri.",
-      description:
-        "Kerjakan proyek riil bersama tim dan dokumentasikan setiap pencapaianmu di sini.",
-    },
-    {
-      id: 4,
-      title: "Koneksi Tanpa Batas",
-      subtitle: "temukan mentor dan rekan kerja yang sefrekuensi.",
-      description:
-        "Perluas jaringan profesionalmu sejak dini untuk masa depan yang lebih cerah.",
-    },
-  ];
-
-  // Efek untuk auto-scroll slider setiap 5 detik
+  // Efek untuk auto-scroll saben 3 detik
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) =>
         prev === brandFeatures.length - 1 ? 0 : prev + 1,
       );
-    }, 5000);
+    }, 3000);
     return () => clearInterval(timer);
   }, [brandFeatures.length]);
 
@@ -110,7 +73,7 @@ const LoginPage = () => {
               <input
                 type="email"
                 placeholder="rizalabraka@mail.com"
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm bg-slate-50/50"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primaryTint/20 focus:border-primaryTint transition-all text-sm bg-slate-50/50"
               />
             </div>
 
@@ -122,7 +85,7 @@ const LoginPage = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm bg-slate-50/50"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primaryTint/20 focus:border-primaryTint transition-all text-sm bg-slate-50/50"
                 />
                 <button
                   type="button"
@@ -139,8 +102,8 @@ const LoginPage = () => {
                 <div
                   className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
                     rememberMe
-                      ? "bg-indigo-600 border-indigo-600"
-                      : "border-slate-300 group-hover:border-indigo-500"
+                      ? "bg-primaryTint border-primaryTint"
+                      : "border-slate-300 group-hover:border-primaryTint"
                   }`}
                   onClick={() => setRememberMe(!rememberMe)}
                 >
@@ -166,13 +129,16 @@ const LoginPage = () => {
               </label>
               <a
                 href="#"
-                className="text-xs font-bold text-indigo-600 hover:text-indigo-800"
+                className="text-xs font-bold text-primaryTint hover:text-indigo-800"
               >
                 Forgot Password?
               </a>
             </div>
 
-            <button className="w-full bg-indigo-600 text-white py-3.5 rounded-xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-200 active:scale-[0.98] transition-all">
+            <button
+              onClick={() => route.push("/dashboard")}
+              className="w-full bg-primaryTint text-white py-3.5 rounded-xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-200 active:scale-[0.98] transition-all"
+            >
               Masuk
             </button>
           </form>
@@ -181,7 +147,7 @@ const LoginPage = () => {
             Don&apos;t have an account?{" "}
             <Link
               href="/register"
-              className="text-indigo-600 font-bold hover:underline decoration-2 underline-offset-4"
+              className="text-primaryTint font-bold hover:underline decoration-2 underline-offset-4"
             >
               Daftar
             </Link>
@@ -196,8 +162,8 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* SISI KANAN: Visual Slider (Hanya bagian ini yang berganti-ganti) */}
-      <div className="hidden lg:flex w-1/2 bg-indigo-600 p-12 relative flex-col items-center justify-center text-white overflow-hidden">
+      {/* SISI KANAN:  */}
+      <div className="hidden lg:flex w-1/2 bg-primaryTint p-12 relative flex-col items-center justify-center text-white overflow-hidden">
         {/* Dekorasi Latar Belakang */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-black/10 rounded-full -ml-48 -mb-48 blur-3xl"></div>

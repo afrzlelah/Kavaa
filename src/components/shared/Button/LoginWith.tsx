@@ -1,5 +1,3 @@
-import { Apple } from "lucide-react";
-
 export default function LoginWith({
   name,
   icons,

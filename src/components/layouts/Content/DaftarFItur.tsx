@@ -1,32 +1,5 @@
 import React from "react";
-import { Globe, Award } from "lucide-react";
-
-const stats = [
-  {
-    icon: Globe,
-    value: "316,000+",
-    label: "Instruktur Berkualifikasi",
-    desc: "Mentor berpengalaman lintas industri global.",
-  },
-  {
-    icon: Globe,
-    value: "1.8 Miliar+",
-    label: "Pendaftaran Kursus",
-    desc: "Perjalanan belajar dari komunitas seluruh dunia.",
-  },
-  {
-    icon: Globe,
-    value: "41,000+",
-    label: "Kursus Berbagai Bahasa",
-    desc: "Pilihan kelas multibahasa dan sertifikasi resmi.",
-  },
-  {
-    icon: Award,
-    value: "179,000+",
-    label: "Video Pembelajaran",
-    desc: "Materi video mendalam, praktis, dan interaktif.",
-  },
-];
+import { stats } from "@/constants";
 
 export default function DaftarFitur() {
   return (
