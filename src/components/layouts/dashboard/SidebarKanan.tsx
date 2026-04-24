@@ -1,7 +1,34 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import { yourMentorsList } from "@/constants";
 import { Bell, Mail, MessageSquare, MoreVertical, Plus } from "lucide-react";
-
+import { useParams } from "next/navigation";
+interface UserData {
+  first_name: string;
+  last_name: string;
+  email: string;
+}
 export default function SidebarKanan() {
+  const [dataUser, setDataUser] = useState<UserData | null>(null);
+  const params = useParams();
+
+  useEffect(() => {
+    // Contoh fetch data user (ganti dengan API call yang sesuai)
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`/api/users/${params.slug}`);
+        const result = await response.json();
+        console.log(response);
+        console.log(result);
+        setDataUser(result);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    fetchUserData();
+  }, []);
   return (
     <aside className="hidden xl:flex w-80 flex-col bg-white border-l border-slate-100 h-full overflow-y-auto px-6 py-8 z-20">
       {/* Header Profil */}
@@ -29,7 +56,7 @@ export default function SidebarKanan() {
           <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-blue-600 border-2 border-white rounded-full"></div>
         </div>
         <h3 className="text-lg font-bold text-slate-900 mb-1">
-          Selamat Pagi APIIP
+          Selamat Pagi {dataUser?.first_name || "User"}!
         </h3>
         <p className="text-[11px] font-medium text-slate-400 text-center px-4 leading-relaxed">
           Lanjutkan Perjalanan Anda Dan Capai Target Anda

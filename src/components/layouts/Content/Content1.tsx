@@ -1,5 +1,6 @@
 import React from "react";
 import { ChevronRight, CheckCircle, Award } from "lucide-react";
+import Link from "next/link";
 
 export default function Content1() {
   return (
@@ -22,7 +23,7 @@ export default function Content1() {
         <div className="lg:col-span-6 relative z-10 text-center lg:text-left">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-primaryTint shadow-sm text-xs md:text-sm font-semibold text-primaryTint mb-6 md:mb-8">
             <span className="w-2 h-2 rounded-full bg-primaryTint animate-pulse"></span>{" "}
-            Masa Depan Pembelajaran
+            Ubah pengetahuan mu jadi pengalaman
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1] text-slate-900">
@@ -39,12 +40,13 @@ export default function Content1() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10">
-            <button
+            <Link
+              href="/login"
               aria-label="Mulai Belajar Sekarang"
               className="w-full sm:w-auto px-8 py-4 rounded-xl bg-primaryTint hover:bg-primaryTint/90 text-white font-bold flex items-center justify-center gap-2 shadow-[0_8px_20px_-6px_rgba(79,70,229,0.5)] hover:-translate-y-1 transition-transform duration-300"
             >
               Mulai Belajar Sekarang <ChevronRight size={20} />
-            </button>
+            </Link>
             <button
               aria-label="Lihat Cara Kerja"
               className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold flex items-center justify-center gap-2 shadow-sm transition-colors"

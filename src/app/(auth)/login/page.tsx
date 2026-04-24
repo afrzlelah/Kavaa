@@ -1,21 +1,43 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Eye, EyeOff, Apple } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { BsApple, BsGoogle } from "react-icons/bs";
-import { FaFacebook } from "react-icons/fa";
 import SocialLogin from "@/components/layouts/SocialLogin";
 import KavaaBanner from "@/components/Atom/KavaaBanner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { brandFeatures } from "@/constants";
+import { cekUserLogin } from "@/app/api/auth/credentials/login/page";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  // data
+  const [dataLogin, setDataLogin] = useState({
+    email: "",
+    password: "",
+  });
   const route = useRouter();
 
-  const [currentSlide, setCurrentSlide] = useState(0);
+  // AUTH
+  const AUTH = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
+    const Response = await cekUserLogin(email, password);
+    const { data } = await Response.json();
+    if (Response.status === 200) {
+      console.log("Login Berhasil:", Response, data);
+      route.push(`/dashboard/user/${data.id}`);
+    } else {
+      alert("Login Gagal: " + "Kata Sandi atau Email Salah" || "Unknown error");
+    }
+  };
 
   // Efek untuk auto-scroll saben 3 detik
   useEffect(() => {
@@ -43,13 +65,12 @@ const LoginPage = () => {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 mb-8">
+          <div className="flex justify-center mb-8 ">
             <SocialLogin
-              platforms={["Apple", "Google", "Facebook"]}
+              platforms={["Apple", "Google"]}
               icons={[
                 <BsApple key="Apple" size={18} />,
                 <BsGoogle key="Google" size={18} />,
-                <FaFacebook key="Facebook" size={18} />,
               ]}
             />
           </div>
@@ -72,6 +93,9 @@ const LoginPage = () => {
               </label>
               <input
                 type="email"
+                onChange={(e) =>
+                  setDataLogin({ ...dataLogin, email: e.target.value })
+                }
                 placeholder="rizalabraka@mail.com"
                 className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primaryTint/20 focus:border-primaryTint transition-all text-sm bg-slate-50/50"
               />
@@ -83,6 +107,9 @@ const LoginPage = () => {
               </label>
               <div className="relative">
                 <input
+                  onChange={(e) =>
+                    setDataLogin({ ...dataLogin, password: e.target.value })
+                  }
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primaryTint/20 focus:border-primaryTint transition-all text-sm bg-slate-50/50"
@@ -136,7 +163,7 @@ const LoginPage = () => {
             </div>
 
             <button
-              onClick={() => route.push("/dashboard")}
+              onClick={() => AUTH(dataLogin)}
               className="w-full bg-primaryTint text-white py-3.5 rounded-xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-200 active:scale-[0.98] transition-all"
             >
               Masuk
