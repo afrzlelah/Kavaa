@@ -223,8 +223,6 @@ export default function ChatApp() {
   return (
     <div className="h-screen w-full flex flex-col bg-white font-['DM_Sans',sans-serif] overflow-hidden">
       {/* ── Top Search Bar ── */}
-      {/* Mobile: show only when sidebar is visible (no active chat) */}
-      {/* Desktop: always show */}
       <div
         className={`flex-shrink-0 px-4 pt-4 pb-3 mt-14 lg:mt-0 bg-white border-b border-gray-100 gap-2
           ${activeChat ? "hidden md:flex" : "flex"}

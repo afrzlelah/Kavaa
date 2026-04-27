@@ -6,6 +6,7 @@ import {
   Inbox,
   LayoutDashboard,
   Users,
+  Target
 } from "lucide-react";
 import { Contact, Message } from "./type";
 
@@ -142,11 +143,13 @@ export const brandFeatures = [
 ];
 
 export const menuItems = [
-  { icon: LayoutDashboard, label: "Dashboard", active: true },
-  { icon: Inbox, label: "Kotak Masuk", active: false },
-  { icon: BookOpen, label: "Pembelajaran", active: false },
-  { icon: ClipboardList, label: "Tugas", active: false },
-  { icon: Users, label: "Grup", active: false },
+  { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
+  { icon: Inbox, label: "Inbox", path: "/inbox" },
+  { icon: BookOpen, label: "Learning", path: "/learning" },
+  { icon: ClipboardList, label: "Task", path: "/task" },
+  { icon: Target, label: "Challenge", path: "/challenge" },
+  { icon: Users, label: "Collaboration", path: "/collaboration" },
+  { icon: Award, label: "Reward & Certificate", path: "/reward-certificate" },
 ];
 
 export const friends = [

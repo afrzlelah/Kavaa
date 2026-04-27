@@ -1,32 +1,19 @@
+"use client";
+
 import { LogOut, Settings } from "lucide-react";
 import { menuItems } from "@/constants";
 import { friends } from "@/constants";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function SidebarKiri({
   isMobileMenuOpen,
-  activeTab,
-  setActiveTab,
+  setIsMobileMenuOpen,
 }: {
   isMobileMenuOpen: boolean;
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  setIsMobileMenuOpen: (open: boolean) => void;
 }) {
-  interface MenuItem {
-    icon: React.ComponentType<{ size: number; className?: string }>;
-    label: string;
-    active?: boolean;
-  }
-
-  const activeMenuItem = (item: MenuItem) => {
-    setActiveTab(item.label);
-    item.active = true;
-    menuItems.forEach((i) => {
-      if (i.label !== item.label) {
-        i.active = false;
-      }
-    });
-  };
+  const pathname = usePathname();
 
   return (
     <aside
@@ -57,25 +44,29 @@ export default function SidebarKiri({
             Gambaran Umum
           </h3>
           <nav className="flex flex-col gap-1">
-            {menuItems.map((item, index) => (
-              <button
-                onClick={() => activeMenuItem(item)}
-                key={index}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
-                  item.active
-                    ? "text-primaryTint bg-blue-50/50"
-                    : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
-                }`}
-              >
-                <item.icon
-                  size={20}
-                  className={
-                    item.active ? "text-primaryTint" : "text-slate-400"
-                  }
-                />
-                {item.label}
-              </button>
-            ))}
+            {menuItems.map((item, index) => {
+              const isActive = pathname?.startsWith(item.path || "");
+              return (
+                <Link
+                  href={item.path || "#"}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  key={index}
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                    isActive
+                      ? "text-primaryTint bg-blue-50/50"
+                      : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+                >
+                  <item.icon
+                    size={20}
+                    className={
+                      isActive ? "text-primaryTint" : "text-slate-400"
+                    }
+                  />
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
 

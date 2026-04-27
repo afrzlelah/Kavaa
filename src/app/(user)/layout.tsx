@@ -4,22 +4,32 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import SidebarKiri from "@/components/layouts/dashboard/SidebarKiri";
 import SidebarKanan from "@/components/layouts/dashboard/SidebarKanan";
-import DashboardPage from "@/components/layouts/dashboard/DashboardPage";
-import InboxPage from "@/components/layouts/dashboard/InboxPage";
+import { useParams, usePathname } from "next/navigation";
 
-export default function Dashboard() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("Dashboard");
+export default function UserLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const pathname = usePathname();
+
+  // Right sidebar is mostly shown on Dashboard and Collaboration pages, we can show/hide based on needs,
+  // but for now let's keep it visible everywhere or only on dashboard
+  const showRightSidebar =
+    pathname === `/dashboard/${useParams().slug}` ||
+    pathname === "/collaboration";
+
   return (
     <div className="flex h-screen w-full bg-slate-50/50 font-sans text-slate-900 overflow-hidden">
       {/* TAMPILAN MOBILE: Header & Toggle Menu */}
       <div className="lg:hidden fixed top-0 left-0 w-full bg-white border-b border-slate-100 p-4 flex items-center justify-between z-50">
         <div className="flex items-center gap-2">
           <div className="flex gap-1">
-            <div className="w-3 h-3 bg-blue-600 rounded-sm"></div>
-            <div className="w-3 h-3 bg-blue-400 rounded-sm"></div>
+            <div className="w-3 h-3 bg-primaryTint rounded-sm"></div>
+            <div className="w-3 h-3 bg-primaryTint rounded-sm"></div>
           </div>
-          <span className="text-xl font-black text-blue-600 tracking-tight">
+          <span className="text-xl font-black text-primaryTint tracking-tight">
             KAVA
           </span>
         </div>
@@ -31,12 +41,12 @@ export default function Dashboard() {
         </button>
       </div>
 
-      {/* Sidebar kiri pak */}
+      {/* Sidebar Kiri */}
       <SidebarKiri
         isMobileMenuOpen={isMobileMenuOpen}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
       />
+
       {/* Overlay untuk Mobile */}
       {isMobileMenuOpen && (
         <div
@@ -45,17 +55,13 @@ export default function Dashboard() {
         ></div>
       )}
 
-      {/* KOLOM TENGAH: Konten Utama */}
-      {activeTab === "Dashboard" && (
-        <>
-          <DashboardPage /> <SidebarKanan />
-        </>
-      )}
-      {activeTab === "Kotak Masuk" && <InboxPage />}
-      {activeTab === "Pembelajaran" && <h1>Pembelajaran</h1>}
-      {activeTab === "Grup" && <h1>Grup</h1>}
-      {activeTab === "Tugas" && <h1>Tugas</h1>}
-      {/* Sidebar kanan */}
+      {/* Konten Utama */}
+      <main className="flex-1 h-screen overflow-y-auto mt-16 lg:mt-0 relative">
+        {children}
+      </main>
+
+      {/* Sidebar Kanan (opsional, tergantung routing) */}
+      {showRightSidebar && <SidebarKanan />}
     </div>
   );
 }

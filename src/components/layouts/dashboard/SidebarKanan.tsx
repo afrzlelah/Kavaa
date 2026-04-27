@@ -18,6 +18,7 @@ export default function SidebarKanan() {
     // Contoh fetch data user (ganti dengan API call yang sesuai)
     const fetchUserData = async () => {
       try {
+        console.log("Fetching user data for slug:", params.slug);
         const response = await fetch(`/api/users/${params.slug}`);
         const result = await response.json();
         console.log(response);

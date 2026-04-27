@@ -8,12 +8,12 @@ import KavaaBanner from "@/components/Atom/KavaaBanner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { brandFeatures } from "@/constants";
-import { cekUserLogin } from "@/app/api/auth/credentials/login/page";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [messageLogin, setMessageLogin] = useState<string | null>("");
   // data
   const [dataLogin, setDataLogin] = useState({
     email: "",
@@ -29,13 +29,36 @@ const LoginPage = () => {
     email: string;
     password: string;
   }) => {
-    const Response = await cekUserLogin(email, password);
-    const { data } = await Response.json();
-    if (Response.status === 200) {
-      console.log("Login Berhasil:", Response, data);
-      route.push(`/dashboard/user/${data.id}`);
-    } else {
-      alert("Login Gagal: " + "Kata Sandi atau Email Salah" || "Unknown error");
+    if (!email || !password) {
+      setTimeout(() => {
+        setMessageLogin("");
+      }, 3000);
+      setMessageLogin("Email dan Password harus diisi!");
+      return;
+    }
+    try {
+      const response = await fetch("/api/auth/credentials/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const { data } = await response.json();
+
+      if (response.ok) {
+        route.push(`/dashboard/${data.id}`);
+      } else {
+        setTimeout(() => {
+          setMessageLogin("");
+        }, 3000);
+        setMessageLogin(
+          "Login Gagal: " + "Kata Sandi atau Email Salah" || "Unknown error",
+        );
+      }
+    } catch (err) {
+      setMessageLogin("Terjadi kesalahan jaringan.");
     }
   };
 
@@ -161,6 +184,7 @@ const LoginPage = () => {
                 Forgot Password?
               </a>
             </div>
+            <p className="text-red-500  ">{messageLogin || " ."}</p>
 
             <button
               onClick={() => AUTH(dataLogin)}

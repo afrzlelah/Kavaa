@@ -7,10 +7,11 @@ import Link from "next/link";
 import { FormData } from "@/type";
 
 const RegisterPage: React.FC = () => {
+  const [messageRegist, setMessageRegist] = useState<string>("");
   // Inisialisasi state dengan tipe data yang sudah didefinisikan
   const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     country: "",
     state: "",
@@ -18,7 +19,6 @@ const RegisterPage: React.FC = () => {
     password: "",
   });
 
-  // Handler untuk perubahan input dengan tipe event yang spesifik
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -29,9 +29,22 @@ const RegisterPage: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData);
+    const Response = await fetch("/api/auth/credentials/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    if (!Response.ok) {
+      const errorResult = await Response.json().then((res) => res.error);
+      setMessageRegist(errorResult || "Registration failed");
+      return;
+    }
+    const result = await Response.json();
+    setMessageRegist(result.message);
   };
 
   return (
@@ -116,9 +129,10 @@ const RegisterPage: React.FC = () => {
                   First name
                 </label>
                 <input
+                  required
                   type="text"
-                  name="firstName"
-                  value={formData.firstName}
+                  name="first_name"
+                  value={formData.first_name}
                   onChange={handleChange}
                   placeholder="e.g. John"
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
@@ -129,9 +143,10 @@ const RegisterPage: React.FC = () => {
                   Last name
                 </label>
                 <input
+                  required
                   type="text"
-                  name="lastName"
-                  value={formData.lastName}
+                  name="last_name"
+                  value={formData.last_name}
                   onChange={handleChange}
                   placeholder="e.g. Doe"
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
@@ -145,6 +160,7 @@ const RegisterPage: React.FC = () => {
                 Email
               </label>
               <input
+                required
                 type="email"
                 name="email"
                 value={formData.email}
@@ -162,6 +178,7 @@ const RegisterPage: React.FC = () => {
                 </label>
                 <div className="relative">
                   <select
+                    required
                     name="country"
                     value={formData.country}
                     onChange={handleChange}
@@ -182,6 +199,7 @@ const RegisterPage: React.FC = () => {
                   State
                 </label>
                 <input
+                  required
                   type="text"
                   name="state"
                   value={formData.state}
@@ -207,6 +225,7 @@ const RegisterPage: React.FC = () => {
                   placeholder="+6281234567891"
                   value={formData.phone}
                   onChange={handleChange}
+                  required
                   className="w-full pl-5  py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
                 />
               </div>
@@ -223,9 +242,11 @@ const RegisterPage: React.FC = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••••"
+                required
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
               />
             </div>
+            <p className="text-red-600">{messageRegist}</p>
 
             {/* Submit Button */}
             <button
