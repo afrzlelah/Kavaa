@@ -449,8 +449,29 @@ export default function ChatApp({
   };
 
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Keyboard auto-focus logic
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Only focus if we have an active chat and aren't already focusing an input
+      if (
+        activeChat && 
+        document.activeElement?.tagName !== "INPUT" && 
+        document.activeElement?.tagName !== "TEXTAREA" &&
+        !e.ctrlKey && !e.metaKey && !e.altKey &&
+        e.key.length === 1 // Only for character keys
+      ) {
+        inputRef.current?.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeChat]);
+
   return (
-    <div className="h-screen w-full flex flex-col bg-white font-['DM_Sans',sans-serif] overflow-hidden">
+    <div className="h-[calc(100vh-80px)] md:h-full w-full flex flex-col bg-white font-['DM_Sans',sans-serif] overflow-hidden">
       {/* ── Top Search Bar ── */}
       <div
         className={`flex-shrink-0 px-4 pt-4 pb-3 mt-14 lg:mt-0 bg-white border-b border-gray-100 gap-2
@@ -613,6 +634,7 @@ export default function ChatApp({
                   className="flex items-center gap-3 bg-gray-50 rounded-2xl px-4 py-3"
                 >
                   <input
+                    ref={inputRef}
                     type="text"
                     placeholder="Tulis pesan..."
                     className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
