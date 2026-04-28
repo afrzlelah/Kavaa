@@ -1,10 +1,8 @@
-import InboxPage from "@/components/layouts/dashboard/InboxPage";
-import { getConversations } from "@/services/inboxService";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function Inbox() {
+export default async function DashboardRoot() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
   const { data: { user } } = await supabase.auth.getUser();
@@ -13,8 +11,6 @@ export default async function Inbox() {
     redirect("/login");
   }
 
-  const initialConversations = await getConversations(user.id);
-
-  return <InboxPage initialConversations={initialConversations} userId={user.id} />;
+  // Redirect to the user-specific dashboard
+  redirect(`/dashboard/${user.id}`);
 }
-

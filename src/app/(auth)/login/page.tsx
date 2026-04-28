@@ -45,22 +45,23 @@ const LoginPage = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      const { data } = await response.json();
+      const result = await response.json();
 
-      if (response.ok) {
-        route.push(`/dashboard/${data.id}`);
+      if (response.ok && result.user) {
+        route.push(`/dashboard/${result.user.id}`);
       } else {
         setTimeout(() => {
           setMessageLogin("");
         }, 3000);
         setMessageLogin(
-          "Login Gagal: " + "Kata Sandi atau Email Salah" || "Unknown error",
+          "Login Gagal: " + (result.error || "Kata Sandi atau Email Salah"),
         );
       }
     } catch (err) {
       setMessageLogin("Terjadi kesalahan jaringan.");
     }
   };
+
 
   // Efek untuk auto-scroll saben 3 detik
   useEffect(() => {

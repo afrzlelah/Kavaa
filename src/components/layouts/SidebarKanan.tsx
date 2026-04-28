@@ -1,35 +1,73 @@
 "use client";
 
+import { createClientClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
-
-import { yourMentorsList } from "@/constants";
 import { Bell, Mail, MessageSquare, MoreVertical, Plus } from "lucide-react";
 import { useParams } from "next/navigation";
+
 interface UserData {
   first_name: string;
   last_name: string;
   email: string;
 }
-export default function SidebarKanan() {
+
+export default function SidebarKanan({ user }: { user?: any }) {
+
   const [dataUser, setDataUser] = useState<UserData | null>(null);
+  const [mentors, setMentors] = useState<any[]>([]);
   const params = useParams();
 
   useEffect(() => {
-    // Contoh fetch data user (ganti dengan API call yang sesuai)
     const fetchUserData = async () => {
+      const targetId = user?.id || params.slug;
+      if (!targetId || targetId === "undefined") return;
+
       try {
-        console.log("Fetching user data for slug:", params.slug);
-        const response = await fetch(`/api/users/${params.slug}`);
-        const result = await response.json();
-        console.log(response);
-        console.log(result);
-        setDataUser(result);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
+        const supabase = createClientClient();
+        const { data, error } = await supabase
+          .from("users")
+          .select("*")
+          .eq("id", targetId)
+          .single();
+
+        if (data && !error) {
+          setDataUser(data);
+        } else if (user) {
+          setDataUser({
+            first_name: user.user_metadata?.first_name || "User",
+            last_name: user.user_metadata?.last_name || "",
+            email: user.email || ""
+          });
+        }
+      } catch (err) {
+        console.error("Error in SidebarKanan fetch:", err);
       }
     };
+
+    const fetchMentorsData = async () => {
+      try {
+        const supabase = createClientClient();
+        const { data, error } = await supabase.from('mentors').select('*').limit(5);
+        if (!error && data) {
+          setMentors(data);
+        }
+      } catch (err) {
+        console.log("Mentors table likely missing, using fallback data.");
+      }
+    };
+
     fetchUserData();
-  }, []);
+    fetchMentorsData();
+  }, [user, params.slug]);
+
+
+  // Fallback if db is empty or table missing
+  const displayMentors = (mentors && mentors.length > 0) ? mentors : [
+    { id: 1, name: "Prashant Kumar Singh", role: "Software Developer", avatar_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&q=80" },
+    { id: 2, name: "Ravi Kumar", role: "Frontend Developer", avatar_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&q=80" }
+  ];
+
+
   return (
     <aside className="hidden xl:flex w-80 flex-col bg-white border-l border-slate-100 h-full overflow-y-auto px-6 py-8 z-20">
       {/* Header Profil */}
@@ -43,7 +81,6 @@ export default function SidebarKanan() {
       {/* Info Profil */}
       <div className="flex flex-col items-center mb-8">
         <div className="relative w-28 h-28 mb-4">
-          {/* Lingkaran Progress Semu menggunakan Tailwind */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-600 via-blue-400 to-slate-100 p-1">
             <div className="w-full h-full bg-white rounded-full p-1">
               <img
@@ -53,7 +90,6 @@ export default function SidebarKanan() {
               />
             </div>
           </div>
-          {/* Titik indikator kecil di atas */}
           <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-blue-600 border-2 border-white rounded-full"></div>
         </div>
         <h3 className="text-lg font-bold text-slate-900 mb-1">
@@ -77,27 +113,16 @@ export default function SidebarKanan() {
         </button>
       </div>
 
-      {/* Grafik Aktivitas (Ilustrasi) */}
+      {/* Grafik Aktivitas */}
       <div className="flex items-end justify-between h-24 mb-10 px-2">
-        {/* Batang Grafik Tiruan */}
-        <div className="w-8 h-[40%] bg-blue-100 flex flex-col justify-end rounded-t-sm">
-          <div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div>
-        </div>
-        <div className="w-8 h-[60%] bg-blue-100 flex flex-col justify-end rounded-t-sm">
-          <div className="w-full h-2/3 bg-blue-500 rounded-t-sm"></div>
-        </div>
-        <div className="w-8 h-[80%] bg-blue-100 flex flex-col justify-end rounded-t-sm">
-          <div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div>
-        </div>
-        <div className="w-8 h-[100%] bg-blue-100 flex flex-col justify-end rounded-t-sm">
-          <div className="w-full h-3/4 bg-blue-500 rounded-t-sm"></div>
-        </div>
-        <div className="w-8 h-[70%] bg-blue-100 flex flex-col justify-end rounded-t-sm">
-          <div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div>
-        </div>
+        <div className="w-8 h-[40%] bg-blue-100 flex flex-col justify-end rounded-t-sm"><div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div></div>
+        <div className="w-8 h-[60%] bg-blue-100 flex flex-col justify-end rounded-t-sm"><div className="w-full h-2/3 bg-blue-500 rounded-t-sm"></div></div>
+        <div className="w-8 h-[80%] bg-blue-100 flex flex-col justify-end rounded-t-sm"><div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div></div>
+        <div className="w-8 h-[100%] bg-blue-100 flex flex-col justify-end rounded-t-sm"><div className="w-full h-3/4 bg-blue-500 rounded-t-sm"></div></div>
+        <div className="w-8 h-[70%] bg-blue-100 flex flex-col justify-end rounded-t-sm"><div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div></div>
       </div>
 
-      {/* Daftar Mentor Anda di Kanan */}
+      {/* Daftar Mentor Anda */}
       <div className="flex-1 flex flex-col">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-sm font-bold text-slate-900">Mentor Anda</h2>
@@ -107,11 +132,11 @@ export default function SidebarKanan() {
         </div>
 
         <div className="flex flex-col gap-5 flex-1">
-          {yourMentorsList.map((mentor, idx) => (
-            <div key={idx} className="flex items-center justify-between">
+          {displayMentors.map((mentor: any, idx: number) => (
+            <div key={mentor.id || idx} className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <img
-                  src={mentor.avatar}
+                  src={mentor.avatar_url || mentor.avatar}
                   alt={mentor.name}
                   className="w-10 h-10 rounded-full object-cover"
                 />

@@ -9,10 +9,15 @@ import { usePathname } from "next/navigation";
 export default function SidebarKiri({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
+  userId,
+  user,
 }: {
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (open: boolean) => void;
+  userId: string;
+  user: any;
 }) {
+
   const pathname = usePathname();
 
   return (
@@ -45,10 +50,13 @@ export default function SidebarKiri({
           </h3>
           <nav className="flex flex-col gap-1">
             {menuItems.map((item, index) => {
-              const isActive = pathname?.startsWith(item.path || "");
+              // Logic for dynamic paths: dashboard needs the userId slug
+              const href = item.path === "/dashboard" ? `${item.path}/${userId}` : item.path;
+              const isActive = pathname === href || (href !== "/" && pathname?.startsWith(href));
+              
               return (
                 <Link
-                  href={item.path || "#"}
+                  href={href || "#"}
                   onClick={() => setIsMobileMenuOpen(false)}
                   key={index}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
@@ -67,6 +75,7 @@ export default function SidebarKiri({
                 </Link>
               );
             })}
+
           </nav>
         </div>
 
