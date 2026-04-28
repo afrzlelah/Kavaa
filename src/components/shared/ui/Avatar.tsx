@@ -1,12 +1,5 @@
 import React from "react";
-
-interface AvatarProps {
-  src?: string;
-  initials?: string;
-  alt?: string;
-  size?: "sm" | "md" | "lg" | "xl";
-  className?: string;
-}
+import { AvatarProps } from "@/types";
 
 const sizeClasses = {
   sm: "w-8 h-8 text-[10px]",

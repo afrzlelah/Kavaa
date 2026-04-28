@@ -7,7 +7,9 @@ import RewardCertificateClient from "./RewardCertificateClient";
 export default async function RewardCertificatePage() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user) {
     redirect("/login");
@@ -19,23 +21,25 @@ export default async function RewardCertificatePage() {
   // Adding missing properties to match the expected type
   if (!certificates || certificates.length === 0) {
     certificates = [
-      { 
-        id: 1, 
-        title: "WEBSITE STORE", 
-        provider: "Python AI at DQLab", 
+      {
+        id: 1,
+        title: "WEBSITE STORE",
+        provider: "Python AI at DQLab",
         is_earned: false,
         issued_at: new Date().toISOString(),
         thumbnail_url: null,
-        certificate_url: null
+        certificate_url: null,
+        category: "Programming",
       },
-      { 
-        id: 2, 
-        title: "Fundamental SQL Group By and Having", 
-        provider: "SQL Group By and Having", 
+      {
+        id: 2,
+        title: "Fundamental SQL Group By and Having",
+        provider: "SQL Group By and Having",
         is_earned: false,
         issued_at: new Date().toISOString(),
         thumbnail_url: null,
-        certificate_url: null
+        certificate_url: null,
+        category: "Database",
       },
     ];
   }

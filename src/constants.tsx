@@ -6,9 +6,9 @@ import {
   Inbox,
   LayoutDashboard,
   Users,
-  Target
+  Target,
 } from "lucide-react";
-import { Contact, Message } from "./type";
+import { Contact, Message } from "./types";
 
 export const stats = [
   {

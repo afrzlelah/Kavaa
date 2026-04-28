@@ -1,13 +1,17 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+import { Certificate } from "@/types";
 
-export async function getUserCertificates(userId: string) {
+export async function getUserCertificates(
+  userId: string,
+): Promise<Certificate[]> {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
   const { data, error } = await supabase
     .from("certificates")
-    .select(`
+    .select(
+      `
       issued_at,
       certificate_url,
       courses:course_id (
@@ -16,7 +20,8 @@ export async function getUserCertificates(userId: string) {
         thumbnail_url,
         category
       )
-    `)
+    `,
+    )
     .eq("user_id", userId)
     .order("issued_at", { ascending: false });
 
@@ -28,10 +33,11 @@ export async function getUserCertificates(userId: string) {
   return data.map((cert: any) => ({
     id: cert.courses?.id || Math.random(),
     title: cert.courses?.title || "Sertifikat Tanpa Judul",
+    provider: cert.courses?.category || "Penyedia Tidak Diketahui",
     category: cert.courses?.category || "Other",
     issued_at: cert.issued_at,
     thumbnail_url: cert.courses?.thumbnail_url,
     certificate_url: cert.certificate_url,
-    is_earned: true
+    is_earned: true,
   }));
 }

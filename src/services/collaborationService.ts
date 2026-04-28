@@ -1,17 +1,19 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+import { TeamRequest } from "@/types";
 
 /**
- * Fetch team requests from the 'team_requests' table, 
+ * Fetch team requests from the 'team_requests' table,
  * joining with 'teams' and 'users' for full context.
  */
-export async function getTeamRequests() {
+export async function getTeamRequests(): Promise<TeamRequest[]> {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
   const { data, error } = await supabase
     .from("team_requests")
-    .select(`
+    .select(
+      `
       id,
       status,
       message,
@@ -25,20 +27,22 @@ export async function getTeamRequests() {
         last_name,
         avatar_url
       )
-    `)
+    `,
+    )
     .order("id", { ascending: false });
 
   if (error) {
     console.error("Error fetching team requests:", error);
     return [];
   }
-  
+
   return data.map((req: any) => ({
     id: req.id,
     title: req.teams.project_name,
-    initials: req.users.first_name.charAt(0) + (req.users.last_name?.charAt(0) || ""),
+    initials:
+      req.users.first_name.charAt(0) + (req.users.last_name?.charAt(0) || ""),
     time_ago: "Baru saja", // Could calculate from created_at if added to schema
-    status: req.status
+    status: req.status,
   }));
 }
 
@@ -82,7 +86,7 @@ export async function getMyTeams(userId: string) {
 }
 
 /**
- * Fetch recent activities (mocked using team status updates or similar logic 
+ * Fetch recent activities (mocked using team status updates or similar logic
  * since no dedicated activity table was provided in the core schema).
  */
 export async function getRecentActivities() {
@@ -93,7 +97,8 @@ export async function getRecentActivities() {
   // We'll fetch the latest teams for now as "Recent Projects"
   const { data, error } = await supabase
     .from("teams")
-    .select(`
+    .select(
+      `
       id,
       project_name,
       status,
@@ -101,7 +106,8 @@ export async function getRecentActivities() {
         first_name,
         last_name
       )
-    `)
+    `,
+    )
     .order("id", { ascending: false })
     .limit(5);
 
@@ -109,13 +115,13 @@ export async function getRecentActivities() {
     console.error("Error fetching recent activities:", error);
     return [];
   }
-  
+
   return data.map((team: any) => ({
     id: team.id,
     user_name: team.users.first_name,
     initials: team.users.first_name.charAt(0),
     action: `membuat proyek ${team.project_name}`,
     time_ago: "Baru saja",
-    color: "bg-primary"
+    color: "bg-primary",
   }));
 }

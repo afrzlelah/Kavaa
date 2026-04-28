@@ -5,14 +5,9 @@ import { useEffect, useState } from "react";
 import { Bell, Mail, MessageSquare, MoreVertical, Plus } from "lucide-react";
 import { useParams } from "next/navigation";
 
-interface UserData {
-  first_name: string;
-  last_name: string;
-  email: string;
-}
+import { UserData } from "@/types";
 
 export default function SidebarKanan({ user }: { user?: any }) {
-
   const [dataUser, setDataUser] = useState<UserData | null>(null);
   const [mentors, setMentors] = useState<any[]>([]);
   const params = useParams();
@@ -36,7 +31,7 @@ export default function SidebarKanan({ user }: { user?: any }) {
           setDataUser({
             first_name: user.user_metadata?.first_name || "User",
             last_name: user.user_metadata?.last_name || "",
-            email: user.email || ""
+            email: user.email || "",
           });
         }
       } catch (err) {
@@ -47,7 +42,10 @@ export default function SidebarKanan({ user }: { user?: any }) {
     const fetchMentorsData = async () => {
       try {
         const supabase = createClientClient();
-        const { data, error } = await supabase.from('mentors').select('*').limit(5);
+        const { data, error } = await supabase
+          .from("mentors")
+          .select("*")
+          .limit(5);
         if (!error && data) {
           setMentors(data);
         }
@@ -60,13 +58,26 @@ export default function SidebarKanan({ user }: { user?: any }) {
     fetchMentorsData();
   }, [user, params.slug]);
 
-
   // Fallback if db is empty or table missing
-  const displayMentors = (mentors && mentors.length > 0) ? mentors : [
-    { id: 1, name: "Prashant Kumar Singh", role: "Software Developer", avatar_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&q=80" },
-    { id: 2, name: "Ravi Kumar", role: "Frontend Developer", avatar_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&q=80" }
-  ];
-
+  const displayMentors =
+    mentors && mentors.length > 0
+      ? mentors
+      : [
+          {
+            id: 1,
+            name: "Prashant Kumar Singh",
+            role: "Software Developer",
+            avatar_url:
+              "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&q=80",
+          },
+          {
+            id: 2,
+            name: "Ravi Kumar",
+            role: "Frontend Developer",
+            avatar_url:
+              "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&q=80",
+          },
+        ];
 
   return (
     <aside className="hidden xl:flex w-80 flex-col bg-white border-l border-slate-100 h-full overflow-y-auto px-6 py-8 z-20">
@@ -115,11 +126,21 @@ export default function SidebarKanan({ user }: { user?: any }) {
 
       {/* Grafik Aktivitas */}
       <div className="flex items-end justify-between h-24 mb-10 px-2">
-        <div className="w-8 h-[40%] bg-blue-100 flex flex-col justify-end rounded-t-sm"><div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div></div>
-        <div className="w-8 h-[60%] bg-blue-100 flex flex-col justify-end rounded-t-sm"><div className="w-full h-2/3 bg-blue-500 rounded-t-sm"></div></div>
-        <div className="w-8 h-[80%] bg-blue-100 flex flex-col justify-end rounded-t-sm"><div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div></div>
-        <div className="w-8 h-[100%] bg-blue-100 flex flex-col justify-end rounded-t-sm"><div className="w-full h-3/4 bg-blue-500 rounded-t-sm"></div></div>
-        <div className="w-8 h-[70%] bg-blue-100 flex flex-col justify-end rounded-t-sm"><div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div></div>
+        <div className="w-8 h-[40%] bg-blue-100 flex flex-col justify-end rounded-t-sm">
+          <div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div>
+        </div>
+        <div className="w-8 h-[60%] bg-blue-100 flex flex-col justify-end rounded-t-sm">
+          <div className="w-full h-2/3 bg-blue-500 rounded-t-sm"></div>
+        </div>
+        <div className="w-8 h-[80%] bg-blue-100 flex flex-col justify-end rounded-t-sm">
+          <div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div>
+        </div>
+        <div className="w-8 h-[100%] bg-blue-100 flex flex-col justify-end rounded-t-sm">
+          <div className="w-full h-3/4 bg-blue-500 rounded-t-sm"></div>
+        </div>
+        <div className="w-8 h-[70%] bg-blue-100 flex flex-col justify-end rounded-t-sm">
+          <div className="w-full h-1/2 bg-blue-500 rounded-t-sm"></div>
+        </div>
       </div>
 
       {/* Daftar Mentor Anda */}
@@ -133,7 +154,10 @@ export default function SidebarKanan({ user }: { user?: any }) {
 
         <div className="flex flex-col gap-5 flex-1">
           {displayMentors.map((mentor: any, idx: number) => (
-            <div key={mentor.id || idx} className="flex items-center justify-between">
+            <div
+              key={mentor.id || idx}
+              className="flex items-center justify-between"
+            >
               <div className="flex items-center gap-3">
                 <img
                   src={mentor.avatar_url || mentor.avatar}
