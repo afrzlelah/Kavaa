@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { BsApple, BsGoogle } from "react-icons/bs";
+import { BsApple, BsGoogle, BsGithub } from "react-icons/bs";
 import SocialLogin from "@/components/layouts/SocialLogin";
 import KavaaBanner from "@/components/Atom/KavaaBanner";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { brandFeatures } from "@/constants";
+import { createClientClient } from "@/utils/supabase/client";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,6 +21,27 @@ const LoginPage = () => {
     password: "",
   });
   const route = useRouter();
+
+  const handleSocialLogin = async (platform: string) => {
+    const supabase = createClientClient();
+    const provider = platform.toLowerCase() as "google" | "github";
+    
+    if (provider !== "google" && provider !== "github") {
+      alert("Hanya Google dan GitHub yang tersedia saat ini.");
+      return;
+    }
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${window.location.origin}/api/auth/callback`,
+      },
+    });
+
+    if (error) {
+      setMessageLogin("Gagal login dengan " + platform + ": " + error.message);
+    }
+  };
 
   // AUTH
   const AUTH = async ({
@@ -91,13 +113,15 @@ const LoginPage = () => {
 
           <div className="flex justify-center mb-8 ">
             <SocialLogin
-              platforms={["Apple", "Google"]}
+              platforms={["Google", "Github"]}
+              onSelectPlatform={handleSocialLogin}
               icons={[
-                <BsApple key="Apple" size={18} />,
                 <BsGoogle key="Google" size={18} />,
+                <BsGithub key="Github" size={18} />,
               ]}
             />
           </div>
+
 
           <div className="relative mb-8">
             <div className="absolute inset-0 flex items-center">

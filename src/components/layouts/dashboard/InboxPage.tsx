@@ -471,7 +471,7 @@ export default function ChatApp({
   }, [activeChat]);
 
   return (
-    <div className="h-[calc(100vh-80px)] md:h-full w-full flex flex-col bg-white font-['DM_Sans',sans-serif] overflow-hidden">
+    <div className="flex-1 w-full flex flex-col bg-white font-['DM_Sans',sans-serif] overflow-hidden">
       {/* ── Top Search Bar ── */}
       <div
         className={`flex-shrink-0 px-4 pt-4 pb-3 mt-14 lg:mt-0 bg-white border-b border-gray-100 gap-2
@@ -520,7 +520,7 @@ export default function ChatApp({
 
 
       {/* ── Body ── */}
-      <div className="flex flex-col h-[calc(100vh-80px)] md:h-full bg-white overflow-hidden">
+      <div className="flex flex-1 overflow-hidden">
         {/* ── SIDEBAR ── */}
         {/* Mobile: full-width, hidden when a chat is open */}
         {/* Desktop: fixed 288px sidebar, always visible */}
@@ -572,7 +572,7 @@ export default function ChatApp({
           `}
         >
           {/* Chat Header */}
-          <div className="bg-white mt-20 border-b border-gray-100 px-4 md:px-6 py-4 flex-shrink-0 flex items-center gap-3">
+          <div className="bg-white mt-14 lg:mt-0 border-b border-gray-100 px-4 md:px-6 py-4 flex-shrink-0 flex items-center gap-3">
             <button
               onClick={() => setActiveChat(null)}
               className="md:hidden p-1.5 -ml-1 rounded-lg hover:bg-gray-100 transition-colors"
@@ -601,47 +601,67 @@ export default function ChatApp({
             </div>
           )}
 
-          {/* Messages */}
+          {/* Messages & Input Area */}
           {activeContact && (
             <>
-              <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 md:px-6 py-5 space-y-4 bg-white">
-                {messagesList.map((msg) => {
-                  const isMine = msg.sender_id === userId;
-                  return (
-                    <div key={msg.id} className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
-                      <div className={`max-w-[70%] rounded-2xl px-4 py-2.5 shadow-sm ${
-                        isMine 
-                        ? "bg-white border border-gray-100 rounded-br-sm" 
-                        : "bg-indigo-500 text-white rounded-tl-sm"
-                      }`}>
-                        <p className="text-sm">{msg.content}</p>
-                        <p className={`text-[10px] mt-1 ${isMine ? "text-gray-400 text-right" : "text-indigo-100"}`}>
-                          {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </p>
+              {/* Messages - Scrollable area */}
+              <div 
+                ref={scrollRef} 
+                className="flex-1 overflow-y-auto px-4 md:px-6 py-5 space-y-4 bg-white scroll-smooth"
+              >
+                {messagesList.length === 0 ? (
+                  <div className="h-full flex items-center justify-center">
+                    <p className="text-gray-400 text-sm italic">Belum ada pesan. Mulai percakapan sekarang!</p>
+                  </div>
+                ) : (
+                  messagesList.map((msg) => {
+                    const isMine = msg.sender_id === userId;
+                    return (
+                      <div key={msg.id} className={`flex ${isMine ? "justify-end" : "justify-start"}`}>
+                        <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 shadow-sm ${
+                          isMine 
+                          ? "bg-indigo-600 text-white rounded-br-sm" 
+                          : "bg-gray-100 text-gray-800 rounded-tl-sm"
+                        }`}>
+                          <p className="text-sm leading-relaxed">{msg.content}</p>
+                          <p className={`text-[9px] mt-1.5 opacity-70 ${isMine ? "text-right" : "text-left"}`}>
+                            {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })
+                )}
               </div>
-
-              {/* Input Area */}
-              <div className="bg-white border-t border-gray-100 px-4 md:px-6 py-4 flex-shrink-0">
+ 
+              {/* Input Area - Fixed at the bottom */}
+              <div className="bg-white  border-t border-gray-100 px-4 md:px-6 py-4 flex-shrink-0 z-10 shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">
                 <form 
                   onSubmit={(e) => {
                     e.preventDefault();
                     handleSendMessage();
                   }}
-                  className="flex items-center gap-3 bg-gray-50 rounded-2xl px-4 py-3"
+                  className="flex  items-center gap-3 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-2.5 focus-within:bg-white focus-within:ring-2 focus-within:ring-indigo-500/10 focus-within:border-indigo-500/30 transition-all"
                 >
                   <input
                     ref={inputRef}
                     type="text"
                     placeholder="Tulis pesan..."
-                    className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none"
+                    className="flex-1 bg-transparent text-sm text-gray-700 placeholder-gray-400 outline-none py-1"
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
                   />
-                  <button type="submit" className="text-indigo-500 font-bold text-sm px-2">Kirim</button>
+                  <button 
+                    type="submit" 
+                    disabled={!messageInput.trim()}
+                    className={`bg-indigo-500 text-white p-2 rounded-xl transition-all ${
+                      messageInput.trim() ? "hover:bg-indigo-600 active:scale-95 opacity-100" : "opacity-50 cursor-not-allowed"
+                    }`}
+                  >
+                    <svg className="w-5 h-5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                  </button>
                 </form>
               </div>
             </>
