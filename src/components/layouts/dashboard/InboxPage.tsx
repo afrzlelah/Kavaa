@@ -257,70 +257,62 @@ export default function ChatApp({
 
     let channel: any;
 
-    const setupSubscriptions = async () => {
-      try {
-        const { createClientClient } = await import("@/utils/supabase/client");
-        const supabase = createClientClient();
+    const setupSubscriptions = () => {
+      const { createClientClient } = require("@/utils/supabase/client");
+      const supabase = createClientClient();
 
-        const channelName = `inbox_global_${userId}`;
-        console.log("Inbox: 🔄 Subscribing to messages...", channelName);
+      const channelId = `inbox_${userId}`;
+      console.log("Inbox: 🔄 Subscribing to...", channelId);
 
-        channel = supabase
-          .channel(channelName)
-          .on(
-            "postgres_changes",
-            { event: "INSERT", schema: "public", table: "messages" },
-            (payload: any) => {
-              console.log("Inbox: 📩 New message received!", payload.new);
-              
-              const newMsg = payload.new;
+      // Clean up existing channel with same ID if any
+      supabase.removeChannel(supabase.channel(channelId));
 
-              // 1. Update active chat messages
-              if (newMsg.conversation_id === activeChat) {
-                setMessagesList((prev) => {
-                  if (prev.some(m => m.id === newMsg.id)) return prev;
-                  return [...prev, newMsg];
-                });
-                
-                // Mark as read on the server
-                if (newMsg.sender_id !== userId) {
-                  markMessagesAsReadClient(newMsg.conversation_id, userId!);
-                }
-              }
+      const newChannel = supabase.channel(channelId);
+      
+      newChannel
+        .on(
+          "postgres_changes",
+          { event: "INSERT", schema: "public", table: "messages" },
+          (payload: any) => {
+            console.log("Inbox: 📩 New message!", payload.new);
+            const newMsg = payload.new;
 
-              // 2. Update sidebar conversations
-              setConversations((prev) => {
-                const index = prev.findIndex(c => c.id === newMsg.conversation_id);
-                
-                if (index !== -1) {
-                  const updated = [...prev];
-                  updated[index] = {
-                    ...updated[index],
-                    lastMessage: newMsg.content,
-                    time: formatRelativeTime(newMsg.created_at),
-                    last_message_at: newMsg.created_at,
-                    unread: newMsg.conversation_id === activeChat ? 0 : (updated[index].unread || 0) + (newMsg.sender_id !== userId ? 1 : 0)
-                  };
-                  // Move to top
-                  return updated.sort((a, b) => 
-                    new Date(b.last_message_at || 0).getTime() - new Date(a.last_message_at || 0).getTime()
-                  );
-                } else {
-                  // New conversation! Should ideally fetch details from server
-                  // For now, we'll wait for a refresh or implement a fetch logic
-                  console.log("Inbox: New conversation detected, please refresh or implement fetch.");
-                  return prev;
-                }
+            // 1. Update messages
+            if (newMsg.conversation_id === activeChat) {
+              setMessagesList((prev) => {
+                if (prev.some(m => m.id === newMsg.id)) return prev;
+                return [...prev, newMsg];
               });
+              if (newMsg.sender_id !== userId) {
+                markMessagesAsReadClient(newMsg.conversation_id, userId!);
+              }
             }
-          )
-          .subscribe((status) => {
-            console.log("Inbox: Subscription status:", status);
-          });
 
-      } catch (err) {
-        console.error("Inbox: Subscription error:", err);
-      }
+            // 2. Update sidebar
+            setConversations((prev) => {
+              const index = prev.findIndex(c => c.id === newMsg.conversation_id);
+              if (index !== -1) {
+                const updated = [...prev];
+                updated[index] = {
+                  ...updated[index],
+                  lastMessage: newMsg.content,
+                  time: formatRelativeTime(newMsg.created_at),
+                  last_message_at: newMsg.created_at,
+                  unread: newMsg.conversation_id === activeChat ? 0 : (updated[index].unread || 0) + (newMsg.sender_id !== userId ? 1 : 0)
+                };
+                return [...updated].sort((a, b) => 
+                  new Date(b.last_message_at || 0).getTime() - new Date(a.last_message_at || 0).getTime()
+                );
+              }
+              return prev;
+            });
+          }
+        )
+        .subscribe((status: string) => {
+          console.log(`Inbox: Subscription ${channelId} status:`, status);
+        });
+
+      channel = newChannel;
     };
 
       setupSubscriptions();

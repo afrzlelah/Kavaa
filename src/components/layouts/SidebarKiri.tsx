@@ -2,22 +2,22 @@
 
 import { LogOut, Settings } from "lucide-react";
 import { menuItems } from "@/constants";
-import { friends } from "@/constants";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import Image from "next/image";
+import Link from "next/link";
 export default function SidebarKiri({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
   userId,
   user,
+  friendsList = [],
 }: {
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (open: boolean) => void;
   userId: string;
   user: any;
+  friendsList?: any[];
 }) {
-
   const pathname = usePathname();
 
   return (
@@ -26,20 +26,15 @@ export default function SidebarKiri({
     >
       {/* Logo bjir anjir*/}
       <div className="p-8 hidden lg:flex items-center gap-2">
-        <div className="flex items-center gap-1">
-          <div className="grid grid-cols-2 gap-0.5">
-            <div className="w-3 h-3 bg-primaryTint rounded-tl-sm rounded-bl-sm"></div>
-            <div className="w-3 h-3 bg-primaryTint rounded-tr-sm rounded-br-sm"></div>
-          </div>
-        </div>
-        <div className="flex flex-col leading-none">
-          <span className="text-2xl font-black text-primaryTint tracking-tight">
-            KAVA
-          </span>
-          <span className="text-[8px] text-blue-400 font-bold uppercase">
-            Where Learning Meets Evolution
-          </span>
-        </div>
+        <Link href="/" className="flex flex-col leading-none">
+          <Image
+            src={"/assets/logo_kava_text_biru.png"}
+            alt={"Logo Kavaa"}
+            width={100}
+            height={100}
+            className="w-full h-full object-cover"
+          />
+        </Link>
       </div>
 
       <div className="flex-1 overflow-y-auto mt-16 lg:mt-0">
@@ -51,9 +46,14 @@ export default function SidebarKiri({
           <nav className="flex flex-col gap-1">
             {menuItems.map((item, index) => {
               // Logic for dynamic paths: dashboard needs the userId slug
-              const href = item.path === "/dashboard" ? `${item.path}/${userId}` : item.path;
-              const isActive = pathname === href || (href !== "/" && pathname?.startsWith(href));
-              
+              const href =
+                item.path === "/dashboard"
+                  ? `${item.path}/${userId}`
+                  : item.path;
+              const isActive =
+                pathname === href ||
+                (href !== "/" && pathname?.startsWith(href));
+
               return (
                 <Link
                   href={href || "#"}
@@ -67,15 +67,12 @@ export default function SidebarKiri({
                 >
                   <item.icon
                     size={20}
-                    className={
-                      isActive ? "text-primaryTint" : "text-slate-400"
-                    }
+                    className={isActive ? "text-primaryTint" : "text-slate-400"}
                   />
                   {item.label}
                 </Link>
               );
             })}
-
           </nav>
         </div>
 
@@ -85,26 +82,42 @@ export default function SidebarKiri({
             Teman
           </h3>
           <div className="flex flex-col gap-4">
-            {friends.map((friend, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 cursor-pointer group"
-              >
-                <img
-                  src={friend.avatar}
-                  alt={friend.name}
-                  className="w-10 h-10 rounded-full object-cover ring-2 ring-transparent group-hover:ring-blue-100 transition-all"
-                />
-                <div className="flex flex-col">
-                  <span className="text-sm font-bold text-slate-800">
-                    {friend.name}
-                  </span>
-                  <span className="text-[10px] font-medium text-slate-400">
-                    {friend.role}
-                  </span>
+            {friendsList.length === 0 ? (
+              <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest px-2 italic">
+                Belum ada teman
+              </p>
+            ) : (
+              friendsList.map((friend, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 cursor-pointer group"
+                >
+                  <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-transparent group-hover:ring-blue-100 transition-all bg-slate-100 flex items-center justify-center">
+                    {friend.avatar_url ? (
+                      <img
+                        src={friend.avatar_url}
+                        alt={friend.first_name}
+                        className="w-full h-full object-cover"
+                        width={100}
+                        height={100}
+                      />
+                    ) : (
+                      <span className="text-xs font-bold text-slate-400">
+                        {(friend.first_name || "?")[0]}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-slate-800">
+                      {friend.first_name} {friend.last_name}
+                    </span>
+                    <span className="text-[10px] font-medium text-slate-400">
+                      {friend.role || "Pelajar"}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>

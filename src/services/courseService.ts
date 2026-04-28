@@ -68,3 +68,37 @@ export async function getQuickStats(userId: string) {
     icon: "Bell", // Fallback icon
   }));
 }
+
+/**
+ * Fetch courses grouped by category to serve as "Learning Paths"
+ */
+export async function getLearningPaths() {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  // In a real app, you might have a dedicated 'learning_paths' table
+  // For now, we'll group existing courses by category
+  const { data, error } = await supabase
+    .from("courses")
+    .select("*")
+    .order("category");
+
+  if (error) {
+    console.error("Error fetching learning paths:", error);
+    return [];
+  }
+
+  // Group by category
+  const grouped = data.reduce((acc: any, course: any) => {
+    const cat = course.category || "General";
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(course);
+    return acc;
+  }, {});
+
+  return Object.keys(grouped).map(category => ({
+    title: category.toUpperCase(),
+    subtitle: `Jalur Belajar ${category}`,
+    courses: grouped[category]
+  }));
+}

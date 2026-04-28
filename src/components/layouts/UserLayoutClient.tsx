@@ -9,11 +9,13 @@ import { usePathname } from "next/navigation";
 export default function UserLayoutClient({
   children,
   user,
-  slug
+  slug,
+  friends = []
 }: {
   children: React.ReactNode;
   user: any;
   slug: string;
+  friends?: any[];
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
@@ -50,6 +52,7 @@ export default function UserLayoutClient({
         setIsMobileMenuOpen={setIsMobileMenuOpen}
         userId={slug}
         user={user}
+        friendsList={friends}
       />
 
       {/* Overlay untuk Mobile */}

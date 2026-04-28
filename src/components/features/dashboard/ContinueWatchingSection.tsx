@@ -11,20 +11,9 @@ export async function ContinueWatchingSection({ userId }: { userId?: string }) {
     userCourses = await getUserCourses(userId);
   }
 
-  // Fallback static data if no courses are returned (so UI isn't empty during testing)
+  // Removed static mock data to ensure pure data-driven UI
   if (!userCourses || userCourses.length === 0) {
-    userCourses = [
-      {
-        id: 1,
-        tag: "FRONTEND",
-        title: "Panduan Pemula Menjadi Developer Frontend Profesional",
-        instructor: "Prashant Kumar Singh",
-        role: "Pengembang Perangkat Lunak",
-        progress: 75,
-        thumbnail_url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop&q=80",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&q=80",
-      }
-    ];
+    return null; // Don't show the section if no courses are in progress
   }
 
   return (

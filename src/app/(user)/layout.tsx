@@ -11,17 +11,31 @@ export default async function UserLayout({
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { user: authUser } } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (!authUser) {
     redirect("/login");
   }
 
-  // Use the user ID as the slug for now
-  const slug = user.id;
+  // Fetch full profile and all users
+  const { data: userProfile } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", authUser.id)
+    .single();
+
+  const { data: allUsers } = await supabase
+    .from("users")
+    .select("id, first_name, last_name, avatar_url, role")
+    .neq("id", authUser.id)
+    .limit(10);
 
   return (
-    <UserLayoutClient user={user} slug={slug}>
+    <UserLayoutClient 
+      user={userProfile || authUser} 
+      slug={authUser.id}
+      friends={allUsers || []}
+    >
       {children}
     </UserLayoutClient>
   );

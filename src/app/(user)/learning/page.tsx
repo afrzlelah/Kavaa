@@ -1,79 +1,84 @@
-import { getCourses } from "@/services/courseService";
-import { Card } from "@/components/shared/ui/Card";
+import { LearningHubHeader } from "@/components/features/learning/LearningHubHeader";
+import { LearningPathCard } from "@/components/features/learning/LearningPathCard";
+import { LearningSidebar } from "@/components/features/learning/LearningSidebar";
+import { RecentLearningActivity } from "@/components/features/learning/RecentLearningActivity";
+import { FeedbackSection } from "@/components/features/learning/FeedbackSection";
+import { PortfolioBuilding } from "@/components/features/learning/PortfolioBuilding";
+import { Plus } from "lucide-react";
 import { Button } from "@/components/shared/ui/Button";
-import { Avatar } from "@/components/shared/ui/Avatar";
+import { getLearningPaths } from "@/services/courseService";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
-export default async function Learning() {
-  let courses = await getCourses();
+export default async function LearningPage() {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  // 1. Fetch real learning paths
+  const pathsData = await getLearningPaths();
+  
+  // 2. Map DB categories to the UI structure
+  const learningPaths = pathsData.map(path => ({
+    title: path.title,
+    subtitle: path.subtitle,
+    buttonText: `Lanjut ${path.title}`,
+    icons: [
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+    ],
+    items: path.courses.slice(0, 3).map((c: any, idx: number) => ({
+      title: c.title,
+      progress: Math.floor(Math.random() * 100), // In real app, fetch from user_courses
+      status: idx === 0 ? "in-progress" : "pending"
+    }))
+  }));
 
-  // Fallback if db is empty during testing
-  if (!courses || courses.length === 0) {
-    courses = [
-      {
-        id: 1,
-        category: "Programming",
-        title: "React for Beginners",
-        description: "Belajar React dari nol sampai bisa bikin project.",
-        instructor: "John Doe",
-        participants: 1200,
-        rating: 4.7,
-        duration: "8 jam",
-        level: "Beginner",
-        is_free: true,
-        price: 0,
-        thumbnail_url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop&q=80"
-      }
-    ];
+  // Fallback if no paths
+  if (learningPaths.length === 0) {
+    // Add default UI if empty
   }
 
   return (
-    <div className="p-8 max-w-7xl mx-auto h-full overflow-y-auto">
-      <div className="flex justify-between items-end mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">Pusat Pembelajaran</h1>
-          <p className="text-slate-500">Tingkatkan keahlianmu dengan kelas interaktif terbaru.</p>
-        </div>
-        <Button>Lihat Semua</Button>
-      </div>
+    <div className="flex flex-col h-full overflow-y-auto bg-[#F8FAFC] px-4 md:px-8 py-6">
+      <LearningHubHeader />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {courses.map((course: any) => (
-          <Card key={course.id} className="p-0 overflow-hidden hover:shadow-lg transition-shadow">
-            <div className="relative h-48 w-full bg-slate-100">
-              {course.thumbnail_url ? (
-                <img src={course.thumbnail_url} alt={course.title} className="w-full h-full object-cover" />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-tr from-blue-500 to-cyan-400" />
-              )}
-              {course.is_free && (
-                <div className="absolute top-3 right-3 bg-emerald-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">
-                  GRATIS
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 mb-8">
+        {/* Main Learning Hub Content */}
+        <div className="xl:col-span-3 space-y-6">
+          <div className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500">
+                  <Plus size={20} />
                 </div>
-              )}
-            </div>
-            <div className="p-5 flex flex-col flex-1">
-              <span className="text-[10px] font-bold text-primaryTint bg-blue-50 px-2 py-1 rounded w-fit mb-2">
-                {course.category?.toUpperCase() || "UMUM"}
-              </span>
-              <h3 className="text-base font-bold text-slate-800 mb-2 line-clamp-2 leading-tight">
-                {course.title}
-              </h3>
-              <p className="text-xs text-slate-500 mb-4 line-clamp-2">
-                {course.description || "Deskripsi kursus tidak tersedia."}
-              </p>
-              
-              <div className="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Avatar initials={course.instructor?.[0] || "?"} size="sm" />
-                  <span className="text-[11px] font-semibold text-slate-700">{course.instructor || "Instruktur"}</span>
-                </div>
-                <div className="flex items-center gap-1 text-[11px] font-bold text-amber-500">
-                  <span>★</span> {course.rating || "0.0"}
-                </div>
+                <h2 className="text-sm font-bold text-slate-800 uppercase tracking-widest">Learning Hub</h2>
               </div>
+              <Button className="rounded-lg px-5 py-2.5 font-bold text-xs bg-primary shadow-md hover:bg-blue-700 transition-all">
+                + Cari Materi Belajar
+              </Button>
             </div>
-          </Card>
-        ))}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {learningPaths.map((path, idx) => (
+                <LearningPathCard key={idx} {...path as any} />
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <RecentLearningActivity />
+            <FeedbackSection />
+            <PortfolioBuilding />
+          </div>
+        </div>
+
+        {/* Sidebar */}
+        <div className="xl:col-span-1">
+          <LearningSidebar />
+        </div>
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ export function ProgressBar({
   const safeProgress = Math.min(Math.max(progress, 0), 100);
 
   return (
-    <div className={`w-full ${bgColorClass} rounded-full h-2.5 overflow-hidden ${className}`}>
+    <div className={`w-full ${bgColorClass} rounded-full overflow-hidden ${className || "h-2.5"}`}>
       <div
         className={`${colorClass} h-full rounded-full transition-all duration-500`}
         style={{ width: `${safeProgress}%` }}

@@ -7,28 +7,31 @@ import { createClientClient } from "@/utils/supabase/client";
 export async function findExistingConversationClient(userId1: string, userId2: string) {
   const supabase = createClientClient();
 
-  // Try using RPC if available
+  // Try using RPC if available (requires a specific Postgres function)
   const { data, error } = await supabase.rpc('get_conversation_by_participants', {
-    user_ids: [userId1, userId2]
+    p_user_ids: [userId1, userId2]
   });
 
   if (error || !data || data.length === 0) {
-    // Fallback to manual check
-    const { data: convs } = await supabase
+    // Robust Fallback: Find all conversations for user1
+    const { data: user1Convs } = await supabase
       .from("conversation_participants")
       .select("conversation_id")
       .eq("user_id", userId1);
 
-    if (convs) {
-      for (const c of convs) {
-        const { data: other } = await supabase
-          .from("conversation_participants")
-          .select("user_id")
-          .eq("conversation_id", c.conversation_id)
-          .eq("user_id", userId2)
-          .single();
-        
-        if (other) return c.conversation_id;
+    if (user1Convs && user1Convs.length > 0) {
+      const convIds = user1Convs.map(c => c.conversation_id);
+      
+      // Check which of these conversations also have user2
+      const { data: commonConvs } = await supabase
+        .from("conversation_participants")
+        .select("conversation_id")
+        .in("conversation_id", convIds)
+        .eq("user_id", userId2);
+      
+      if (commonConvs && commonConvs.length > 0) {
+        // Return the first one found (usually there should only be one)
+        return commonConvs[0].conversation_id;
       }
     }
     return null;
