@@ -9,7 +9,7 @@ interface ProgressBarProps {
 
 export function ProgressBar({
   progress,
-  colorClass = "bg-primaryTint",
+  colorClass = "bg-primary",
   bgColorClass = "bg-slate-100",
   className = "",
 }: ProgressBarProps) {

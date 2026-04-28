@@ -2,8 +2,11 @@ import { Filter, Search } from "lucide-react";
 import { Avatar } from "@/components/shared/ui/Avatar";
 
 export function DashboardHeader({ user }: { user?: any }) {
-  const userName = user?.user_metadata?.first_name 
-    ? `${user.user_metadata.first_name} ${user.user_metadata.last_name || ""}`
+  // Handle both auth.user (metadata) and public.users (direct properties)
+  const firstName = user?.first_name || user?.user_metadata?.first_name || "";
+  const lastName = user?.last_name || user?.user_metadata?.last_name || "";
+  const userName = (firstName || lastName) 
+    ? `${firstName} ${lastName}`.trim()
     : user?.email?.split("@")[0] || "User";
 
   return (

@@ -15,4 +15,20 @@ export const getAllUsers = async () => {
   return data;
 };
 
-// validasi Login via email and password
+export const getUserProfile = async (userId: string) => {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", userId)
+    .single();
+
+  if (error) {
+    console.error("Error fetching user profile:", error);
+    return null;
+  }
+
+  return data;
+};
