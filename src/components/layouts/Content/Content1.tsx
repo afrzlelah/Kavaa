@@ -34,9 +34,7 @@ export default function Content1() {
           </h1>
 
           <p className="text-base md:text-lg lg:text-xl text-slate-600 max-w-2xl mx-auto lg:mx-0 mb-8 md:mb-10 leading-relaxed">
-            Temukan jalur belajar yang dipersonalisasi dari ribuan kursus,
-            sertifikasi global, dan program dari institusi ternama untuk
-            mencapai potensi penuh Anda.
+            Sukses di dunia kerja bukan hanya soal apa yang kamu tahu, melainkan bagaimana kamu bekerja bersama dengan orang lain. Di sini, kamu bisa merasakannya secara langsung melalui simulasi kerja tim yang nyata 
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10">
@@ -58,15 +56,15 @@ export default function Content1() {
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-6 text-slate-600 text-sm font-medium">
             <span className="flex items-center gap-2">
               <CheckCircle size={18} className="text-primaryTint" /> Jalur
-              personal
+              Simulasi Kerja Nyata
             </span>
             <span className="flex items-center gap-2">
               <CheckCircle size={18} className="text-primaryTint" /> Mentor
-              global
+              Kolaborasi Tim
             </span>
             <span className="flex items-center gap-2">
               <CheckCircle size={18} className="text-primaryTint" /> Sertifikasi
-              resmi
+              Siap Kerja
             </span>
           </div>
         </div>

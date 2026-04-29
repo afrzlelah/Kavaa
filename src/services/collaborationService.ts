@@ -65,10 +65,13 @@ export async function getChallenges() {
   return data;
 }
 
+const isUuid = (id: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+
 /**
  * Fetch teams created by the user or where they are a participant.
  */
 export async function getMyTeams(userId: string) {
+  if (!isUuid(userId)) return [];
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 

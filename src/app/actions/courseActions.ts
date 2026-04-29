@@ -4,7 +4,12 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
+const isIdValid = (id: string) => /^[0-9a-f-]+$/i.test(id) || /^\d+$/.test(id);
+
 export async function toggleModuleCompletion(moduleId: string, courseId: string) {
+  if (!isIdValid(moduleId) || !isIdValid(courseId)) {
+    return { error: `Format ID tidak valid: moduleId=${moduleId}, courseId=${courseId}` };
+  }
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
@@ -58,6 +63,9 @@ export async function toggleModuleCompletion(moduleId: string, courseId: string)
 }
 
 export async function recordModuleWatch(moduleId: string) {
+  if (!isIdValid(moduleId)) {
+    return { error: `Format ID tidak valid: ${moduleId}` };
+  }
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 

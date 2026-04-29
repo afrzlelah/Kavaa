@@ -1,7 +1,7 @@
 -- Create tables for course modules and user progress tracking
 CREATE TABLE IF NOT EXISTS public.course_modules (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  course_id UUID REFERENCES public.courses(id) ON DELETE CASCADE,
+  course_id int8 REFERENCES public.courses(id) ON DELETE CASCADE,
   title TEXT NOT NULL,
   duration TEXT, -- e.g., "13:09"
   video_url TEXT,
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS public.user_module_progress (
 CREATE TABLE IF NOT EXISTS public.user_courses (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-  course_id UUID REFERENCES public.courses(id) ON DELETE CASCADE,
+  course_id int8 REFERENCES public.courses(id) ON DELETE CASCADE,
   progress INTEGER DEFAULT 0,
   enrolled_at TIMESTAMPTZ DEFAULT now(),
   UNIQUE(user_id, course_id)
@@ -34,7 +34,7 @@ RETURNS TRIGGER AS $$
 DECLARE
   total_modules INTEGER;
   completed_modules INTEGER;
-  current_course_id UUID;
+  current_course_id int8;
 BEGIN
   -- Get the course_id for the module
   SELECT course_id INTO current_course_id FROM public.course_modules WHERE id = NEW.module_id;

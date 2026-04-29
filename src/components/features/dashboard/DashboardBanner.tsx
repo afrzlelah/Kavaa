@@ -1,65 +1,34 @@
 import { Button } from "@/components/shared/ui/Button";
+import { Play } from "lucide-react";
 
 export function DashboardBanner({ user }: { user?: any }) {
-  const firstName = user?.user_metadata?.first_name || user?.email?.split("@")[0] || "there";
-
   return (
-    <section className="relative w-full rounded-[24px] bg-[#2563eb] mb-8 p-8 md:px-12 md:py-10 text-white shadow-sm overflow-hidden">
+    <section className="relative w-full rounded-[2.5rem] bg-gradient-to-r from-blue-600 to-blue-500 p-10 md:px-14 md:py-12 text-white shadow-xl shadow-blue-500/10 overflow-hidden">
       {/* Dekorasi Latar Belakang - Bintang/Sparkles */}
-      <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none">
-        {/* Bintang Atas Kiri */}
-        <svg
-          className="absolute top-[10%] right-[30%] w-24 h-24 text-white/[0.12]"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
+      <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-20">
+        <svg className="absolute top-[10%] right-[30%] w-24 h-24" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z" />
         </svg>
-        {/* Bintang Besar Kanan Tengah */}
-        <svg
-          className="absolute top-[35%] -right-[5%] w-48 h-48 text-white/[0.12]"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
-          <path d="M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z" />
-        </svg>
-        {/* Bintang Bawah */}
-        <svg
-          className="absolute bottom-[5%] right-[15%] w-28 h-28 text-white/[0.12]"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-        >
+        <svg className="absolute top-[40%] right-[5%] w-40 h-40" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C12 6.627 17.373 12 24 12C17.373 12 12 17.373 6.627 12 0 12C6.627 12 12 6.627 12 0Z" />
         </svg>
       </div>
 
       <div className="relative z-10 max-w-2xl">
-        <p className="text-[11px] md:text-[13px] font-semibold tracking-wide text-white/90 uppercase mb-3">
-          WELCOME BACK, {firstName}!
+        <p className="text-[10px] font-black tracking-[0.2em] text-white/80 uppercase mb-4">
+          KURSUS ONLINE
         </p>
-        <h1 className="text-[26px] md:text-[34px] font-bold mb-8 leading-[1.3] tracking-wide">
-          Sharpen Your Skills With
-          <br className="hidden md:block" />
-          Professional Online Courses
+        <h1 className="text-[28px] md:text-[36px] font-black mb-10 leading-[1.2] tracking-tight">
+          Wujudkan Karir Profesionalmu
+          <br />
+          Dengan Kursus Online Terbaik
         </h1>
-        <Button 
-          className="bg-[#1c1c1c] text-white pl-5 pr-1.5 py-1.5 rounded-full font-medium text-sm hover:bg-black"
-          icon={
-            <div className="bg-white w-7 h-7 rounded-full flex items-center justify-center">
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="text-[#1c1c1c] ml-0.5"
-              >
-                <path d="M5 3l14 9-14 9V3z" />
-              </svg>
-            </div>
-          }
-        >
-          Explore Courses
-        </Button>
+        <button className="flex items-center gap-4 bg-slate-900 text-white pl-6 pr-2 py-2 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-black transition-all group">
+          Join Now
+          <div className="bg-white w-8 h-8 rounded-full flex items-center justify-center text-slate-900 group-hover:scale-110 transition-transform">
+            <Play size={12} fill="currentColor" />
+          </div>
+        </button>
       </div>
     </section>
   );

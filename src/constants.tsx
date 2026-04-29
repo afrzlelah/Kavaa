@@ -9,29 +9,32 @@ import {
   Target,
 } from "lucide-react";
 import { Contact, Message } from "./types";
+import { BiBookOpen, BiMoney } from "react-icons/bi";
+import { CiMoneyBill } from "react-icons/ci";
+import { GiTeamIdea } from "react-icons/gi";
 
 export const stats = [
   {
-    icon: Globe,
-    value: "316,000+",
-    label: "Instruktur Berkualifikasi",
-    desc: "Mentor berpengalaman lintas industri global.",
+    icon: BiBookOpen,
+    value: "",
+    label: "Belajar Lewat Aksi",
+    desc: "Jangan hanya menonton video. Di KAVA, kamu belajar melalui proyek nyata yang dirancang sesuai standar industri digital saat ini.",
+  },
+  {
+    icon: GiTeamIdea,
+    value: "",
+    label: "Bangun Tim Impianmu",
+    desc: "Temukan rekan kolaborasi dari berbagai bidang. Simulasikan pembagian peran dan komunikasi profesional layaknya bekerja di perusahaan tech..",
   },
   {
     icon: Globe,
-    value: "1.8 Miliar+",
-    label: "Pendaftaran Kursus",
-    desc: "Perjalanan belajar dari komunitas seluruh dunia.",
-  },
-  {
-    icon: Globe,
-    value: "41,000+",
-    label: "Kursus Berbagai Bahasa",
-    desc: "Pilihan kelas multibahasa dan sertifikasi resmi.",
+    value: "",
+    label: "Komunikasi Tanpa Batas ",
+    desc: "Koordinasi proyek jadi lebih mudah dengan fitur Inbox yang terintegrasi. Latih kemampuan komunikasimu dalam memimpin atau bekerja dalam tim. .",
   },
   {
     icon: Award,
-    value: "179,000+",
+    value: "",
     label: "Video Pembelajaran",
     desc: "Materi video mendalam, praktis, dan interaktif.",
   },

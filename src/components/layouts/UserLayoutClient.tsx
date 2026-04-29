@@ -20,10 +20,9 @@ export default function UserLayoutClient({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
 
-  // Right sidebar is mostly shown on Dashboard and Collaboration pages
-  const showRightSidebar =
-    pathname === `/dashboard/${slug}` ||
-    pathname.startsWith("/collaboration");
+  // Right sidebar is mostly shown on Collaboration pages.
+  // Dashboard has its own integrated sidebar now.
+  const showRightSidebar = pathname.startsWith("/collaboration");
 
   return (
     <div className="flex h-screen w-full bg-slate-50/50 font-sans text-slate-900 overflow-hidden">

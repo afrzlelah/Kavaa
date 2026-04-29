@@ -1,42 +1,22 @@
 import { Filter, Search } from "lucide-react";
-import { Avatar } from "@/components/shared/ui/Avatar";
 
 export function DashboardHeader({ user }: { user?: any }) {
-  // Handle both auth.user (metadata) and public.users (direct properties)
-  const firstName = user?.first_name || user?.user_metadata?.first_name || "";
-  const lastName = user?.last_name || user?.user_metadata?.last_name || "";
-  const userName = (firstName || lastName) 
-    ? `${firstName} ${lastName}`.trim()
-    : user?.email?.split("@")[0] || "User";
-
   return (
-    <header className="flex items-center gap-4 mb-8">
-      <div className="relative flex-1 max-w-3xl">
+    <header className="flex items-center gap-6">
+      <div className="relative flex-1 max-w-[640px]">
         <input
           type="text"
-          placeholder="Cari kursus Anda di sini...."
-          className="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+          placeholder="Cari kursus kamu disini..."
+          className="w-full pl-14 pr-6 py-5 bg-white border border-slate-50 rounded-[2rem] text-[13px] font-bold text-slate-400 focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-100 transition-all shadow-sm placeholder:text-slate-300"
         />
         <Search
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+          className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300"
           size={20}
         />
       </div>
-      <button className="w-12 h-12 bg-white border border-slate-200 rounded-2xl flex items-center justify-center text-slate-600 hover:bg-slate-50 shadow-sm transition-all shrink-0">
-        <Filter size={20} />
+      <button className="w-14 h-14 bg-white border border-slate-50 rounded-[1.5rem] flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-primary shadow-sm transition-all shrink-0">
+        <Filter size={22} strokeWidth={2.5} />
       </button>
-      
-      <div className="flex items-center gap-3 ml-2 shrink-0">
-        <div className="hidden md:block text-right">
-          <p className="text-sm font-bold text-slate-900">{userName}</p>
-          <p className="text-[11px] font-medium text-slate-500">{user?.user_metadata?.role || "Student"}</p>
-        </div>
-        <Avatar 
-          src={user?.avatar_url || user?.user_metadata?.avatar_url || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&q=80"} 
-          initials={userName.charAt(0)}
-          className="w-11 h-11 border-2 border-white shadow-sm"
-        />
-      </div>
     </header>
   );
 }

@@ -16,7 +16,10 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/shared/ui/Button";
-import { toggleModuleCompletion, recordModuleWatch } from "@/app/actions/courseActions";
+import {
+  toggleModuleCompletion,
+  recordModuleWatch,
+} from "@/app/actions/courseActions";
 import { useEffect } from "react";
 
 interface Module {
@@ -44,7 +47,7 @@ export function CoursePlayerContent({
     "deskripsi",
   );
   const [isPending, startTransition] = useTransition();
-  
+
   useEffect(() => {
     if (activeModuleId) {
       recordModuleWatch(activeModuleId);
@@ -56,7 +59,7 @@ export function CoursePlayerContent({
 
   const handleToggleCompletion = async () => {
     if (!activeModule) return;
-    
+
     startTransition(async () => {
       const result = await toggleModuleCompletion(activeModule.id, course.id);
       if (result.error) {
@@ -115,7 +118,10 @@ export function CoursePlayerContent({
           <div className="flex flex-col md:flex-row justify-between items-start gap-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-2">
-                <Link href="/learning" className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-500 transition-colors">
+                <Link
+                  href="/learning"
+                  className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-500 transition-colors"
+                >
                   <ArrowLeft size={16} />
                 </Link>
                 <span className="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-widest rounded-lg">
@@ -138,7 +144,7 @@ export function CoursePlayerContent({
                     {course.instructor_name || "Kavaa Instructor"}
                   </span>
                 </div>
-                <button className="text-xs font-bold text-primaryTint hover:underline">
+                <button className="text-lg  text-primaryTint hover:underline">
                   + Follow Channel
                 </button>
               </div>
@@ -148,19 +154,23 @@ export function CoursePlayerContent({
                 onClick={handleToggleCompletion}
                 disabled={isPending}
                 className={`flex-1 md:flex-none rounded-2xl h-12 px-6 gap-2 font-bold transition-all ${
-                  activeModule?.is_completed 
-                    ? "bg-emerald-500 hover:bg-emerald-600 shadow-emerald-100" 
+                  activeModule?.is_completed
+                    ? "bg-emerald-600 hover:bg-emerald-600 shadow-emerald-100"
                     : "bg-primaryTint hover:bg-blue-700 shadow-blue-100"
                 } text-white shadow-lg`}
               >
-                {activeModule?.is_completed ? <CheckCircle size={18} /> : <Play size={18} />}
+                {activeModule?.is_completed ? (
+                  <CheckCircle size={18} />
+                ) : (
+                  <Play size={18} />
+                )}
                 {activeModule?.is_completed ? "Selesai" : "Tandai Selesai"}
               </Button>
               <Button
                 variant="outline"
                 className="flex-1 md:flex-none rounded-2xl border-slate-200 h-12 px-6 gap-2 text-slate-600 font-bold hover:bg-slate-50"
               >
-                <Download size={18} /> Resource
+                <Download size={18} />
               </Button>
             </div>
           </div>
@@ -171,7 +181,7 @@ export function CoursePlayerContent({
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`pb-4 text-sm font-black uppercase tracking-widest transition-all relative ${
+                className={`pb-4 text-sm font-black uppercase  transition-all relative font-semibold ${
                   activeTab === tab
                     ? "text-slate-900"
                     : "text-slate-300 hover:text-slate-500"
@@ -179,43 +189,43 @@ export function CoursePlayerContent({
               >
                 {tab}
                 {activeTab === tab && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-primaryTint rounded-full" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5  bg-black rounded-full" />
                 )}
               </button>
             ))}
           </div>
 
           {/* Tab Content */}
-          <div className="min-h-[100px]">
+          <div className="min-h-[100px] ">
             {activeTab === "deskripsi" ? (
               <div className="space-y-10">
-                <p className="text-slate-500 font-medium leading-relaxed max-w-4xl">
+                <p className="text-slabg-blackte-500  font-normal leading-relaxed max-w-4xl">
                   {activeModule?.description ||
                     "Pelajari fondasi utama dalam materi ini untuk membangun pemahaman yang kuat."}
                 </p>
 
                 <div className="flex flex-wrap gap-4">
                   <div className="flex flex-col gap-2 min-w-[120px]">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    <span className="text-[10px] font-bold text-black  tracking-widest">
                       Durasi
                     </span>
-                    <div className="px-5 py-3 bg-blue-50/50 rounded-2xl text-primaryTint text-xs font-black border border-blue-100">
+                    <div className="px-5 py-3 bg-primaryTint rounded-2xl text-blue-100 text-xs font-black border border-blue-100 font-medium">
                       {activeModule?.duration || "0:00"} Menit
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 min-w-[120px]">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    <span className="text-[10px] font-bold text-black  tracking-widest">
                       Level
                     </span>
-                    <div className="px-5 py-3 bg-blue-50/50 rounded-2xl text-primaryTint text-xs font-black border border-blue-100">
+                    <div className="px-5 py-3 bg-primaryTint rounded-2xl text-blue-100 text-xs font-black border border-blue-100 font-medium">
                       {course.difficulty || "Dasar"}
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 min-w-[120px]">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    <span className="text-[10px] font-bold text-black  tracking-widest">
                       Modul
                     </span>
-                    <div className="px-5 py-3 bg-blue-50/50 rounded-2xl text-primaryTint text-xs font-black border border-blue-100">
+                    <div className="px-5 py-3 bg-primaryTint rounded-2xl text-blue-100 text-xs font-black border border-blue-100 font-medium">
                       {modules.findIndex((m) => m.id === activeModuleId) + 1} /{" "}
                       {modules.length}
                     </div>
@@ -225,7 +235,8 @@ export function CoursePlayerContent({
             ) : (
               <div className="py-6 text-center bg-slate-50 rounded-[2rem] border border-dashed border-slate-200">
                 <p className="text-sm font-bold text-slate-400">
-                  Klik tab "Give Feedback" di panel kanan untuk memberikan ulasan
+                  Klik tab "Give Feedback" di panel kanan untuk memberikan
+                  ulasan
                 </p>
               </div>
             )}

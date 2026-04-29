@@ -18,14 +18,19 @@ export async function getCourses() {
 }
 
 export async function getCourseById(courseId: string) {
+  if (!isIdValid(courseId)) return null;
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
+  console.log("FETCHING COURSE BY ID:", courseId);
   const { data, error } = await supabase
     .from("courses")
     .select("*")
     .eq("id", courseId)
     .single();
+
+  if (error) console.error("COURSE DB ERROR:", error);
+  console.log("FETCHED COURSE DATA:", data ? data.title : "NULL");
 
   if (error) {
     console.error("Error fetching course by id:", error);
@@ -35,14 +40,19 @@ export async function getCourseById(courseId: string) {
 }
 
 export async function getCourseModules(courseId: string, userId?: string) {
+  if (!isIdValid(courseId)) return [];
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
+  console.log("FETCHING MODULES FOR COURSE:", courseId);
   const { data: modules, error: mError } = await supabase
     .from("course_modules")
     .select("*")
     .eq("course_id", courseId)
     .order("order_index", { ascending: true });
+  
+  if (mError) console.error("DB ERROR:", mError);
+  console.log("FETCHED MODULES COUNT:", modules?.length || 0);
 
   if (mError) {
     console.error("Error fetching modules:", mError);
@@ -93,6 +103,7 @@ export async function getCourseProgress(courseId: string, userId: string) {
 }
 
 export async function getUserCourses(userId: number | string) {
+  if (typeof userId === 'string' && !isIdValid(userId)) return [];
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
@@ -119,7 +130,10 @@ export async function getUserCourses(userId: number | string) {
     role: "Instruktur",
   }));
 }
+const isIdValid = (id: string) => /^[0-9a-f-]+$/i.test(id) || /^\d+$/.test(id);
+
 export async function getQuickStats(userId: string) {
+  if (!isIdValid(userId)) return [];
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
@@ -133,7 +147,7 @@ export async function getQuickStats(userId: string) {
     .limit(3);
 
   if (error) {
-    console.error("Error fetching quick stats:", error);
+    console.error("Error fetching quick stats:", error.message);
     return [];
   }
 
@@ -203,7 +217,7 @@ export async function getRecentActivity() {
       user_id,
       is_completed,
       last_watched_at,
-      users:user_id ( first_name, avatar_url ),
+      users ( first_name, avatar_url ),
       module:module_id ( 
         title, 
         course_id, 
@@ -214,15 +228,15 @@ export async function getRecentActivity() {
     .limit(5);
 
   if (error) {
-    console.error("Activity Error:", error);
+    console.error("Activity Error Detail:", error.message);
     
-    // Fallback if last_watched_at is missing from schema
+    // Fallback if last_watched_at is missing or query fails
     const { data: fallbackData, error: fallbackError } = await supabase
       .from("user_module_progress")
       .select(`
         user_id,
         is_completed,
-        users:user_id ( first_name, avatar_url ),
+        users ( first_name, avatar_url ),
         module:module_id ( 
           title, 
           course_id, 
@@ -231,7 +245,10 @@ export async function getRecentActivity() {
       `)
       .limit(5);
 
-    if (fallbackError) return [];
+    if (fallbackError) {
+      console.error("Fallback Activity Error:", fallbackError.message);
+      return [];
+    }
     return fallbackData;
   }
   return data;
@@ -246,13 +263,13 @@ export async function getRecentFeedback() {
     .select(`
       id,
       comment,
-      users:user_id ( first_name, avatar_url )
+      users ( first_name, avatar_url )
     `)
     .order("created_at", { ascending: false })
     .limit(5);
 
   if (error) {
-    console.error("Feedback Error:", error);
+    console.error("Feedback Error:", error.message);
     return [];
   }
   return data;
