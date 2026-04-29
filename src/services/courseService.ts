@@ -115,7 +115,7 @@ export async function getUserCourses(userId: number | string) {
     ...item.courses,
     progress: item.progress,
     tag: item.courses.category?.toUpperCase() || "COURSE",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&q=80", // Mock avatar for now
+    avatar: item.courses.instructor_avatar_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&q=80",
     role: "Instruktur",
   }));
 }
@@ -190,5 +190,70 @@ export async function getRelatedCourses(category: string, excludeId: string) {
     .limit(2);
 
   if (error) return [];
+  return data;
+}
+
+export async function getRecentActivity() {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data, error } = await supabase
+    .from("user_module_progress")
+    .select(`
+      user_id,
+      is_completed,
+      last_watched_at,
+      users:user_id ( first_name, avatar_url ),
+      module:module_id ( 
+        title, 
+        course_id, 
+        courses:course_id ( category ) 
+      )
+    `)
+    .order("last_watched_at", { ascending: false })
+    .limit(5);
+
+  if (error) {
+    console.error("Activity Error:", error);
+    
+    // Fallback if last_watched_at is missing from schema
+    const { data: fallbackData, error: fallbackError } = await supabase
+      .from("user_module_progress")
+      .select(`
+        user_id,
+        is_completed,
+        users:user_id ( first_name, avatar_url ),
+        module:module_id ( 
+          title, 
+          course_id, 
+          courses:course_id ( category ) 
+        )
+      `)
+      .limit(5);
+
+    if (fallbackError) return [];
+    return fallbackData;
+  }
+  return data;
+}
+
+export async function getRecentFeedback() {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data, error } = await supabase
+    .from("course_feedback")
+    .select(`
+      id,
+      comment,
+      users:user_id ( first_name, avatar_url )
+    `)
+    .order("created_at", { ascending: false })
+    .limit(5);
+
+  if (error) {
+    console.error("Feedback Error:", error);
+    return [];
+  }
   return data;
 }

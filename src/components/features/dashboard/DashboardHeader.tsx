@@ -32,7 +32,7 @@ export function DashboardHeader({ user }: { user?: any }) {
           <p className="text-[11px] font-medium text-slate-500">{user?.user_metadata?.role || "Student"}</p>
         </div>
         <Avatar 
-          src={user?.user_metadata?.avatar_url || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&q=80"} 
+          src={user?.avatar_url || user?.user_metadata?.avatar_url || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&q=80"} 
           initials={userName.charAt(0)}
           className="w-11 h-11 border-2 border-white shadow-sm"
         />

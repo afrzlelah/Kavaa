@@ -8,14 +8,14 @@ export async function UpcomingMilestones() {
 
   // If no challenges, show placeholder content
   const displayItems = hasData ? challenges : [
-    { id: 1, title: "Kavaa UI Challenge", company_name: "Kavaa Team", deadline: "2024-12-31", difficulty: "Medium" },
-    { id: 2, title: "Backend API Optimization", company_name: "FreshMart", deadline: "2024-12-15", difficulty: "Hard" },
+    { id: 1, title: "Kavaa UI Challenge", company_name: "Kavaa Team", deadline: "31 Des 2024", difficulty: "Medium" },
+    { id: 2, title: "Backend API Optimization", company_name: "FreshMart", deadline: "15 Des 2024", difficulty: "Hard" },
   ];
 
   return (
     <Card className="h-full border-none shadow-xl shadow-slate-200/50">
       <CardHeader 
-        title="Challenges & Milestones" 
+        title="Tantangan & Milestones" 
         subtitle="Tantangan kolaborasi terbaru" 
         action={<Trophy size={16} className="text-amber-400" />}
       />

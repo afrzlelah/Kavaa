@@ -87,13 +87,13 @@ const LoginPage = () => {
 
   // Efek untuk auto-scroll saben 3 detik
   useEffect(() => {
+    if (brandFeatures.length <= 1) return;
+    
     const timer = setInterval(() => {
-      setCurrentSlide((prev) =>
-        prev === brandFeatures.length - 1 ? 0 : prev + 1,
-      );
+      setCurrentSlide((prev) => (prev + 1) % brandFeatures.length);
     }, 3000);
     return () => clearInterval(timer);
-  }, [brandFeatures.length]);
+  }, []);
 
   return (
     <div className="min-h-screen w-full flex bg-white font-sans text-slate-900 overflow-hidden">
@@ -180,7 +180,10 @@ const LoginPage = () => {
                       ? "bg-primaryTint border-primaryTint"
                       : "border-slate-300 group-hover:border-primaryTint"
                   }`}
-                  onClick={() => setRememberMe(!rememberMe)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setRememberMe(!rememberMe);
+                  }}
                 >
                   {rememberMe && (
                     <svg

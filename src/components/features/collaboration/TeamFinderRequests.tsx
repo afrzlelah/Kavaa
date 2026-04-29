@@ -14,22 +14,22 @@ export async function TeamFinderRequests() {
       {
         id: 1,
         initials: "AW",
-        title: "Front-end needed for FreshMart",
-        time_ago: "4m ago",
+        title: "Dibutuhkan Front-end untuk FreshMart",
+        time_ago: "4 mnt yang lalu",
         color: "bg-indigo-500",
       },
       {
         id: 2,
         initials: "CM",
-        title: "Back-end for SkillLink",
-        time_ago: "12m ago",
+        title: "Back-end untuk SkillLink",
+        time_ago: "12 mnt yang lalu",
         color: "bg-amber-500",
       },
       {
         id: 3,
         initials: "JS",
-        title: "UI Designer for EduApp",
-        time_ago: "1h ago",
+        title: "UI Designer untuk EduApp",
+        time_ago: "1 jam yang lalu",
         color: "bg-emerald-500",
       },
     ];

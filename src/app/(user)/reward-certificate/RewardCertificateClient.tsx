@@ -64,36 +64,36 @@ export default function RewardCertificateClient({
             onClick={() => setActiveTab("Learning Progress")}
             className={`pb-4 text-sm font-bold transition-all relative ${
               activeTab === "Learning Progress"
-                ? "text-primary"
+                ? "text-primaryTint"
                 : "text-slate-400 hover:text-slate-600"
             }`}
           >
             <span className="flex items-center gap-2">
               <div
-                className={`w-1.5 h-4 rounded-full ${activeTab === "Learning Progress" ? "bg-primary" : "bg-slate-300"}`}
+                className={`w-1.5 h-4 rounded-full ${activeTab === "Learning Progress" ? "bg-primaryTint" : "bg-slate-300"}`}
               ></div>
-              Learning Progress
+              Progres Belajar
             </span>
             {activeTab === "Learning Progress" && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full"></div>
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primaryTint rounded-t-full"></div>
             )}
           </button>
           <button
             onClick={() => setActiveTab("Sertifikat")}
             className={`pb-4 text-sm font-bold transition-all relative ${
               activeTab === "Sertifikat"
-                ? "text-primary"
+                ? "text-primaryTint"
                 : "text-slate-400 hover:text-slate-600"
             }`}
           >
             <span className="flex items-center gap-2">
               <div
-                className={`w-3 h-3 rounded-full ${activeTab === "Sertifikat" ? "bg-primary" : "bg-slate-300"}`}
+                className={`w-3 h-3 rounded-full ${activeTab === "Sertifikat" ? "bg-primaryTint" : "bg-slate-300"}`}
               ></div>
               Sertifikat
             </span>
             {activeTab === "Sertifikat" && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full"></div>
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primaryTint rounded-t-full"></div>
             )}
           </button>
         </div>
@@ -114,8 +114,8 @@ export default function RewardCertificateClient({
                     className="bg-transparent text-xs font-bold text-slate-600 focus:outline-none"
                   />
                 </div>
-                <button className="bg-primary text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 hover:bg-blue-700 transition-all active:scale-95 shadow-lg shadow-primary/20">
-                  <Filter size={14} /> Apply
+                <button className="bg-primaryTint text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 hover:bg-blue-700 transition-all active:scale-95 shadow-lg shadow-primaryTint/20">
+                  <Filter size={14} /> Terapkan
                 </button>
               </div>
 
@@ -124,37 +124,37 @@ export default function RewardCertificateClient({
                   <input
                     type="text"
                     placeholder="Cari sertifikat..."
-                    className="bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-2.5 text-xs w-full sm:w-64 focus:outline-none focus:ring-4 focus:ring-primary/5 focus:border-primary transition-all shadow-sm"
+                    className="bg-white border border-slate-200 rounded-xl pl-4 pr-10 py-2.5 text-xs w-full sm:w-64 focus:outline-none focus:ring-4 focus:ring-primaryTint/5 focus:border-primaryTint transition-all shadow-sm"
                   />
                   <Search
                     size={14}
-                    className="absolute right-3 top-3 text-slate-400 group-focus-within:text-primary transition-colors"
+                    className="absolute right-3 top-3 text-slate-400 group-focus-within:text-primaryTint transition-colors"
                   />
                 </div>
 
                 <button className="bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-bold text-slate-600 flex items-center gap-2 hover:bg-slate-50 transition-all shadow-sm">
-                  Sort by Date <ChevronDown size={14} />
+                  Urutkan Tanggal <ChevronDown size={14} />
                 </button>
 
                 {/* Toggle Switch */}
                 <div className="flex items-center gap-3 bg-white border border-slate-200 rounded-xl px-4 py-2 shadow-sm">
                   <span
-                    className={`text-xs font-bold transition-colors ${isEarnedOnly ? "text-primary" : "text-slate-400"}`}
+                    className={`text-xs font-bold transition-colors ${!isEarnedOnly ? "text-primaryTint" : "text-slate-400"}`}
                   >
-                    Didapat
+                    Semua
                   </span>
                   <button
                     onClick={() => setIsEarnedOnly(!isEarnedOnly)}
-                    className={`w-9 h-5 rounded-full relative transition-all ${isEarnedOnly ? "bg-primary" : "bg-slate-200"}`}
+                    className={`w-9 h-5 rounded-full relative transition-all ${isEarnedOnly ? "bg-primaryTint" : "bg-slate-200"}`}
                   >
                     <div
                       className={`w-3.5 h-3.5 bg-white rounded-full absolute top-0.75 transition-all shadow-sm ${isEarnedOnly ? "left-5" : "left-0.75"}`}
                     ></div>
                   </button>
                   <span
-                    className={`text-xs font-bold transition-colors ${!isEarnedOnly ? "text-slate-600" : "text-slate-400"}`}
+                    className={`text-xs font-bold transition-colors ${isEarnedOnly ? "text-primaryTint" : "text-slate-400"}`}
                   >
-                    Semua
+                    Didapat
                   </span>
                 </div>
               </div>
@@ -168,8 +168,8 @@ export default function RewardCertificateClient({
                   onClick={() => setActiveFilter(cat.name)}
                   className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border flex items-center gap-2 ${
                     activeFilter === cat.name
-                      ? "bg-primary text-white border-primary shadow-lg shadow-primary/20"
-                      : "bg-white text-slate-500 border-slate-200 hover:border-primary/30 hover:text-primary"
+                      ? "bg-primaryTint text-white border-primaryTint shadow-lg shadow-primaryTint/20"
+                      : "bg-white text-slate-500 border-slate-200 hover:border-primaryTint/30 hover:text-primaryTint"
                   }`}
                 >
                   {cat.name}
@@ -189,8 +189,8 @@ export default function RewardCertificateClient({
             {/* Main Content Area */}
             {!hasCertificates ? (
               <div className="mt-8 bg-white rounded-3xl border border-slate-100 p-12 flex flex-col items-center justify-center text-center shadow-sm min-h-[400px]">
-                <div className="w-24 h-24 bg-primary/5 rounded-full flex items-center justify-center mb-6">
-                  <Award size={48} className="text-primary/20" />
+                <div className="w-24 h-24 bg-primaryTint/5 rounded-full flex items-center justify-center mb-6">
+                  <Award size={48} className="text-primaryTint/20" />
                 </div>
                 <h3 className="text-xl font-black text-slate-800 mb-2">
                   Belum ada sertifikat
@@ -199,7 +199,7 @@ export default function RewardCertificateClient({
                   Selesaikan modul atau track belajar Anda untuk mendapatkan
                   sertifikat resmi dari Kavaa.
                 </p>
-                <button className="bg-primary text-white px-8 py-3 rounded-2xl text-sm font-bold shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 active:scale-95">
+                <button className="bg-primaryTint text-white px-8 py-3 rounded-2xl text-sm font-bold shadow-lg shadow-primaryTint/20 transition-all hover:-translate-y-1 active:scale-95">
                   Mulai Belajar Sekarang
                 </button>
               </div>
@@ -225,7 +225,7 @@ export default function RewardCertificateClient({
 
                     <div className="flex-1 flex flex-col">
                       <div className="flex items-start justify-between gap-3 mb-2">
-                        <h3 className="font-black text-slate-800 text-sm leading-tight group-hover:text-primary transition-colors">
+                        <h3 className="font-black text-slate-800 text-sm leading-tight group-hover:text-primaryTint transition-colors">
                           {cert.title}
                         </h3>
                         {cert.is_earned ? (
@@ -261,12 +261,12 @@ export default function RewardCertificateClient({
                           className={`w-full py-3 rounded-2xl text-xs font-black transition-all flex items-center justify-center gap-2 ${
                             cert.is_earned
                               ? "bg-emerald-600 text-white shadow-lg shadow-emerald-200 hover:bg-emerald-700"
-                              : "bg-primary text-white shadow-lg shadow-primary/20 hover:bg-blue-700"
+                              : "bg-primaryTint text-white shadow-lg shadow-primaryTint/20 hover:bg-blue-700"
                           } active:scale-95`}
                         >
                           {cert.is_earned
-                            ? "Download Certificate"
-                            : "Continue Learning"}
+                            ? "Unduh Sertifikat"
+                            : "Lanjutkan Belajar"}
                         </button>
                       </div>
                     </div>
@@ -274,6 +274,29 @@ export default function RewardCertificateClient({
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {activeTab === "Learning Progress" && (
+          <div className="bg-white rounded-3xl border border-slate-100 p-12 flex flex-col items-center justify-center text-center shadow-sm min-h-[400px]">
+            <div className="w-24 h-24 bg-primaryTint/5 rounded-full flex items-center justify-center mb-6">
+              <BookOpen size={48} className="text-primaryTint/20" />
+            </div>
+            <h3 className="text-xl font-black text-slate-800 mb-2">
+              Progres Belajar Anda
+            </h3>
+            <p className="text-sm text-slate-400 max-w-xs mb-8">
+              Di sini Anda dapat melihat modul yang sedang dipelajari dan riwayat kursus Anda.
+            </p>
+            <div className="w-full max-w-lg bg-slate-50 rounded-2xl p-6 border border-slate-100 text-left">
+               <div className="flex justify-between items-center mb-4">
+                  <span className="text-xs font-bold text-slate-500 uppercase">Total Modul Selesai</span>
+                  <span className="text-xs font-black text-primaryTint">12 / 48</span>
+               </div>
+               <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                  <div className="bg-primaryTint h-full w-[25%] rounded-full"></div>
+               </div>
+            </div>
           </div>
         )}
       </div>

@@ -1,5 +1,5 @@
--- 1. Add last_message_at to conversations
 ALTER TABLE public.conversations ADD COLUMN IF NOT EXISTS last_message_at TIMESTAMPTZ DEFAULT now();
+ALTER TABLE public.user_module_progress ADD COLUMN IF NOT EXISTS last_watched_at TIMESTAMPTZ DEFAULT now();
 
 -- 2. Create function to update last_message_at
 CREATE OR REPLACE FUNCTION public.update_last_message_at()

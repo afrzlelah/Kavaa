@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 @theme {
+  --font-sans: var(--font-inter-sans);
+  --font-mono: var(--font-inter-mono);
   --color-primaryTint: #1661de;
   --color-secondTint: #057469;
   --color-primary: #fff;

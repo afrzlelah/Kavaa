@@ -113,7 +113,7 @@ function MessageBubble({ msg, isNewGroup }: { msg: any; isNewGroup: boolean }) {
     id: msg.sender_id,
     name: senderName,
     initials: senderName.slice(0, 2).toUpperCase(),
-    color: isMine ? "bg-primary" : "bg-gray-400",
+    color: isMine ? "bg-primaryTint" : "bg-gray-400",
     avatar: msg.sender_avatar || "",
     lastMessage: "",
     type: "person",
@@ -123,7 +123,7 @@ function MessageBubble({ msg, isNewGroup }: { msg: any; isNewGroup: boolean }) {
     return (
       <div className={`flex justify-end items-end gap-2 ${isNewGroup ? "mb-4 mt-2" : "mb-1"}`}>
         <div className="max-w-[75%] sm:max-w-md lg:max-w-lg">
-          <div className={`bg-primary text-white rounded-2xl px-4 py-2.5 shadow-sm transition-all hover:shadow-md ${isNewGroup ? "rounded-br-sm" : ""}`}>
+          <div className={`bg-primaryTint text-white rounded-2xl px-4 py-2.5 shadow-sm transition-all hover:shadow-md ${isNewGroup ? "rounded-br-sm" : ""}`}>
             <p className="text-sm leading-relaxed">{msg.content}</p>
             <div className="flex items-center justify-end gap-1 mt-1 opacity-70">
               <p className="text-[9px]">{msg.time}</p>
@@ -131,7 +131,7 @@ function MessageBubble({ msg, isNewGroup }: { msg: any; isNewGroup: boolean }) {
           </div>
         </div>
         {isNewGroup && (
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 mb-4">
+          <div className="w-8 h-8 rounded-full bg-primaryTint flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0 mb-4">
             ME
           </div>
         )}
@@ -158,16 +158,16 @@ function MessageBubble({ msg, isNewGroup }: { msg: any; isNewGroup: boolean }) {
         )}
 
         {msg.type === "audio" && (
-          <div className={`bg-primary/5 border border-primary/10 rounded-2xl px-4 py-3 mb-1 flex items-center gap-3 min-w-[200px] ${isNewGroup ? "rounded-tl-sm" : ""}`}>
-            <button className="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 shadow-sm transition-transform active:scale-95">
+          <div className={`bg-primaryTint/5 border border-primaryTint/10 rounded-2xl px-4 py-3 mb-1 flex items-center gap-3 min-w-[200px] ${isNewGroup ? "rounded-tl-sm" : ""}`}>
+            <button className="w-8 h-8 bg-primaryTint rounded-full flex items-center justify-center flex-shrink-0 shadow-sm transition-transform active:scale-95">
               <Play size={14} className="text-white ml-0.5" fill="currentColor" />
             </button>
             <div className="flex items-center gap-1 flex-1">
               {[10, 14, 18, 12, 16, 8, 20, 14, 10, 12, 18, 16, 8, 14, 12, 10, 16, 18, 12, 10].map((h, i) => (
-                <div key={i} className="bg-primary/40 rounded-full w-1" style={{ height: `${h}px` }} />
+                <div key={i} className="bg-primaryTint/40 rounded-full w-1" style={{ height: `${h}px` }} />
               ))}
             </div>
-            <span className="text-primary text-[10px] font-bold opacity-70">0:42</span>
+            <span className="text-primaryTint text-[10px] font-bold opacity-70">0:42</span>
           </div>
         )}
 
@@ -176,8 +176,8 @@ function MessageBubble({ msg, isNewGroup }: { msg: any; isNewGroup: boolean }) {
             <div className="flex gap-2 flex-wrap">
               {msg.files?.map((f:any, i:any) => (
                 <div key={i} className="flex items-center gap-3 bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 shadow-sm transition-all hover:bg-white">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <FileText size={18} className="text-primary" />
+                  <div className="p-2 bg-primaryTint/10 rounded-lg">
+                    <FileText size={18} className="text-primaryTint" />
                   </div>
                   <div>
                     <p className="text-xs font-bold text-gray-800">{f.name}</p>
@@ -523,7 +523,7 @@ export default function ChatApp({
           ${activeChat ? "hidden md:flex" : "flex"}
           items-center relative`}
       >
-        <div className="flex items-center gap-3 bg-gray-50 rounded-2xl px-4 py-3 flex-1 border border-gray-100 shadow-sm focus-within:ring-2 focus-within:ring-primary/10 transition-all relative">
+        <div className="flex items-center gap-3 bg-gray-50 rounded-2xl px-4 py-3 flex-1 border border-gray-100 shadow-sm focus-within:ring-2 focus-within:ring-primaryTint/10 transition-all relative">
           <Search size={16} className="text-gray-400 flex-shrink-0" />
           <input
             type="text"
@@ -542,7 +542,7 @@ export default function ChatApp({
                   onClick={() => startNewConversation(user)}
                   className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left border-b border-gray-50 last:border-0"
                 >
-                  <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">
+                  <div className="w-9 h-9 rounded-full bg-primaryTint/10 flex items-center justify-center text-primaryTint text-xs font-bold">
                     {user.avatar_url ? (
                       <img src={user.avatar_url} className="w-full h-full rounded-full object-cover" />
                     ) : (
@@ -578,7 +578,7 @@ export default function ChatApp({
             <button className="flex items-center gap-1.5 bg-gray-50 hover:bg-gray-100 border border-gray-100 rounded-xl px-4 py-2 text-xs font-bold text-gray-600 transition-all active:scale-95">
               All Category <ChevronDown size={14} />
             </button>
-            <button className="flex items-center gap-1.5 bg-primary/10 hover:bg-primary/20 rounded-xl px-4 py-2 text-xs font-bold text-primary transition-all active:scale-95">
+            <button className="flex items-center gap-1.5 bg-primaryTint/10 hover:bg-primaryTint/20 rounded-xl px-4 py-2 text-xs font-bold text-primaryTint transition-all active:scale-95">
               Search...
             </button>
           </div>
@@ -620,7 +620,7 @@ export default function ChatApp({
             </button>
 
             {activeContact && (
-              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold overflow-hidden">
+              <div className="w-10 h-10 bg-primaryTint/10 rounded-full flex items-center justify-center text-primaryTint font-bold overflow-hidden">
                 {activeContact.avatar ? (
                   <img src={activeContact.avatar} className="w-full h-full object-cover" />
                 ) : (
@@ -639,14 +639,14 @@ export default function ChatApp({
           {/* Empty state */}
           {!activeContact && (
             <div className="flex-1 hidden md:flex flex-col items-center justify-center p-8 text-center">
-              <div className="w-24 h-24 bg-primary/5 rounded-full flex items-center justify-center mb-4">
-                <Mic size={40} className="text-primary/20" />
+              <div className="w-24 h-24 bg-primaryTint/5 rounded-full flex items-center justify-center mb-4">
+                <Mic size={40} className="text-primaryTint/20" />
               </div>
               <h3 className="text-lg font-black text-gray-800 mb-2">Pesan Anda</h3>
               <p className="text-sm text-gray-400 max-w-[240px]">
                 Kirim foto dan pesan pribadi ke teman atau grup.
               </p>
-              <button className="mt-6 bg-primary text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 active:scale-95">
+              <button className="mt-6 bg-primaryTint text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-primaryTint/20 transition-all hover:-translate-y-1 active:scale-95">
                 Kirim Pesan
               </button>
             </div>
@@ -693,9 +693,9 @@ export default function ChatApp({
                     e.preventDefault();
                     handleSendMessage();
                   }}
-                  className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-4 py-2 focus-within:ring-4 focus-within:ring-primary/5 focus-within:border-primary/20 transition-all shadow-sm"
+                  className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-4 py-2 focus-within:ring-4 focus-within:ring-primaryTint/5 focus-within:border-primaryTint/20 transition-all shadow-sm"
                 >
-                  <button type="button" className="p-2 text-gray-400 hover:text-primary transition-colors">
+                  <button type="button" className="p-2 text-gray-400 hover:text-primaryTint transition-colors">
                     <Paperclip size={20} />
                   </button>
                   <input
@@ -707,16 +707,16 @@ export default function ChatApp({
                     onChange={(e) => setMessageInput(e.target.value)}
                   />
                   <div className="flex items-center gap-1">
-                    <button type="button" className="p-2 text-gray-400 hover:text-primary transition-colors">
+                    <button type="button" className="p-2 text-gray-400 hover:text-primaryTint transition-colors">
                       <Mic size={20} />
                     </button>
-                    <button type="button" className="p-2 text-gray-400 hover:text-primary transition-colors">
+                    <button type="button" className="p-2 text-gray-400 hover:text-primaryTint transition-colors">
                       <Camera size={20} />
                     </button>
                     <button 
                       type="submit" 
                       disabled={!messageInput.trim()}
-                      className={`bg-primary text-white p-2.5 rounded-xl transition-all shadow-md shadow-primary/20 ${
+                      className={`bg-primaryTint text-white p-2.5 rounded-xl transition-all shadow-md shadow-primaryTint/20 ${
                         messageInput.trim() ? "hover:scale-105 active:scale-95 opacity-100" : "opacity-50 cursor-not-allowed"
                       }`}
                     >

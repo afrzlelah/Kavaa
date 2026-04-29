@@ -1,9 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { ModuleList } from "./ModuleList";
-import { Play, RotateCcw, Volume2, Settings, Maximize, Clock, Download, Plus } from "lucide-react";
+import {
+  Play,
+  RotateCcw,
+  Volume2,
+  Settings,
+  Maximize,
+  Clock,
+  Download,
+  Plus,
+  CheckCircle,
+  ArrowLeft,
+} from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/shared/ui/Button";
+import { toggleModuleCompletion, recordModuleWatch } from "@/app/actions/courseActions";
+import { useEffect } from "react";
 
 interface Module {
   id: string;
@@ -20,130 +34,213 @@ interface CoursePlayerContentProps {
   relatedCourses: any[];
 }
 
-export function CoursePlayerContent({ course, modules, relatedCourses }: CoursePlayerContentProps) {
+export function CoursePlayerContent({
+  course,
+  modules,
+  relatedCourses,
+}: CoursePlayerContentProps) {
   const [activeModuleId, setActiveModuleId] = useState(modules[0]?.id);
-  const [activeTab, setActiveTab] = useState<"deskripsi" | "feedback">("deskripsi");
+  const [activeTab, setActiveTab] = useState<"deskripsi" | "feedback">(
+    "deskripsi",
+  );
+  const [isPending, startTransition] = useTransition();
+  
+  useEffect(() => {
+    if (activeModuleId) {
+      recordModuleWatch(activeModuleId);
+    }
+  }, [activeModuleId]);
 
-  const activeModule = modules.find((m) => m.id === activeModuleId) || modules[0];
+  const activeModule =
+    modules.find((m) => m.id === activeModuleId) || modules[0];
+
+  const handleToggleCompletion = async () => {
+    if (!activeModule) return;
+    
+    startTransition(async () => {
+      const result = await toggleModuleCompletion(activeModule.id, course.id);
+      if (result.error) {
+        alert("Gagal memperbarui progres: " + result.error);
+      }
+    });
+  };
+
+  // Helper to convert YouTube URL to Embed URL
+  const getEmbedUrl = (url: string) => {
+    if (!url) return "";
+    if (url.includes("youtube.com/embed/")) return url;
+
+    let videoId = "";
+    const regExp =
+      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+
+    if (match && match[2].length === 11) {
+      videoId = match[2];
+    }
+
+    return videoId
+      ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`
+      : url;
+  };
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 h-full">
       {/* Video Area (Main) */}
       <div className="xl:col-span-3 space-y-6">
         {/* Video Player */}
-        <div className="bg-slate-900 rounded-[2rem] overflow-hidden aspect-video relative group shadow-2xl">
-          <img 
-            src={activeModule?.video_url || "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&q=80"} 
-            alt="video thumbnail" 
-            className="w-full h-full object-cover opacity-60"
-          />
-          
-          {/* Mock Video Controls */}
-          <div className="absolute inset-0 flex items-center justify-center">
-             <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 cursor-pointer hover:scale-110 transition-all">
-                <Play fill="white" className="text-white ml-1" size={32} />
-             </div>
-          </div>
-
-          <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-             <div className="flex flex-col gap-4">
-                {/* Progress Bar */}
-                <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden relative">
-                   <div className="absolute top-0 left-0 h-full w-[40%] bg-blue-500 rounded-full" />
-                </div>
-                
-                <div className="flex items-center justify-between text-white">
-                   <div className="flex items-center gap-6">
-                      <button className="hover:text-blue-400 transition-colors"><Play size={20} fill="currentColor" /></button>
-                      <button className="hover:text-blue-400 transition-colors"><RotateCcw size={20} /></button>
-                      <button className="hover:text-blue-400 transition-colors flex items-center gap-2">
-                        <Volume2 size={20} />
-                        <div className="w-16 h-1 bg-white/30 rounded-full overflow-hidden">
-                           <div className="w-[60%] h-full bg-white" />
-                        </div>
-                      </button>
-                      <span className="text-xs font-bold font-mono">05:42 / 08:23</span>
-                   </div>
-                   <div className="flex items-center gap-6">
-                      <button className="hover:text-blue-400 transition-colors"><Settings size={20} /></button>
-                      <button className="hover:text-blue-400 transition-colors"><Maximize size={20} /></button>
-                   </div>
-                </div>
-             </div>
-          </div>
+        <div className="bg-slate-900 rounded-[2rem] overflow-hidden aspect-video relative group shadow-2xl border border-slate-800">
+          {activeModule?.video_url ? (
+            <iframe
+              src={getEmbedUrl(activeModule.video_url)}
+              title={activeModule.title}
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center bg-slate-800 text-slate-400 gap-4">
+              <div className="w-16 h-16 rounded-full bg-slate-700 flex items-center justify-center animate-pulse">
+                <Play size={32} />
+              </div>
+              <p className="font-medium tracking-tight">
+                Materi video tidak tersedia
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Course Info */}
-        <div className="space-y-6">
-          <div className="flex justify-between items-start">
-            <div>
-              <h1 className="text-2xl font-black text-slate-800 tracking-tight mb-2 uppercase">
-                {activeModule?.title.toUpperCase()}
+        <div className="space-y-8 bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-6">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 mb-2">
+                <Link href="/learning" className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-500 transition-colors">
+                  <ArrowLeft size={16} />
+                </Link>
+                <span className="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-widest rounded-lg">
+                  Materi Sedang Dipelajari
+                </span>
+                <span className="text-slate-200">•</span>
+                <span className="text-xs font-bold text-slate-400 flex items-center gap-1">
+                  <Clock size={14} /> {activeModule?.duration || "0:00"}
+                </span>
+              </div>
+              <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                {activeModule?.title}
               </h1>
-              <div className="flex items-center gap-4">
-                <span className="text-sm font-bold text-slate-400">{course.instructor || "Kavaa Instructor"}</span>
-                <button className="text-sm font-bold text-primary hover:underline">+ Follow Chanel</button>
+              <div className="flex items-center gap-4 pt-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-400">
+                    {course.instructor_name?.[0] || "K"}
+                  </div>
+                  <span className="text-sm font-bold text-slate-500">
+                    {course.instructor_name || "Kavaa Instructor"}
+                  </span>
+                </div>
+                <button className="text-xs font-bold text-primaryTint hover:underline">
+                  + Follow Channel
+                </button>
               </div>
             </div>
-            <div className="flex gap-3">
-               <button className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-all">
-                  <Clock size={20} />
-               </button>
-               <button className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-all">
-                  <Download size={20} />
-               </button>
+            <div className="flex gap-3 w-full md:w-auto">
+              <Button
+                onClick={handleToggleCompletion}
+                disabled={isPending}
+                className={`flex-1 md:flex-none rounded-2xl h-12 px-6 gap-2 font-bold transition-all ${
+                  activeModule?.is_completed 
+                    ? "bg-emerald-500 hover:bg-emerald-600 shadow-emerald-100" 
+                    : "bg-primaryTint hover:bg-blue-700 shadow-blue-100"
+                } text-white shadow-lg`}
+              >
+                {activeModule?.is_completed ? <CheckCircle size={18} /> : <Play size={18} />}
+                {activeModule?.is_completed ? "Selesai" : "Tandai Selesai"}
+              </Button>
+              <Button
+                variant="outline"
+                className="flex-1 md:flex-none rounded-2xl border-slate-200 h-12 px-6 gap-2 text-slate-600 font-bold hover:bg-slate-50"
+              >
+                <Download size={18} /> Resource
+              </Button>
             </div>
           </div>
 
           {/* Tabs */}
-          <div className="border-b border-slate-100 flex gap-8">
-            <button
-              onClick={() => setActiveTab("deskripsi")}
-              className={`pb-4 text-sm font-black uppercase tracking-widest transition-all ${
-                activeTab === "deskripsi" ? "text-slate-800 border-b-2 border-slate-800" : "text-slate-400"
-              }`}
-            >
-              Deskripsi
-            </button>
+          <div className="flex gap-8 border-b border-slate-100">
+            {(["deskripsi", "feedback"] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`pb-4 text-sm font-black uppercase tracking-widest transition-all relative ${
+                  activeTab === tab
+                    ? "text-slate-900"
+                    : "text-slate-300 hover:text-slate-500"
+                }`}
+              >
+                {tab}
+                {activeTab === tab && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-primaryTint rounded-full" />
+                )}
+              </button>
+            ))}
           </div>
 
           {/* Tab Content */}
-          <div className="space-y-12">
-            <p className="text-sm font-bold text-slate-500 leading-relaxed max-w-4xl">
-              {activeModule?.description || "Kenali fondasi utama dunia internet dalam video ini. \"Apa Itu Website?\" memberikan pemahaman mendasar bagi pemula mengenai struktur, kegunaan, dan cara kerja website secara singkat dan padat. Langkah pertama yang tepat sebelum kamu masuk ke materi Web Development yang lebih dalam."}
-            </p>
+          <div className="min-h-[100px]">
+            {activeTab === "deskripsi" ? (
+              <div className="space-y-10">
+                <p className="text-slate-500 font-medium leading-relaxed max-w-4xl">
+                  {activeModule?.description ||
+                    "Pelajari fondasi utama dalam materi ini untuk membangun pemahaman yang kuat."}
+                </p>
 
-            <div className="flex gap-4">
-               <div className="flex flex-col gap-2">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Durasi</span>
-                  <div className="px-5 py-2.5 bg-[#0066FF] rounded-lg text-white text-[11px] font-black shadow-lg shadow-blue-500/20">
-                    {activeModule?.duration || "0:00"} Menit
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex flex-col gap-2 min-w-[120px]">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                      Durasi
+                    </span>
+                    <div className="px-5 py-3 bg-blue-50/50 rounded-2xl text-primaryTint text-xs font-black border border-blue-100">
+                      {activeModule?.duration || "0:00"} Menit
+                    </div>
                   </div>
-               </div>
-               <div className="flex flex-col gap-2">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Level</span>
-                  <div className="px-8 py-2.5 bg-[#0066FF] rounded-lg text-white text-[11px] font-black shadow-lg shadow-blue-500/20">
-                    {course.level || "Dasar"}
+                  <div className="flex flex-col gap-2 min-w-[120px]">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                      Level
+                    </span>
+                    <div className="px-5 py-3 bg-blue-50/50 rounded-2xl text-primaryTint text-xs font-black border border-blue-100">
+                      {course.difficulty || "Dasar"}
+                    </div>
                   </div>
-               </div>
-               <div className="flex flex-col gap-2">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Modul</span>
-                  <div className="px-8 py-2.5 bg-[#0066FF] rounded-lg text-white text-[11px] font-black shadow-lg shadow-blue-500/20">
-                    {modules.findIndex(m => m.id === activeModuleId) + 1} dari {modules.length}
+                  <div className="flex flex-col gap-2 min-w-[120px]">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                      Modul
+                    </span>
+                    <div className="px-5 py-3 bg-blue-50/50 rounded-2xl text-primaryTint text-xs font-black border border-blue-100">
+                      {modules.findIndex((m) => m.id === activeModuleId) + 1} /{" "}
+                      {modules.length}
+                    </div>
                   </div>
-               </div>
-            </div>
+                </div>
+              </div>
+            ) : (
+              <div className="py-6 text-center bg-slate-50 rounded-[2rem] border border-dashed border-slate-200">
+                <p className="text-sm font-bold text-slate-400">
+                  Klik tab "Give Feedback" di panel kanan untuk memberikan ulasan
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Sidebar (Right) */}
       <div className="xl:col-span-1 h-[calc(100vh-180px)] sticky top-6">
-        <ModuleList 
-          modules={modules} 
-          activeModuleId={activeModuleId} 
+        <ModuleList
+          modules={modules}
+          activeModuleId={activeModuleId}
           onModuleSelect={setActiveModuleId}
           relatedCourses={relatedCourses}
+          courseId={course.id}
         />
       </div>
     </div>

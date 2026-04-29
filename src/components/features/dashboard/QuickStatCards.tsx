@@ -15,7 +15,10 @@ export function QuickStatCards({ stats = [] }: { stats?: any[] }) {
         <Card key={idx} className="flex-row items-center justify-between p-4 hover:shadow-md transition-shadow">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 shrink-0">
-              <item.icon size={20} className="fill-blue-100" />
+              {(() => {
+                const Icon = item.icon && typeof item.icon !== 'string' ? item.icon : Bell;
+                return <Icon size={20} className="fill-blue-100" />;
+              })()}
             </div>
             <div>
               <p className="text-xs font-semibold text-slate-500 mb-0.5">

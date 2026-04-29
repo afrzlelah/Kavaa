@@ -32,8 +32,12 @@ export default function PostProjectPage() {
             <div className="flex flex-col gap-2">
               <label className="text-sm font-bold text-slate-800">Platform</label>
               <div className="relative">
-                <select className="border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-transparent">
-                  <option>Pilih Platform</option>
+                <select className="border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-slate-800">
+                  <option value="" disabled selected>Pilih Platform</option>
+                  <option value="Mobile">Mobile (Android/iOS)</option>
+                  <option value="Web">Web Application</option>
+                  <option value="Desktop">Desktop Application</option>
+                  <option value="Cross-Platform">Cross-Platform</option>
                 </select>
                 <ChevronDown size={16} className="absolute right-4 top-3 text-slate-400 pointer-events-none" />
               </div>
@@ -41,8 +45,13 @@ export default function PostProjectPage() {
             <div className="flex flex-col gap-2">
               <label className="text-sm font-bold text-slate-800">Kategori</label>
               <div className="relative">
-                <select className="border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-transparent">
-                  <option>Pilih Kategori</option>
+                <select className="border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-slate-800">
+                  <option value="" disabled selected>Pilih Kategori</option>
+                  <option value="E-Commerce">E-Commerce</option>
+                  <option value="Education">Education</option>
+                  <option value="Health">Health / Fitness</option>
+                  <option value="Finance">Finance</option>
+                  <option value="Social Media">Social Media</option>
                 </select>
                 <ChevronDown size={16} className="absolute right-4 top-3 text-slate-400 pointer-events-none" />
               </div>
@@ -69,8 +78,14 @@ export default function PostProjectPage() {
           <div className="flex flex-col gap-2">
             <label className="text-sm font-bold text-slate-800">Teknologi Utama</label>
             <div className="relative">
-              <select className="border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-transparent">
-                <option>Pilih Teknologi</option>
+              <select className="border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-slate-800">
+                <option value="" disabled selected>Pilih Teknologi Utama</option>
+                <option value="ReactJS">ReactJS / Next.js</option>
+                <option value="VueJS">VueJS / Nuxt</option>
+                <option value="Flutter">Flutter</option>
+                <option value="NodeJS">Node.js / Express</option>
+                <option value="Python">Python / Django</option>
+                <option value="Figma">Figma / UI Design</option>
               </select>
               <ChevronDown size={16} className="absolute right-4 top-3 text-slate-400 pointer-events-none" />
             </div>
@@ -91,8 +106,10 @@ export default function PostProjectPage() {
                   <span className="bg-emerald-50 text-emerald-600 text-[10px] font-bold px-2 py-0.5 rounded">Need</span>
                 </div>
                 <div className="relative">
-                  <select className="border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-transparent">
-                    <option></option>
+                  <select className="border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-slate-800">
+                    <option value="Junior">Junior Level</option>
+                    <option value="Mid">Mid Level</option>
+                    <option value="Senior">Senior Level</option>
                   </select>
                   <ChevronDown size={14} className="absolute right-3 top-2.5 text-slate-400 pointer-events-none" />
                 </div>
@@ -108,8 +125,10 @@ export default function PostProjectPage() {
                   <span className="bg-red-50 text-red-500 text-[10px] font-bold px-2 py-0.5 rounded">Need</span>
                 </div>
                 <div className="relative">
-                  <select className="border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-transparent">
-                    <option></option>
+                  <select className="border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-slate-800">
+                    <option value="Junior">Junior Level</option>
+                    <option value="Mid">Mid Level</option>
+                    <option value="Senior">Senior Level</option>
                   </select>
                   <ChevronDown size={14} className="absolute right-3 top-2.5 text-slate-400 pointer-events-none" />
                 </div>
@@ -125,8 +144,10 @@ export default function PostProjectPage() {
                   <span className="bg-red-50 text-red-500 text-[10px] font-bold px-2 py-0.5 rounded">Need</span>
                 </div>
                 <div className="relative">
-                  <select className="border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-transparent">
-                    <option></option>
+                  <select className="border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-slate-800">
+                    <option value="Junior">Junior Level</option>
+                    <option value="Mid">Mid Level</option>
+                    <option value="Senior">Senior Level</option>
                   </select>
                   <ChevronDown size={14} className="absolute right-3 top-2.5 text-slate-400 pointer-events-none" />
                 </div>
@@ -139,8 +160,12 @@ export default function PostProjectPage() {
           <div className="flex flex-col gap-2 mt-2">
             <label className="text-sm font-bold text-slate-800">Estimasi Waktu</label>
             <div className="relative">
-              <select className="border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-transparent">
-                <option>Pilih Estimasi</option>
+              <select className="border border-slate-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-primaryTint w-full appearance-none bg-slate-50 text-slate-800">
+                <option value="" disabled selected>Pilih Estimasi Waktu</option>
+                <option value="< 1 Bulan">Kurang dari 1 Bulan</option>
+                <option value="1-3 Bulan">1 - 3 Bulan</option>
+                <option value="3-6 Bulan">3 - 6 Bulan</option>
+                <option value="> 6 Bulan">Lebih dari 6 Bulan</option>
               </select>
               <ChevronDown size={16} className="absolute right-4 top-3 text-slate-400 pointer-events-none" />
             </div>

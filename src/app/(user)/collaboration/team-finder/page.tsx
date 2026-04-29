@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown, Ban } from "lucide-react";
+import Link from "next/link";
 
 export default function TeamFinder() {
   const projects = [
@@ -66,11 +67,11 @@ export default function TeamFinder() {
       {/* Left Column: Project Postings */}
       <div className="flex-1 flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-slate-800">Project Postings</h2>
+          <h2 className="text-xl font-bold text-slate-800">Daftar Proyek</h2>
           <div className="relative">
             <input
               type="text"
-              placeholder="Filter Projects"
+              placeholder="Filter Proyek"
               className="border border-slate-200 rounded-full pl-4 pr-10 py-1.5 text-sm w-48 focus:outline-none focus:border-primaryTint"
             />
           </div>
@@ -85,11 +86,11 @@ export default function TeamFinder() {
                   {proj.platform}
                 </span>
               </div>
-              <p className="text-xs text-slate-600 mb-4 font-medium">Seeking: {proj.seeking}</p>
+              <p className="text-xs text-slate-600 mb-4 font-medium">Dicari: {proj.seeking}</p>
               
               <div className="mb-4">
                 <div className="flex items-center justify-between text-xs font-bold text-slate-500 mb-1">
-                  <span>{proj.rolesFilled}/{proj.totalRoles} Roles Filled</span>
+                  <span>{proj.rolesFilled}/{proj.totalRoles} Posisi Terisi</span>
                 </div>
                 <div className="w-full bg-slate-100 rounded-full h-1.5">
                   <div className="bg-primaryTint h-1.5 rounded-full" style={{ width: `${(proj.rolesFilled / proj.totalRoles) * 100}%` }}></div>
@@ -111,12 +112,12 @@ export default function TeamFinder() {
               </div>
 
               <div className="bg-red-50 text-red-500 rounded-lg p-2.5 flex items-center gap-2 mb-4 text-xs font-bold">
-                <Ban size={14} /> Empty slot: {proj.emptySlot}
+                <Ban size={14} /> Posisi kosong: {proj.emptySlot}
               </div>
 
-              <button className="w-full border border-slate-200 text-slate-800 font-bold text-sm py-2 rounded-lg hover:bg-slate-50 transition-colors mt-auto">
-                View Details
-              </button>
+              <Link href={`/collaboration/${i}`} className="w-full text-center border border-slate-200 text-slate-800 font-bold text-sm py-2 rounded-lg hover:bg-slate-50 transition-colors mt-auto block">
+                Lihat Detail
+              </Link>
             </div>
           ))}
         </div>
@@ -125,25 +126,25 @@ export default function TeamFinder() {
       {/* Right Column: Open Roles & Participants */}
       <div className="w-full xl:w-80 flex flex-col gap-6">
         <div>
-          <h2 className="text-xl font-bold text-slate-800 mb-4">Open Roles</h2>
+          <h2 className="text-xl font-bold text-slate-800 mb-4">Posisi Terbuka</h2>
           <div className="flex flex-col gap-2">
-            <span className="text-xs text-slate-500 font-medium">Filter Projects</span>
+            <span className="text-xs text-slate-500 font-medium">Filter Proyek</span>
             <div className="flex gap-2">
               <button className="flex-1 flex justify-between items-center border border-slate-200 rounded-full px-3 py-1.5 text-xs text-slate-600 font-medium hover:bg-slate-50">
-                By Role <ChevronDown size={14} />
+                Peran <ChevronDown size={14} />
               </button>
               <button className="flex-1 flex justify-between items-center border border-slate-200 rounded-full px-3 py-1.5 text-xs text-slate-600 font-medium hover:bg-slate-50">
-                Technology <ChevronDown size={14} />
+                Teknologi <ChevronDown size={14} />
               </button>
               <button className="flex-1 flex justify-between items-center border border-slate-200 rounded-full px-3 py-1.5 text-xs text-slate-600 font-medium hover:bg-slate-50">
-                Project Tipe <ChevronDown size={14} />
+                Tipe Proyek <ChevronDown size={14} />
               </button>
             </div>
           </div>
         </div>
 
         <div>
-          <h3 className="text-sm font-bold text-slate-800 mb-3">Available Participants</h3>
+          <h3 className="text-sm font-bold text-slate-800 mb-3">Partisipan Tersedia</h3>
           <div className="flex flex-col gap-3">
             {participants.map((p, i) => (
               <div key={i} className="bg-white rounded-2xl border border-slate-100 p-4 shadow-sm flex flex-col gap-3">
@@ -157,10 +158,10 @@ export default function TeamFinder() {
                   </div>
                 </div>
                 <div className="text-[10px] text-slate-500 font-medium">
-                  Skills: {p.skills}
+                  Keahlian: {p.skills}
                 </div>
                 <button className="w-full border border-slate-200 text-slate-800 font-bold text-xs py-2.5 rounded-lg hover:bg-slate-50 transition-colors">
-                  Apply to Projects
+                  Lamar Proyek
                 </button>
               </div>
             ))}

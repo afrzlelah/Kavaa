@@ -95,7 +95,7 @@ export default function SidebarKanan({ user }: { user?: any }) {
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-600 via-blue-400 to-slate-100 p-1">
             <div className="w-full h-full bg-white rounded-full p-1">
               <img
-                src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=200&h=200&fit=crop&q=80"
+                src={dataUser?.avatar_url || "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=200&h=200&fit=crop&q=80"}
                 alt="Profil"
                 className="w-full h-full rounded-full object-cover"
               />

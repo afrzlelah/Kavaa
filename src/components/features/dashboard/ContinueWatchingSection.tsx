@@ -1,4 +1,5 @@
-import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, Clock } from "lucide-react";
+import Link from "next/link";
 import { ProgressBar } from "@/components/shared/ui/ProgressBar";
 import { Avatar } from "@/components/shared/ui/Avatar";
 import { getUserCourses } from "@/services/courseService";
@@ -13,7 +14,22 @@ export async function ContinueWatchingSection({ userId }: { userId?: string }) {
 
   // Removed static mock data to ensure pure data-driven UI
   if (!userCourses || userCourses.length === 0) {
-    return null; // Don't show the section if no courses are in progress
+    return (
+      <section className="mb-10">
+        <h2 className="text-lg font-bold text-slate-900 mb-6">
+          Lanjutkan Menonton
+        </h2>
+        <div className="bg-white border border-slate-100 rounded-[2rem] p-12 flex flex-col items-center justify-center text-center shadow-sm">
+          <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4">
+             <Clock size={32} className="text-slate-200" />
+          </div>
+          <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Belum ada kursus yang sedang dipelajari</p>
+          <Link href="/learning" className="bg-primaryTint text-white px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-primaryTint/20 hover:scale-105 transition-all">
+             Mulai Belajar Sekarang
+          </Link>
+        </div>
+      </section>
+    );
   }
 
   return (

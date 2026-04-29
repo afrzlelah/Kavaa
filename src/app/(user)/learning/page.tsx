@@ -54,6 +54,12 @@ export default async function LearningPage() {
     };
   }));
 
+  // 3. Fetch activity and feedback
+  const [recentActivity, recentFeedback] = await Promise.all([
+    import("@/services/courseService").then(m => m.getRecentActivity()),
+    import("@/services/courseService").then(m => m.getRecentFeedback())
+  ]);
+
   // Fallback if no paths
   if (learningPaths.length === 0) {
     // Add default UI if empty
@@ -88,8 +94,8 @@ export default async function LearningPage() {
 
           {/* Bottom Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <RecentLearningActivity />
-            <FeedbackSection />
+            <RecentLearningActivity activities={recentActivity as any} />
+            <FeedbackSection feedback={recentFeedback as any} />
             <PortfolioBuilding />
           </div>
         </div>
