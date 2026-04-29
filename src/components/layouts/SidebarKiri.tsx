@@ -129,10 +129,17 @@ export default function SidebarKiri({
         </h3>
         <nav className="flex flex-col gap-1">
           <Link
-            href="#"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+            href="/settings"
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+              pathname === "/settings"
+                ? "text-primaryTint bg-blue-50/50"
+                : "text-slate-600 hover:bg-slate-50"
+            }`}
           >
-            <Settings size={20} className="text-slate-400" /> Pengaturan
+            <Settings 
+              size={20} 
+              className={pathname === "/settings" ? "text-primaryTint" : "text-slate-400"} 
+            /> Pengaturan
           </Link>
           <a
             href="#"

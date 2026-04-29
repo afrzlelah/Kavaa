@@ -29,6 +29,7 @@ export default async function LearningPage() {
       "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
     ],
     items: path.courses.slice(0, 3).map((c: any, idx: number) => ({
+      id: c.id,
       title: c.title,
       progress: Math.floor(Math.random() * 100), // In real app, fetch from user_courses
       status: idx === 0 ? "in-progress" : "pending"

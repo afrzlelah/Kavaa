@@ -1,8 +1,10 @@
 import { Card } from "@/components/shared/ui/Card";
 import { ProgressBar } from "@/components/shared/ui/ProgressBar";
 import { Button } from "@/components/shared/ui/Button";
+import Link from "next/link";
 
 interface PathItem {
+  id: string;
   title: string;
   progress: number;
   status: "completed" | "in-progress" | "pending";
@@ -57,9 +59,11 @@ export function LearningPathCard({ title, subtitle, items, icons, buttonText }: 
       </div>
 
       {/* Action Button */}
-      <Button className="w-full py-3.5 rounded-xl font-black text-[11px] uppercase tracking-widest bg-primary shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
-        {buttonText}
-      </Button>
+      <Link href={`/learning/${items[0]?.id || "#"}`} className="w-full">
+        <Button className="w-full py-3.5 rounded-xl font-black text-[11px] uppercase tracking-widest bg-primary shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+          {buttonText}
+        </Button>
+      </Link>
     </Card>
   );
 }

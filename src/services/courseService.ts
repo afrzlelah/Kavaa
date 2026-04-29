@@ -17,6 +17,58 @@ export async function getCourses() {
   return data;
 }
 
+export async function getCourseById(courseId: string) {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data, error } = await supabase
+    .from("courses")
+    .select("*")
+    .eq("id", courseId)
+    .single();
+
+  if (error) {
+    console.error("Error fetching course by id:", error);
+    return null;
+  }
+  return data;
+}
+
+export async function getCourseModules(courseId: string, userId?: string) {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data: modules, error: mError } = await supabase
+    .from("course_modules")
+    .select("*")
+    .eq("course_id", courseId)
+    .order("order_index", { ascending: true });
+
+  if (mError) {
+    console.error("Error fetching modules:", mError);
+    return [];
+  }
+
+  if (!userId) return modules.map(m => ({ ...m, is_completed: false }));
+
+  const { data: progress, error: pError } = await supabase
+    .from("user_module_progress")
+    .select("module_id, is_completed")
+    .eq("user_id", userId);
+
+  if (pError) {
+    console.error("Error fetching progress:", pError);
+    return modules.map(m => ({ ...m, is_completed: false }));
+  }
+
+  const progressMap = new Map(progress?.map(p => [p.module_id, p.is_completed]));
+
+  return modules.map(m => ({
+    ...m,
+    is_completed: progressMap.get(m.id) || false
+  }));
+}
+
 export async function getUserCourses(userId: number | string) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
