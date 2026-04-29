@@ -5,6 +5,9 @@ import { menuItems } from "@/constants";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { createClientClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+
 export default function SidebarKiri({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
@@ -19,6 +22,26 @@ export default function SidebarKiri({
   friendsList?: any[];
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    const supabase = createClientClient();
+    
+    // Matikan loading atau beri feedback jika perlu
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      // Redirect ke login dan pastikan session bersih
+      router.push("/login");
+      router.refresh(); // Memaksa refresh untuk membersihkan server cache
+    } catch (error: any) {
+      console.error("Gagal keluar:", error.message);
+      // Fallback redirect
+      window.location.href = "/login";
+    }
+  };
 
   return (
     <aside
@@ -141,12 +164,12 @@ export default function SidebarKiri({
               className={pathname === "/settings" ? "text-primaryTint" : "text-slate-400"} 
             /> Pengaturan
           </Link>
-          <a
-            href="#"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-red-500 hover:bg-red-50 transition-colors mt-2"
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-red-500 hover:bg-red-50 transition-colors mt-2"
           >
             <LogOut size={20} className="text-red-500" /> Keluar
-          </a>
+          </button>
         </nav>
       </div>
     </aside>

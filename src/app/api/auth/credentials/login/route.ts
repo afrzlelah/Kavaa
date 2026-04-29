@@ -29,6 +29,23 @@ export async function POST(req: Request) {
       );
     }
 
+    // Verify profile existence (Ensure sync trigger worked)
+    const { data: profile } = await supabase
+      .from("users")
+      .select("id")
+      .eq("id", data.user.id)
+      .single();
+
+    if (!profile) {
+       // Force sync if missing (Fall back if trigger failed)
+       await supabase.from("users").insert({
+         id: data.user.id,
+         email: data.user.email,
+         first_name: data.user.user_metadata?.first_name || "User",
+         last_name: data.user.user_metadata?.last_name || "",
+       });
+    }
+
     // Return user data for redirection
     return NextResponse.json({ user: data.user }, { status: 200 });
   } catch (error: any) {

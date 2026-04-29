@@ -40,22 +40,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status });
   }
 
-  // 2. Sync to public.users table
-  if (data.user) {
-    const { error: dbError } = await supabase.from("users").insert([
-      {
-        id: data.user.id,
-        email: email,
-        first_name: first_name,
-        last_name: last_name,
-        password: password, // Note: Keeping this if existing logic requires it
-      },
-    ]);
-
-    if (dbError) {
-      console.error("Error syncing user to public table:", dbError);
-    }
-  }
+  // Sync to public.users table is now handled by a database trigger 
+  // (src/utils/supabase/auth_sync_trigger.sql) for better reliability and security.
+  // We no longer manually insert the password into the public table.
 
   return NextResponse.json(
     {

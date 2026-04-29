@@ -34,6 +34,18 @@ const RegisterPage: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Client-side validation
+    if (!formData.first_name || !formData.last_name) {
+      setMessageRegist("Nama depan dan belakang wajib diisi.");
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setMessageRegist("Password minimal 6 karakter.");
+      return;
+    }
+
     setIsLoading(true);
     setMessageRegist("");
     

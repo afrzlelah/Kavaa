@@ -24,6 +24,10 @@ export default async function CoursePlayerPage({ params }: PageProps) {
     notFound();
   }
 
+  const relatedCourses = await import("@/services/courseService").then(m => 
+    m.getRelatedCourses(course.category, id)
+  );
+
   // If no modules found, provide mock data for demo purposes if needed, 
   // but ideally we should have data in the DB.
   const displayModules = modules.length > 0 ? modules : [
@@ -38,7 +42,11 @@ export default async function CoursePlayerPage({ params }: PageProps) {
 
   return (
     <div className="flex flex-col h-full overflow-y-auto bg-[#F8FAFC] px-4 md:px-8 py-6">
-      <CoursePlayerContent course={course} modules={displayModules as any} />
+      <CoursePlayerContent 
+        course={course} 
+        modules={displayModules as any} 
+        relatedCourses={relatedCourses as any}
+      />
     </div>
   );
 }

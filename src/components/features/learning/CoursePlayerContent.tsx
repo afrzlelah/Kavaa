@@ -17,9 +17,10 @@ interface Module {
 interface CoursePlayerContentProps {
   course: any;
   modules: Module[];
+  relatedCourses: any[];
 }
 
-export function CoursePlayerContent({ course, modules }: CoursePlayerContentProps) {
+export function CoursePlayerContent({ course, modules, relatedCourses }: CoursePlayerContentProps) {
   const [activeModuleId, setActiveModuleId] = useState(modules[0]?.id);
   const [activeTab, setActiveTab] = useState<"deskripsi" | "feedback">("deskripsi");
 
@@ -77,10 +78,10 @@ export function CoursePlayerContent({ course, modules }: CoursePlayerContentProp
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-2xl font-black text-slate-800 tracking-tight mb-2 uppercase">
-                {activeModule?.title.toUpperCase()} ? (Penjelasan Sederhana mengenai Website)
+                {activeModule?.title.toUpperCase()}
               </h1>
               <div className="flex items-center gap-4">
-                <span className="text-sm font-bold text-slate-400">{course.instructor || "AsalJeplak"}</span>
+                <span className="text-sm font-bold text-slate-400">{course.instructor || "Kavaa Instructor"}</span>
                 <button className="text-sm font-bold text-primary hover:underline">+ Follow Chanel</button>
               </div>
             </div>
@@ -115,20 +116,20 @@ export function CoursePlayerContent({ course, modules }: CoursePlayerContentProp
             <div className="flex gap-4">
                <div className="flex flex-col gap-2">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Durasi</span>
-                  <div className="px-5 py-2.5 bg-primary rounded-lg text-white text-[11px] font-black shadow-lg shadow-primary/20">
-                    13.09 Menit
+                  <div className="px-5 py-2.5 bg-[#0066FF] rounded-lg text-white text-[11px] font-black shadow-lg shadow-blue-500/20">
+                    {activeModule?.duration || "0:00"} Menit
                   </div>
                </div>
                <div className="flex flex-col gap-2">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Level</span>
-                  <div className="px-8 py-2.5 bg-primary rounded-lg text-white text-[11px] font-black shadow-lg shadow-primary/20">
-                    Dasar
+                  <div className="px-8 py-2.5 bg-[#0066FF] rounded-lg text-white text-[11px] font-black shadow-lg shadow-blue-500/20">
+                    {course.level || "Dasar"}
                   </div>
                </div>
                <div className="flex flex-col gap-2">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Modul</span>
-                  <div className="px-8 py-2.5 bg-primary rounded-lg text-white text-[11px] font-black shadow-lg shadow-primary/20">
-                    2 dari 10
+                  <div className="px-8 py-2.5 bg-[#0066FF] rounded-lg text-white text-[11px] font-black shadow-lg shadow-blue-500/20">
+                    {modules.findIndex(m => m.id === activeModuleId) + 1} dari {modules.length}
                   </div>
                </div>
             </div>
@@ -141,7 +142,8 @@ export function CoursePlayerContent({ course, modules }: CoursePlayerContentProp
         <ModuleList 
           modules={modules} 
           activeModuleId={activeModuleId} 
-          onModuleSelect={setActiveModuleId} 
+          onModuleSelect={setActiveModuleId}
+          relatedCourses={relatedCourses}
         />
       </div>
     </div>

@@ -69,6 +69,29 @@ export async function getCourseModules(courseId: string, userId?: string) {
   }));
 }
 
+export async function getCourseProgress(courseId: string, userId: string) {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data: modules, error: mError } = await supabase
+    .from("course_modules")
+    .select("id")
+    .eq("course_id", courseId);
+
+  if (mError || !modules.length) return 0;
+
+  const { data: progress, error: pError } = await supabase
+    .from("user_module_progress")
+    .select("module_id")
+    .eq("user_id", userId)
+    .eq("is_completed", true)
+    .in("module_id", modules.map(m => m.id));
+
+  if (pError) return 0;
+
+  return Math.round((progress.length / modules.length) * 100);
+}
+
 export async function getUserCourses(userId: number | string) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -153,4 +176,19 @@ export async function getLearningPaths() {
     subtitle: `Jalur Belajar ${category}`,
     courses: grouped[category]
   }));
+}
+
+export async function getRelatedCourses(category: string, excludeId: string) {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data, error } = await supabase
+    .from("courses")
+    .select("*")
+    .eq("category", category)
+    .neq("id", excludeId)
+    .limit(2);
+
+  if (error) return [];
+  return data;
 }

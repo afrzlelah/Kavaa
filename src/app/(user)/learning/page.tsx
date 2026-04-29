@@ -19,21 +19,39 @@ export default async function LearningPage() {
   const pathsData = await getLearningPaths();
   
   // 2. Map DB categories to the UI structure
-  const learningPaths = pathsData.map(path => ({
-    title: path.title,
-    subtitle: path.subtitle,
-    buttonText: `Lanjut ${path.title}`,
-    icons: [
+  const categoryIcons: Record<string, string[]> = {
+    "Web Development": [
       "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
       "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
     ],
-    items: path.courses.slice(0, 3).map((c: any, idx: number) => ({
-      id: c.id,
-      title: c.title,
-      progress: Math.floor(Math.random() * 100), // In real app, fetch from user_courses
-      status: idx === 0 ? "in-progress" : "pending"
-    }))
+    "Design": [
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg",
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg"
+    ]
+  };
+
+  const learningPaths = await Promise.all(pathsData.map(async path => {
+    const coursesWithProgress = await Promise.all(path.courses.slice(0, 3).map(async (c: any) => {
+      const progress = user ? await import("@/services/courseService").then(m => m.getCourseProgress(c.id, user.id)) : 0;
+      return {
+        id: c.id,
+        title: c.title,
+        progress,
+        status: progress === 100 ? "completed" : progress > 0 ? "in-progress" : "pending"
+      };
+    }));
+
+    return {
+      title: path.title,
+      subtitle: path.subtitle,
+      buttonText: `Lanjut ${path.title}`,
+      icons: categoryIcons[path.title as keyof typeof categoryIcons] || [
+        "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+      ],
+      items: coursesWithProgress
+    };
   }));
 
   // Fallback if no paths
