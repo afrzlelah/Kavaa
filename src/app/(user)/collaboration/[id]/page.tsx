@@ -1,8 +1,8 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import { 
   ArrowLeft, 
   Users, 
@@ -19,17 +19,43 @@ import { Card, CardHeader } from "@/components/shared/ui/Card";
 import { ProgressBar } from "@/components/shared/ui/ProgressBar";
 import Image from "next/image";
 
-export default function ProjectDetailsPage() {
-  const params = useParams();
-  const id = typeof params.id === 'string' ? params.id : '';
+export default async function ProjectDetailsPage({ params }: { params: { id: string } }) {
+  // Await params before using its properties to avoid Next.js sync params error
+  const { id } = await params;
+  
+  // Validate UUID to prevent database error 22P02
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+  
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
 
-  // Mock data to match design
+  let projectData = null;
+  let fetchError = null;
+
+  if (isUuid) {
+    // Fetch project from Supabase
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("id", id)
+      .single();
+    
+    projectData = data;
+    fetchError = error;
+  }
+
+  if (fetchError || !projectData) {
+    if (isUuid) console.error("Error fetching project:", fetchError);
+    // Fallback to static mock if not found in db so it doesn't hard crash for the user
+  }
+
+  // Combine fetched data with mock structural details for missing relations (team, milestones) until full schema is built
   const project = {
-    title: "Travel Planner Web",
-    type: "Web",
+    title: projectData?.title || "Travel Planner Web",
+    type: projectData?.category || "Web",
     duration: "6 minggu",
     status: "Sedang Berjalan",
-    description: "Travel Planner concept, designed UI that creates easy way to plan and organize travel itinerary and activities.",
+    description: projectData?.description || "Travel Planner concept, designed UI that creates easy way to plan and organize travel itinerary and activities.",
     figmaLink: "https://figma.com/file/example",
     team: [
       { name: "Alice W.", role: "UI/UX Designer", status: "TEPAT WAKTU", initials: "AW" },

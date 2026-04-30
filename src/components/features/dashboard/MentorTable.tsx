@@ -1,22 +1,29 @@
-"use client";
-
 import { Avatar } from "@/components/shared/ui/Avatar";
 import Image from "next/image";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
-export function MentorTable() {
-  const mentors = [
+export async function MentorTable() {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+  
+  // Fetch from mentors table
+  const { data: mentorsData } = await supabase
+    .from("mentors")
+    .select("*")
+    .limit(5);
+
+  const mentors = mentorsData && mentorsData.length > 0 ? mentorsData : [
     { 
       name: "Dr.Sarah Chen", 
-      date: "25/2/2023", 
-      type: "FRONTEND", 
-      title: "Mengenal Lebih Dekat Apa Itu Web",
+      role: "FRONTEND", 
+      created_at: new Date().toISOString(),
       avatar: "https://ui-avatars.com/api/?name=Sarah+Chen&background=random"
     },
     { 
       name: "Budi Santoso, M.Arch", 
-      date: "25/2/2023", 
-      type: "FRONTEND", 
-      title: "Desain Berkelanjutan Untuk Produk Nyata",
+      role: "FRONTEND", 
+      created_at: new Date().toISOString(),
       avatar: "https://ui-avatars.com/api/?name=Budi+Santoso&background=random"
     }
   ];
@@ -27,8 +34,8 @@ export function MentorTable() {
         <thead>
           <tr className="border-b border-slate-50">
             <th className="px-8 py-5 text-[10px]  text-black uppercase">Instructor Name & Date</th>
-            <th className="px-8 py-5 text-[10px]  text-black uppercase">Course Type</th>
-            <th className="px-8 py-5 text-[10px]  text-black uppercase">Course Title</th>
+            <th className="px-8 py-5 text-[10px]  text-black uppercase">Role</th>
+            <th className="px-8 py-5 text-[10px]  text-black uppercase">Company</th>
             <th className="px-8 py-5 text-[10px]  text-black uppercase text-right">Actions</th>
           </tr>
         </thead>
@@ -42,18 +49,18 @@ export function MentorTable() {
                   </div>
                   <div>
                     <h4 className="text-[12px]  text-slate-800">{m.name}</h4>
-                    <p className="text-[10px]  text-slate-600">{m.date}</p>
+                    <p className="text-[10px]  text-slate-600">{new Date(m.created_at || Date.now()).toLocaleDateString()}</p>
                   </div>
                 </div>
               </td>
               <td className="px-8 py-5">
                 <span className="px-4 py-1 bg-primaryTint/20 text-primaryTint text-[9px]  rounded-xl uppercase ">
-                  {m.type}
+                  {m.role || "MENTOR"}
                 </span>
               </td>
               <td className="px-8 py-5">
                 <p className="text-[12px]  text-slate-600 max-w-xs  font-semibold">
-                  {m.title}
+                  {m.company || "Independent"}
                 </p>
               </td>
               <td className="px-8 py-5 text-right">

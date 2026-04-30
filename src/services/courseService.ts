@@ -114,7 +114,7 @@ export async function getUserCourses(
         `
         progress,
         courses (
-          id, category, title, instructor, thumbnail_url, theme, instructor_avatar_url
+          id, category, title, instructor, thumbnail_url, theme
         )
       `,
       )
@@ -134,14 +134,16 @@ export async function getUserCourses(
 
     return data.map((item: { progress: number; courses: Record<string, unknown> | Record<string, unknown>[] }) => {
       const course = Array.isArray(item.courses) ? item.courses[0] : item.courses;
+      if (!course) return null;
+      
       return {
         ...(course as unknown as Course),
         progress: item.progress,
         tag: ((course as Record<string, unknown>).category as string)?.toUpperCase() || "COURSE",
-        avatar: ((course as Record<string, unknown>).instructor_avatar_url as string) || "",
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent((course as Record<string, unknown>).instructor as string || "Instructor")}&background=random`,
         role: "Instruktur",
       };
-    });
+    }).filter(Boolean) as FlatUserCourse[];
   } catch (err) {
     console.error("Exception fetching user courses:", err);
     return [];
