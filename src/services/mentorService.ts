@@ -35,5 +35,5 @@ export async function getUserMentors(userId: number | string) {
     return [];
   }
 
-  return data.map((item: any) => item.mentors);
+  return data.map((item: { mentors: unknown }) => item.mentors);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardHeader } from "@/components/shared/ui/Card";
+import { Card } from "@/components/shared/ui/Card";
 import { Star, MessageSquare, User } from "lucide-react";
 
 export default function PortfolioReviewsPage() {
@@ -60,7 +60,7 @@ export default function PortfolioReviewsPage() {
               <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
                 <p className="text-xs font-bold text-primaryTint mb-1 uppercase tracking-tight">{review.project}</p>
                 <p className="text-sm text-slate-600 leading-relaxed font-medium">
-                  "{review.comment}"
+                  &quot;{review.comment}&quot;
                 </p>
               </div>
 

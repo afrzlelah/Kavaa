@@ -74,6 +74,75 @@ export interface UserData {
   first_name: string;
   last_name: string;
   email: string;
+  avatar_url?: string;
+}
+
+export interface Course {
+  id: string;
+  title: string;
+  category: string;
+  instructor: string;
+  thumbnail_url: string;
+  theme: string;
+  instructor_avatar_url?: string;
+  lectures_count?: number;
+  total_hours?: number;
+}
+
+export interface CourseModule {
+  id: string;
+  title: string;
+  order_index: number;
+  is_completed: boolean;
+}
+
+export interface UserCourse {
+  progress: number;
+  courses: Course;
+}
+
+// Flattened shape returned by getUserCourses (spread courses + computed fields)
+export interface FlatUserCourse extends Course {
+  progress: number;
+  tag: string;
+  avatar: string;
+  role: string;
+}
+
+export interface Task {
+  id: number | string;
+  title: string;
+  category: string;
+  status: "selesai" | "berjalan" | "tertunda" | "belum";
+  due_date: string;
+  priority: "Tinggi" | "Sedang" | "Rendah";
+}
+
+export interface Activity {
+  id: number;
+  user_name: string;
+  initials: string;
+  action: string;
+  time_ago: string;
+  color: string;
+}
+
+export interface Conversation {
+  id: string;
+  name: string;
+  avatar?: string;
+  lastMessage: string;
+  time: string;
+  last_message_at: string;
+  unread: number;
+}
+
+export interface InboxMessage {
+  id: string;
+  content: string;
+  created_at: string;
+  is_read: boolean;
+  sender_id: string;
 }
 
 export interface Certificate {

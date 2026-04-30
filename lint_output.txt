@@ -1,0 +1,208 @@
+
+> kavaa@0.1.0 lint
+> eslint
+
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/(auth)/login/page.tsx
+   5:10  warning  'BsApple' is defined but never used  @typescript-eslint/no-unused-vars
+  82:14  warning  'err' is defined but never used      @typescript-eslint/no-unused-vars
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/(auth)/register/page.tsx
+  75:14  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/(user)/challenge/page.tsx
+  62:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/(user)/collaboration/[id]/page.tsx
+    8:3   warning  'Users' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   10:3   warning  'CheckCircle2' is defined but never used                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   15:3   warning  'Play' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   23:9   warning  'id' is assigned a value but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+  241:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/(user)/collaboration/my-projects/page.tsx
+  3:16  warning  'CardHeader' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/(user)/collaboration/page.tsx
+  10:10  warning  'requests' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  10:20  warning  'activities' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  10:32  warning  'challenges' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/(user)/learning/[id]/page.tsx
+  37:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  38:43  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/(user)/learning/page.tsx
+    7:20  warning  'Plus' is defined but never used          @typescript-eslint/no-unused-vars
+   40:48  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  107:58  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  114:67  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  115:58  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/(user)/reward-certificate/RewardCertificateClient.tsx
+  214:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/(user)/task/page.tsx
+   9:60  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  44:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  45:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  46:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  47:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  91:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  96:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  96:46  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/api/auth/callback/route.ts
+  9:9  warning  'next' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/app/api/auth/credentials/login/route.ts
+  51:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/collaboration/CollaborationProgress.tsx
+   5:58  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  19:13  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/collaboration/PortfolioShowcase.tsx
+   2:10  warning  'Layout' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+  17:13  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/collaboration/RecentActivity.tsx
+  27:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/collaboration/TeamFinderRequests.tsx
+  2:10  warning  'Avatar' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/collaboration/UpcomingMilestones.tsx
+   3:10  warning  'Flag' is defined but never used          @typescript-eslint/no-unused-vars
+  25:34  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/dashboard/ContinueWatchingSection.tsx
+   1:17  warning  'Clock' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   2:8   warning  'Link' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   3:10  warning  'ProgressBar' is defined but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+  48:36  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  54:13  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  81:20  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/dashboard/DashboardBanner.tsx
+  1:10  warning  'Button' is defined but never used        @typescript-eslint/no-unused-vars
+  4:35  warning  'user' is defined but never used          @typescript-eslint/no-unused-vars
+  4:52  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/dashboard/DashboardHeader.tsx
+  3:35  warning  'user' is defined but never used          @typescript-eslint/no-unused-vars
+  3:52  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/dashboard/DashboardSidebar.tsx
+    3:10  warning  'Avatar' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+    5:10  warning  'Card' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+    8:53  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   53:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  114:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/dashboard/MentorTable.tsx
+   3:10  warning  'Avatar' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+  40:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/dashboard/QuickStatCards.tsx
+  4:58  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/learning/CoursePlayerContent.tsx
+  30:11  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  32:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/learning/FeedbackSection.tsx
+   4:65  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  44:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/learning/LearningHubHeader.tsx
+   1:24  warning  'Grid' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  26:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/learning/LearningPathCard.tsx
+   2:10  warning  'ProgressBar' is defined but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+  37:13  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/learning/ModuleList.tsx
+    1:24  warning  'Circle' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   17:20  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  179:18  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/learning/PortfolioBuilding.tsx
+  37:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/learning/RecentLearningActivity.tsx
+   2:10  warning  'Avatar' is defined but never used                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   3:10  warning  'Clock' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   5:76  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  42:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/features/settings/ProfileForm.tsx
+   9:9   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  39:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/layouts/Content/Content1.tsx
+   2:37  warning  'Award' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  75:13  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/layouts/SidebarKanan.tsx
+   10:57  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   12:42  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   52:16  warning  'err' is defined but never used                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   97:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  156:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  162:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/layouts/SidebarKiri.tsx
+   15:3   warning  'user' is defined but never used                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   21:9   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   22:17  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   39:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  120:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/layouts/UserLayoutClient.tsx
+  16:9   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  18:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/layouts/dashboard/DashboardPage.tsx
+  10:89  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/layouts/dashboard/InboxPage.tsx
+   25:12  warning  'e' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+   49:7   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  108:52  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  177:34  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  177:41  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  207:26  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  212:52  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  215:54  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  216:10  warning  'isSearching' is assigned a value but never used                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  258:18  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  261:38  error    A `require()` style import is forbidden                                                                                                                                                                                                                                                  @typescript-eslint/no-require-imports
+  276:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  355:50  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  547:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  547:23  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images                                                                                                                                                                                jsx-a11y/alt-text
+  625:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  625:19  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images                                                                                                                                                                                jsx-a11y/alt-text
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/shared/Cards/CourseCard.tsx
+  14:3  warning  'isFree' is defined but never used  @typescript-eslint/no-unused-vars
+  16:3  warning  'price' is defined but never used   @typescript-eslint/no-unused-vars
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/components/shared/ui/Avatar.tsx
+  22:7  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/constants.tsx
+  12:22  warning  'BiMoney' is defined but never used      @typescript-eslint/no-unused-vars
+  13:10  warning  'CiMoneyBill' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/proxy.ts
+  18:48  warning  'options' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/afrzlaw/Documents/Kuliah/Lomba/iofest/a/Kavaa/src/utils/supabase/auth-helpers.ts
+  15:9   warning  'supabase' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  21:46  warning  'options' is defined but never used            @typescript-eslint/no-unused-vars
+
+✖ 117 problems (49 errors, 68 warnings)
+

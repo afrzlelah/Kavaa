@@ -48,7 +48,7 @@ export async function POST(req: Request) {
 
     // Return user data for redirection
     return NextResponse.json({ user: data.user }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Login API error:", error);
     return NextResponse.json(
       { error: "Internal server error" },

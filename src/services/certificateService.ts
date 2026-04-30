@@ -30,13 +30,13 @@ export async function getUserCertificates(
     return [];
   }
 
-  return data.map((cert: any) => ({
+  return (data as any[]).map((cert) => ({
     id: cert.courses?.id || Math.random(),
     title: cert.courses?.title || "Sertifikat Tanpa Judul",
     provider: cert.courses?.category || "Penyedia Tidak Diketahui",
     category: cert.courses?.category || "Other",
     issued_at: cert.issued_at,
-    thumbnail_url: cert.courses?.thumbnail_url,
+    thumbnail_url: cert.courses?.thumbnail_url || null,
     certificate_url: cert.certificate_url,
     is_earned: true,
   }));

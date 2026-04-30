@@ -1,6 +1,8 @@
 import { CheckCircle2, Circle, PlayCircle, Star } from "lucide-react";
 import { useState } from "react";
 import { submitCourseFeedback } from "@/app/actions/courseActions";
+import type { Course } from "@/types";
+import Image from "next/image";
 
 interface Module {
   id: string;
@@ -14,7 +16,7 @@ interface ModuleListProps {
   modules: Module[];
   activeModuleId?: string;
   onModuleSelect?: (id: string) => void;
-  relatedCourses?: any[];
+  relatedCourses?: Course[];
   courseId: string;
 }
 
@@ -176,7 +178,7 @@ export function ModuleList({
           {relatedCourses?.map((course) => (
             <div key={course.id} className="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex gap-3 group cursor-pointer hover:shadow-md transition-all">
               <div className="w-20 h-14 bg-slate-200 rounded-lg overflow-hidden flex-shrink-0 relative">
-                 <img src={course.thumbnail_url || "https://images.unsplash.com/photo-1586717791821-3f44a563cc4c?w=200&q=80"} alt="related" className="w-full h-full object-cover" />
+                 <Image src={course.thumbnail_url || "https://images.unsplash.com/photo-1586717791821-3f44a563cc4c?w=200&q=80"} alt="related" fill className="object-cover" />
                  <div className="absolute top-1 right-1 bg-white/90 px-1.5 py-0.5 rounded-md text-[8px] font-black text-slate-800 uppercase tracking-tighter">learning</div>
               </div>
               <div className="flex-1 min-w-0">

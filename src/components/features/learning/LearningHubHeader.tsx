@@ -1,4 +1,5 @@
 import { Search, Bell, Grid } from "lucide-react";
+import Image from "next/image";
 
 export function LearningHubHeader() {
   return (
@@ -22,8 +23,8 @@ export function LearningHubHeader() {
           <Bell size={18} />
           <div className="absolute top-3 right-3 w-1.5 h-1.5 bg-rose-500 rounded-full border border-white"></div>
         </button>
-        <div className="w-10 h-10 rounded-full border border-slate-100 bg-slate-200 overflow-hidden shadow-sm shrink-0">
-          <img src="https://i.pravatar.cc/100?u=me" alt="avatar" />
+        <div className="w-10 h-10 rounded-full border border-slate-100 bg-slate-200 overflow-hidden shadow-sm shrink-0 relative">
+          <Image src="https://ui-avatars.com/api/?name=User" alt="avatar" fill className="object-cover" />
         </div>
       </div>
     </div>

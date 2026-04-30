@@ -7,11 +7,6 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const interMono = Inter({
-  variable: "--font-inter-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: "Kavaa",
   description:
@@ -26,7 +21,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${inter.variable} ${interMono.variable} h-full antialiased`}
+      className={`${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>

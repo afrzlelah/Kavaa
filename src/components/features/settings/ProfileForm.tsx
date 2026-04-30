@@ -4,9 +4,17 @@ import { useState } from "react";
 import { updateUserProfile } from "@/app/(user)/settings/actions";
 import { User, Mail, FileText, Link as LinkIcon, Camera, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/shared/ui/Button";
+import Image from "next/image";
 
 interface ProfileFormProps {
-  user: any;
+  user: {
+    id?: string;
+    first_name?: string;
+    last_name?: string;
+    email?: string;
+    avatar_url?: string;
+    bio?: string;
+  };
 }
 
 export function ProfileForm({ user }: ProfileFormProps) {
@@ -19,6 +27,13 @@ export function ProfileForm({ user }: ProfileFormProps) {
     setMessage(null);
 
     const formData = new FormData(event.currentTarget);
+    
+    if (!user.id) {
+      setMessage({ type: "error", text: "Gagal: User ID tidak ditemukan" });
+      setIsPending(false);
+      return;
+    }
+
     const result = await updateUserProfile(user.id, formData);
 
     setIsPending(false);
@@ -34,9 +49,9 @@ export function ProfileForm({ user }: ProfileFormProps) {
       <div className="flex flex-col md:flex-row gap-8 items-start">
         {/* Avatar Upload Placeholder */}
         <div className="relative group">
-          <div className="w-32 h-32 rounded-full bg-slate-100 border-4 border-white shadow-xl overflow-hidden flex items-center justify-center">
+          <div className="w-32 h-32 rounded-full bg-slate-100 border-4 border-white shadow-xl overflow-hidden flex items-center justify-center relative">
             {user.avatar_url ? (
-              <img src={user.avatar_url} alt="avatar" className="w-full h-full object-cover" />
+              <Image src={user.avatar_url} alt="avatar" fill className="object-cover" />
             ) : (
               <User size={48} className="text-slate-300" />
             )}

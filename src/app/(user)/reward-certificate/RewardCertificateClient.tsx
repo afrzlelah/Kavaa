@@ -8,10 +8,10 @@ import {
   Award,
   BookOpen,
   Clock,
-  LayoutGrid,
   CheckCircle2,
 } from "lucide-react";
 import { Certificate } from "@/types";
+import Image from "next/image";
 
 export default function RewardCertificateClient({
   initialCertificates,
@@ -212,10 +212,11 @@ export default function RewardCertificateClient({
                   >
                     <div className="w-full sm:w-48 h-36 bg-slate-50 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden relative border border-slate-100">
                       {cert.thumbnail_url ? (
-                        <img
+                        <Image
                           src={cert.thumbnail_url}
                           alt={cert.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-500"
                         />
                       ) : (
                         <Award size={40} className="text-slate-200" />
@@ -249,11 +250,11 @@ export default function RewardCertificateClient({
                       <div className="flex-1 flex flex-col justify-end">
                         <div className="p-3 bg-slate-50 rounded-xl mb-4 border border-slate-100">
                           <p className="text-[11px] text-slate-500 font-medium leading-relaxed italic">
-                            "
+                            &quot;
                             {cert.is_earned
                               ? "Sertifikat ini membuktikan keahlian Anda dalam bidang ini."
                               : "Selesaikan 12 modul lagi untuk mendapatkan sertifikat ini."}
-                            "
+                            &quot;
                           </p>
                         </div>
 

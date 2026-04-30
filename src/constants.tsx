@@ -9,8 +9,7 @@ import {
   Target,
 } from "lucide-react";
 import { Contact, Message } from "./types";
-import { BiBookOpen, BiMoney } from "react-icons/bi";
-import { CiMoneyBill } from "react-icons/ci";
+import { BiBookOpen } from "react-icons/bi";
 import { GiTeamIdea } from "react-icons/gi";
 
 export const stats = [

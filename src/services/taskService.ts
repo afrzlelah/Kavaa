@@ -1,7 +1,9 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
-export async function getTasks(userId: string) {
+import { Task } from "@/types";
+
+export async function getTasks(userId: string): Promise<Task[]> {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
@@ -16,11 +18,10 @@ export async function getTasks(userId: string) {
     return [];
   }
 
-  // Map status values if necessary to match the UI keys (berjalan, belum, tertunda, selesai)
-  return data.map((t: any) => ({
-    ...t,
+  return data.map((t: { status: string; category?: string; priority?: string; [key: string]: unknown }) => ({
+    ...(t as unknown as Task),
     status: t.status === "pending" ? "belum" : t.status, // Map 'pending' to 'belum' to match current UI logic
     category: t.category || "General",
     priority: t.priority || "Sedang"
-  }));
+  } as Task));
 }

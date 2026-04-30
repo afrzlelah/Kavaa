@@ -24,7 +24,7 @@ export async function RecentActivity() {
       <div className="flex flex-col gap-6 mt-2 relative">
         <div className="absolute left-4 top-2 bottom-6 w-0.5 bg-slate-50 rounded-full"></div>
         
-        {activities.map((activity: any) => (
+        {activities.map((activity: { id: number; initials: string; user_name?: string; name?: string; action: string; time_ago?: string; time?: string; color?: string }) => (
           <div key={activity.id} className="relative pl-10 group cursor-default">
             <div className={`absolute left-0 top-0.5 w-8 h-8 rounded-full flex items-center justify-center text-white text-[10px] font-black border-2 border-white shadow-sm z-10 transition-transform group-hover:scale-110 ${activity.color || 'bg-slate-400'}`}>
               {activity.initials}

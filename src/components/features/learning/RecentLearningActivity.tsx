@@ -1,8 +1,9 @@
 import { Card } from "@/components/shared/ui/Card";
 import { Avatar } from "@/components/shared/ui/Avatar";
 import { Clock } from "lucide-react";
+import Image from "next/image";
 
-export function RecentLearningActivity({ activities = [] }: { activities?: any[] }) {
+export function RecentLearningActivity({ activities = [] }: { activities?: { users?: { first_name?: string; avatar_url?: string }; is_completed?: boolean; module?: { title?: string; courses?: { category?: string } }; custom_text?: string; is_system?: boolean }[] }) {
   const displayActivities = activities.length > 0 ? activities : [
     {
       users: { first_name: "Alice", avatar_url: "https://ui-avatars.com/api/?name=Alice&background=random" },
@@ -35,14 +36,15 @@ export function RecentLearningActivity({ activities = [] }: { activities?: any[]
       <div className="space-y-6">
         {displayActivities.map((activity, idx) => (
           <div key={idx} className="flex gap-4 items-start">
-            <div className="w-8 h-8 rounded-full bg-slate-100 overflow-hidden flex items-center justify-center shadow-sm shrink-0">
+            <div className="w-8 h-8 rounded-full bg-slate-100 overflow-hidden flex items-center justify-center shadow-sm shrink-0 relative">
               {activity.is_system ? (
                  <span className="text-slate-400 text-xs">✏️</span>
               ) : activity.users?.avatar_url ? (
-                <img
+                <Image
                   src={activity.users.avatar_url}
-                  alt={activity.users.first_name}
-                  className="w-full h-full object-cover"
+                  alt={activity.users.first_name || "avatar"}
+                  fill
+                  className="object-cover"
                 />
               ) : (
                 <span className="text-primary text-xs font-black">

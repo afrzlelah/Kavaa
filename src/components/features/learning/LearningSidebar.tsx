@@ -1,7 +1,7 @@
 import { Card } from "@/components/shared/ui/Card";
 import { Button } from "@/components/shared/ui/Button";
 import { ProgressBar } from "@/components/shared/ui/ProgressBar";
-import { Calendar, Video, BookOpen, CheckCircle, Heart } from "lucide-react";
+// Unused imports removed
 
 export function LearningSidebar() {
   return (
@@ -15,7 +15,7 @@ export function LearningSidebar() {
         </div>
         
         <div className="mb-6">
-          <p className="text-[11px] text-slate-500 mb-1 leading-relaxed">Sesi Live: 'UX Research Fundamentals'</p>
+          <p className="text-[11px] text-slate-500 mb-1 leading-relaxed">Sesi Live: &apos;UX Research Fundamentals&apos;</p>
           <p className="text-[10px] text-slate-400">Kamis, 15:00 WIB</p>
         </div>
 

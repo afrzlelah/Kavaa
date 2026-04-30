@@ -6,19 +6,39 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
-        port: "",
-        pathname: "/**", // Mengizinkan semua gambar dari domain ini
+        pathname: "/**",
       },
       {
         protocol: "https",
-        hostname: "www.gstatic.com/",
-        port: "",
+        hostname: "www.gstatic.com",
+        pathname: "/**",
+      },
+      // Supabase Storage — derived from NEXT_PUBLIC_SUPABASE_URL
+      {
+        protocol: "https",
+        hostname: "hicicwwcehgpznjdtqry.supabase.co",
+        pathname: "/storage/v1/object/**",
+      },
+      // CDN for devicon tech logos used in learning path cards
+      {
+        protocol: "https",
+        hostname: "cdn.jsdelivr.net",
+        pathname: "/**",
+      },
+      // Dynamic avatar fallbacks
+      {
+        protocol: "https",
+        hostname: "ui-avatars.com",
+        pathname: "/**",
+      },
+      // Google Images for user avatars
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
         pathname: "/**",
       },
     ],
   },
-  // Catatan: allowedDevOrigins bukanlah konfigurasi standar Next.js.
-  // Jika Anda tidak menggunakan library khusus yang membutuhkannya, lebih baik dihapus.
 };
 
 export default nextConfig;

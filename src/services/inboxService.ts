@@ -33,7 +33,7 @@ export async function getConversations(userId: string) {
 
   // 3. Get details for each conversation
   const conversationsWithDetails = await Promise.all(
-    conversationsData.map(async (conv: any) => {
+    conversationsData.map(async (conv: { id: string; created_at: string }) => {
       // Get the other participant
       const { data: participantsData } = await supabase
         .from("conversation_participants")
@@ -50,7 +50,7 @@ export async function getConversations(userId: string) {
         .neq("user_id", userId)
         .limit(1);
 
-      const participant = participantsData?.[0]?.users as any;
+      const participant = participantsData?.[0]?.users as unknown as { first_name: string; last_name: string; avatar_url: string };
 
       // Get the last message
       const { data: lastMessageData } = await supabase

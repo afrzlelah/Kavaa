@@ -1,5 +1,6 @@
 import { Card, CardHeader } from "@/components/shared/ui/Card";
 import { Layout, MessageSquare } from "lucide-react";
+import Image from "next/image";
 
 export function PortfolioShowcase() {
   return (
@@ -14,10 +15,11 @@ export function PortfolioShowcase() {
           { id: 2, title: "E-Commerce Dashboard", img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop&q=80" }
         ].map((item) => (
           <div key={item.id} className="relative bg-slate-100 rounded-2xl w-full h-24 flex items-center justify-center overflow-hidden border border-slate-100 shadow-inner group-hover/item:border-primaryTint transition-colors cursor-pointer">
-            <img 
+            <Image 
               src={item.img} 
               alt={item.title} 
-              className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+              fill
+              className="object-cover hover:scale-110 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-primaryTint/10 hover:bg-primaryTint/20 transition-colors"></div>
             <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded shadow-sm text-[8px] font-bold text-slate-800">

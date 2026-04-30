@@ -1,7 +1,8 @@
 import { Card } from "@/components/shared/ui/Card";
 import { Button } from "@/components/shared/ui/Button";
+import Image from "next/image";
 
-export function FeedbackSection({ feedback = [] }: { feedback?: any[] }) {
+export function FeedbackSection({ feedback = [] }: { feedback?: { comment?: string; users?: { first_name?: string } }[] }) {
   // Use fallback data if feedback is empty so it matches the screenshot visually
   const displayFeedback =
     feedback.length > 0
@@ -39,12 +40,13 @@ export function FeedbackSection({ feedback = [] }: { feedback?: any[] }) {
               {[1, 2, 3].map((_, i) => (
                 <div
                   key={i}
-                  className="w-8 h-8 rounded-full border-2 border-white shadow-sm overflow-hidden bg-slate-200"
+                  className="w-8 h-8 rounded-full border-2 border-white shadow-sm overflow-hidden bg-slate-200 relative"
                 >
-                  <img
+                  <Image
                     src={`https://ui-avatars.com/api/?name=User+${i}&background=random`}
                     alt="user"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                 </div>
               ))}

@@ -1,6 +1,7 @@
 import React from "react";
 import { ChevronRight, CheckCircle, Award } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Content1() {
   return (
@@ -72,10 +73,11 @@ export default function Content1() {
         {/* Visual Content */}
         <div className="lg:col-span-6 relative mt-10 lg:mt-0 w-full max-w-2xl mx-auto">
           <div className="relative rounded-[2rem] overflow-hidden border-8 border-white shadow-[0_20px_50px_-15px_rgba(79,70,229,0.2)] bg-slate-100 aspect-square md:aspect-[4/3] lg:aspect-square">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
               alt="Tim profesional sedang berkolaborasi di kantor"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
               loading="eager"
             />
           </div>

@@ -1,6 +1,7 @@
 import { Filter, Search } from "lucide-react";
+import type { UserData } from "@/types";
 
-export function DashboardHeader({ user }: { user?: any }) {
+export function DashboardHeader({ user: _user }: { user?: UserData }) {
   return (
     <header className="flex items-center gap-6">
       <div className="relative flex-1 max-w-[640px]">

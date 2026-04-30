@@ -2,18 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { ModuleList } from "./ModuleList";
-import {
-  Play,
-  RotateCcw,
-  Volume2,
-  Settings,
-  Maximize,
-  Clock,
-  Download,
-  Plus,
-  CheckCircle,
-  ArrowLeft,
-} from "lucide-react";
+import { Play, Clock, Download, CheckCircle, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/shared/ui/Button";
 import {
@@ -21,6 +10,7 @@ import {
   recordModuleWatch,
 } from "@/app/actions/courseActions";
 import { useEffect } from "react";
+import type { Course } from "@/types";
 
 interface Module {
   id: string;
@@ -32,9 +22,9 @@ interface Module {
 }
 
 interface CoursePlayerContentProps {
-  course: any;
+  course: Course;
   modules: Module[];
-  relatedCourses: any[];
+  relatedCourses: Course[];
 }
 
 export function CoursePlayerContent({
@@ -138,10 +128,10 @@ export function CoursePlayerContent({
               <div className="flex items-center gap-4 pt-2">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-400">
-                    {course.instructor_name?.[0] || "K"}
+                    {course.instructor?.[0] || "K"}
                   </div>
                   <span className="text-sm font-bold text-slate-500">
-                    {course.instructor_name || "Kavaa Instructor"}
+                    {course.instructor || "Kavaa Instructor"}
                   </span>
                 </div>
                 <button className="text-lg  text-primaryTint hover:underline">
@@ -218,7 +208,7 @@ export function CoursePlayerContent({
                       Level
                     </span>
                     <div className="px-5 py-3 bg-primaryTint rounded-2xl text-blue-100 text-xs font-black border border-blue-100 font-medium">
-                      {course.difficulty || "Dasar"}
+                      Dasar
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 min-w-[120px]">
@@ -235,8 +225,8 @@ export function CoursePlayerContent({
             ) : (
               <div className="py-6 text-center bg-slate-50 rounded-[2rem] border border-dashed border-slate-200">
                 <p className="text-sm font-bold text-slate-400">
-                  Klik tab "Give Feedback" di panel kanan untuk memberikan
-                  ulasan
+                  Klik tab &quot;Give Feedback&quot; di panel kanan untuk
+                  memberikan ulasan
                 </p>
               </div>
             )}

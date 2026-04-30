@@ -1,5 +1,5 @@
 import { Clock, Star, BrainCircuit } from "lucide-react";
-import { CourseCardProps } from "@/type";
+import { CourseCardProps } from "@/types";
 
 export default function CourseCard({
   category,

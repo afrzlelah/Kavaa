@@ -4,7 +4,15 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import { ChevronRight, Star } from "lucide-react";
 import KavaaBanner from "@/components/Atom/KavaaBanner";
 import Link from "next/link";
-import { FormData } from "@/type";
+interface FormData {
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  country?: string;
+  state?: string;
+  phone?: string;
+  password?: string;
+}
 
 const RegisterPage: React.FC = () => {
   const [messageRegist, setMessageRegist] = useState<string>("");
@@ -41,7 +49,7 @@ const RegisterPage: React.FC = () => {
       return;
     }
 
-    if (formData.password.length < 6) {
+    if (!formData.password || formData.password.length < 6) {
       setMessageRegist("Password minimal 6 karakter.");
       return;
     }

@@ -6,8 +6,9 @@ import { DashboardSidebar } from "@/components/features/dashboard/DashboardSideb
 import { MentorTable } from "@/components/features/dashboard/MentorTable";
 import { getQuickStats } from "@/services/courseService";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import type { UserData } from "@/types";
 
-export default async function DashboardPage({ userId, user }: { userId?: string, user?: any }) {
+export default async function DashboardPage({ userId, user }: { userId?: string, user?: UserData }) {
   const quickStats = userId ? await getQuickStats(userId) : [];
 
   return (

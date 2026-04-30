@@ -1,15 +1,18 @@
 "use client";
 
+import Image from "next/image";
 import { createClientClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 import { Bell, Mail, MessageSquare, MoreVertical, Plus } from "lucide-react";
 import { useParams } from "next/navigation";
-
 import { UserData } from "@/types";
 
-export default function SidebarKanan({ user }: { user?: any }) {
+type Mentor = { id: number | string; name: string; role: string; avatar_url?: string };
+type AuthUser = UserData & { id?: string; user_metadata?: { first_name?: string; last_name?: string } };
+
+export default function SidebarKanan({ user }: { user?: AuthUser }) {
   const [dataUser, setDataUser] = useState<UserData | null>(null);
-  const [mentors, setMentors] = useState<any[]>([]);
+  const [mentors, setMentors] = useState<Mentor[]>([]);
   const params = useParams();
 
   useEffect(() => {
@@ -94,10 +97,12 @@ export default function SidebarKanan({ user }: { user?: any }) {
         <div className="relative w-28 h-28 mb-4">
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-600 via-blue-400 to-slate-100 p-1">
             <div className="w-full h-full bg-white rounded-full p-1">
-              <img
-                src={dataUser?.avatar_url || "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=200&h=200&fit=crop&q=80"}
+              <Image
+                src={dataUser?.avatar_url || "https://images.unsplash.com/photo-1599566150163-29194dcaad36"}
                 alt="Profil"
-                className="w-full h-full rounded-full object-cover"
+                fill
+                style={{ objectFit: "cover" }}
+                className="rounded-full"
               />
             </div>
           </div>
@@ -153,15 +158,17 @@ export default function SidebarKanan({ user }: { user?: any }) {
         </div>
 
         <div className="flex flex-col gap-5 flex-1">
-          {displayMentors.map((mentor: any, idx: number) => (
+          {displayMentors.map((mentor, idx) => (
             <div
               key={mentor.id || idx}
               className="flex items-center justify-between"
             >
               <div className="flex items-center gap-3">
-                <img
-                  src={mentor.avatar_url || mentor.avatar}
+                <Image
+                  src={mentor.avatar_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"}
                   alt={mentor.name}
+                  width={40}
+                  height={40}
                   className="w-10 h-10 rounded-full object-cover"
                 />
                 <div className="flex flex-col">

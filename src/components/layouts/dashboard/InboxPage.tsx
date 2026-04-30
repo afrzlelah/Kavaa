@@ -11,12 +11,18 @@ import {
   FileText,
   ChevronDown,
   ArrowLeft,
+  Phone,
+  Video,
 } from "lucide-react";
+import Image from "next/image";
 import { createClientClient } from "@/utils/supabase/client";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
-import { findExistingConversationClient, markMessagesAsReadClient } from "@/services/inboxClientService";
-import { Contact } from "@/type";
+import {
+  findExistingConversationClient,
+  markMessagesAsReadClient,
+} from "@/services/inboxClientService";
+import { Contact } from "@/types";
 
 // --- Helper for Relative Time ---
 const formatRelativeTime = (date: string | Date) => {
@@ -41,16 +47,20 @@ function Avatar({
     lg: "w-11 h-11 text-sm",
   };
 
-  const initials = contact.initials || contact.name?.charAt(0).toUpperCase() || "?";
+  const initials =
+    contact.initials || contact.name?.charAt(0).toUpperCase() || "?";
   const bgColor = contact.color || "bg-indigo-500";
 
   if (contact.avatar) {
     return (
-      <img
-        src={contact.avatar}
-        alt={contact.name}
-        className={`${sizeMap[size]} rounded-full object-cover flex-shrink-0`}
-      />
+      <div className={`${sizeMap[size]} rounded-full overflow-hidden flex-shrink-0 relative`}>
+        <Image
+          src={contact.avatar}
+          alt={contact.name}
+          fill
+          className="object-cover"
+        />
+      </div>
     );
   }
 
@@ -62,7 +72,6 @@ function Avatar({
     </div>
   );
 }
-
 
 // --- Sidebar Contact Item ---
 function ContactItem({
@@ -108,7 +117,7 @@ function ContactItem({
 function MessageBubble({ msg, isNewGroup }: { msg: any; isNewGroup: boolean }) {
   const isMine = msg.isMine;
   const senderName = msg.sender || "Kavaa User";
-  
+
   const senderContact: Contact = {
     id: msg.sender_id,
     name: senderName,
@@ -121,9 +130,13 @@ function MessageBubble({ msg, isNewGroup }: { msg: any; isNewGroup: boolean }) {
 
   if (isMine) {
     return (
-      <div className={`flex justify-end items-end gap-2 ${isNewGroup ? "mb-4 mt-2" : "mb-1"}`}>
+      <div
+        className={`flex justify-end items-end gap-2 ${isNewGroup ? "mb-4 mt-2" : "mb-1"}`}
+      >
         <div className="max-w-[75%] sm:max-w-md lg:max-w-lg">
-          <div className={`bg-primaryTint text-white rounded-2xl px-4 py-2.5 shadow-sm transition-all hover:shadow-md ${isNewGroup ? "rounded-br-sm" : ""}`}>
+          <div
+            className={`bg-primaryTint text-white rounded-2xl px-4 py-2.5 shadow-sm transition-all hover:shadow-md ${isNewGroup ? "rounded-br-sm" : ""}`}
+          >
             <p className="text-sm leading-relaxed">{msg.content}</p>
             <div className="flex items-center justify-end gap-1 mt-1 opacity-70">
               <p className="text-[9px]">{msg.time}</p>
@@ -141,47 +154,77 @@ function MessageBubble({ msg, isNewGroup }: { msg: any; isNewGroup: boolean }) {
   }
 
   return (
-    <div className={`flex items-start gap-2 ${isNewGroup ? "mb-4 mt-2" : "mb-1"}`}>
-      {isNewGroup ? <Avatar contact={senderContact} size="sm" /> : <div className="w-8 flex-shrink-0" />}
+    <div
+      className={`flex items-start gap-2 ${isNewGroup ? "mb-4 mt-2" : "mb-1"}`}
+    >
+      {isNewGroup ? (
+        <Avatar contact={senderContact} size="sm" />
+      ) : (
+        <div className="w-8 flex-shrink-0" />
+      )}
       <div className="max-w-[75%] sm:max-w-md lg:max-w-lg">
         {isNewGroup && (
           <p className="text-[10px] font-bold mb-1 ml-1 text-gray-500 uppercase tracking-wider">
             {msg.sender}
           </p>
         )}
-        
+
         {msg.type === "text" && (
-          <div className={`bg-white border border-gray-100 text-gray-800 rounded-2xl px-4 py-2.5 shadow-sm transition-all hover:shadow-md ${isNewGroup ? "rounded-tl-sm" : ""}`}>
+          <div
+            className={`bg-white border border-gray-100 text-gray-800 rounded-2xl px-4 py-2.5 shadow-sm transition-all hover:shadow-md ${isNewGroup ? "rounded-tl-sm" : ""}`}
+          >
             <p className="text-sm leading-relaxed">{msg.content}</p>
             <p className="text-[9px] text-gray-400 mt-1">{msg.time}</p>
           </div>
         )}
 
         {msg.type === "audio" && (
-          <div className={`bg-primaryTint/5 border border-primaryTint/10 rounded-2xl px-4 py-3 mb-1 flex items-center gap-3 min-w-[200px] ${isNewGroup ? "rounded-tl-sm" : ""}`}>
+          <div
+            className={`bg-primaryTint/5 border border-primaryTint/10 rounded-2xl px-4 py-3 mb-1 flex items-center gap-3 min-w-[200px] ${isNewGroup ? "rounded-tl-sm" : ""}`}
+          >
             <button className="w-8 h-8 bg-primaryTint rounded-full flex items-center justify-center flex-shrink-0 shadow-sm transition-transform active:scale-95">
-              <Play size={14} className="text-white ml-0.5" fill="currentColor" />
+              <Play
+                size={14}
+                className="text-white ml-0.5"
+                fill="currentColor"
+              />
             </button>
             <div className="flex items-center gap-1 flex-1">
-              {[10, 14, 18, 12, 16, 8, 20, 14, 10, 12, 18, 16, 8, 14, 12, 10, 16, 18, 12, 10].map((h, i) => (
-                <div key={i} className="bg-primaryTint/40 rounded-full w-1" style={{ height: `${h}px` }} />
+              {[
+                10, 14, 18, 12, 16, 8, 20, 14, 10, 12, 18, 16, 8, 14, 12, 10,
+                16, 18, 12, 10,
+              ].map((h, i) => (
+                <div
+                  key={i}
+                  className="bg-primaryTint/40 rounded-full w-1"
+                  style={{ height: `${h}px` }}
+                />
               ))}
             </div>
-            <span className="text-primaryTint text-[10px] font-bold opacity-70">0:42</span>
+            <span className="text-primaryTint text-[10px] font-bold opacity-70">
+              0:42
+            </span>
           </div>
         )}
 
         {msg.type === "files" && (
-          <div className={`flex flex-col gap-2 ${isNewGroup ? "rounded-tl-sm" : ""}`}>
+          <div
+            className={`flex flex-col gap-2 ${isNewGroup ? "rounded-tl-sm" : ""}`}
+          >
             <div className="flex gap-2 flex-wrap">
-              {msg.files?.map((f:any, i:any) => (
-                <div key={i} className="flex items-center gap-3 bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 shadow-sm transition-all hover:bg-white">
+              {msg.files?.map((f: any, i: any) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-3 bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 shadow-sm transition-all hover:bg-white"
+                >
                   <div className="p-2 bg-primaryTint/10 rounded-lg">
                     <FileText size={18} className="text-primaryTint" />
                   </div>
                   <div>
                     <p className="text-xs font-bold text-gray-800">{f.name}</p>
-                    <p className="text-[10px] text-gray-400 uppercase">{f.size}</p>
+                    <p className="text-[10px] text-gray-400 uppercase">
+                      {f.size}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -200,19 +243,23 @@ function MessageBubble({ msg, isNewGroup }: { msg: any; isNewGroup: boolean }) {
 }
 
 // --- Main Component ---
-export default function ChatApp({ 
-  initialConversations = [], 
-  userId 
-}: { 
-  initialConversations?: any[], 
-  userId?: string 
+export default function ChatApp({
+  initialConversations = [],
+  userId,
+}: {
+  initialConversations?: any[];
+  userId?: string;
 }) {
   const [activeChat, setActiveChat] = useState<string | null>(null);
   const [conversations, setConversations] = useState(initialConversations);
-  const [messagesList, setMessagesList] = useState<any[]>([]);
+  const [messagesList, setMessagesList] = useState<any[]>(
+    [],
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [messageInput, setMessageInput] = useState("");
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<
+    { id: string; first_name: string; last_name: string; avatar_url?: string }[]
+  >([]);
   const [isSearching, setIsSearching] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -221,11 +268,13 @@ export default function ChatApp({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
-        activeChat && 
-        document.activeElement?.tagName !== "INPUT" && 
+        activeChat &&
+        document.activeElement?.tagName !== "INPUT" &&
         document.activeElement?.tagName !== "TEXTAREA" &&
-        !e.ctrlKey && !e.metaKey && !e.altKey &&
-        e.key.length === 1 
+        !e.ctrlKey &&
+        !e.metaKey &&
+        !e.altKey &&
+        e.key.length === 1
       ) {
         inputRef.current?.focus();
       }
@@ -251,14 +300,14 @@ export default function ChatApp({
     }
   }, [activeChat]);
 
-
   useEffect(() => {
     if (!userId) return;
 
-    let channel: any;
+    let channel: ReturnType<
+      ReturnType<typeof createClientClient>["channel"]
+    > | null = null;
 
     const setupSubscriptions = () => {
-      const { createClientClient } = require("@/utils/supabase/client");
       const supabase = createClientClient();
 
       const channelId = `inbox_${userId}`;
@@ -268,19 +317,26 @@ export default function ChatApp({
       supabase.removeChannel(supabase.channel(channelId));
 
       const newChannel = supabase.channel(channelId);
-      
+
       newChannel
         .on(
           "postgres_changes",
           { event: "INSERT", schema: "public", table: "messages" },
-          (payload: any) => {
-            console.log("Inbox: 📩 New message!", payload.new);
+          (payload: {
+            new: {
+              id: string;
+              conversation_id: string;
+              sender_id: string;
+              content: string;
+              created_at: string;
+            };
+          }) => {
             const newMsg = payload.new;
 
             // 1. Update messages
             if (newMsg.conversation_id === activeChat) {
               setMessagesList((prev) => {
-                if (prev.some(m => m.id === newMsg.id)) return prev;
+                if (prev.some((m) => m.id === newMsg.id)) return prev;
                 return [...prev, newMsg];
               });
               if (newMsg.sender_id !== userId) {
@@ -290,7 +346,9 @@ export default function ChatApp({
 
             // 2. Update sidebar
             setConversations((prev) => {
-              const index = prev.findIndex(c => c.id === newMsg.conversation_id);
+              const index = prev.findIndex(
+                (c) => c.id === newMsg.conversation_id,
+              );
               if (index !== -1) {
                 const updated = [...prev];
                 updated[index] = {
@@ -298,34 +356,42 @@ export default function ChatApp({
                   lastMessage: newMsg.content,
                   time: formatRelativeTime(newMsg.created_at),
                   last_message_at: newMsg.created_at,
-                  unread: newMsg.conversation_id === activeChat ? 0 : (updated[index].unread || 0) + (newMsg.sender_id !== userId ? 1 : 0)
+                  unread:
+                    newMsg.conversation_id === activeChat
+                      ? 0
+                      : ((updated[index].unread as number) || 0) +
+                        (newMsg.sender_id !== userId ? 1 : 0),
                 };
-                return [...updated].sort((a, b) => 
-                  new Date(b.last_message_at || 0).getTime() - new Date(a.last_message_at || 0).getTime()
+                return [...updated].sort(
+                  (a, b) =>
+                    new Date(
+                      (b.last_message_at as string | number) || 0,
+                    ).getTime() -
+                    new Date(
+                      (a.last_message_at as string | number) || 0,
+                    ).getTime(),
                 );
               }
               return prev;
             });
-          }
+          },
         )
         .subscribe((status: string) => {
-          console.log(`Inbox: Subscription ${channelId} status:`, status);
+          console.log(`Inbox: Subscription status:`, status);
         });
 
       channel = newChannel;
     };
 
-      setupSubscriptions();
+    setupSubscriptions();
 
-      return () => {
-        if (channel) {
-          const supabase = createClientClient();
-          supabase.removeChannel(channel);
-        }
-      };
-    }, [userId, activeChat]);
-
-
+    return () => {
+      if (channel) {
+        const supabase = createClientClient();
+        supabase.removeChannel(channel);
+      }
+    };
+  }, [userId, activeChat]);
 
   // Search users logic
   const handleSearchUsers = async (query: string) => {
@@ -355,11 +421,14 @@ export default function ChatApp({
   const startNewConversation = async (otherUser: any) => {
     const { createClientClient } = await import("@/utils/supabase/client");
     const supabase = createClientClient();
-    
+
     try {
       // 1. Check if conversation already exists
-      const existingId = await findExistingConversationClient(userId!, otherUser.id);
-      
+      const existingId = await findExistingConversationClient(
+        userId!,
+        otherUser.id,
+      );
+
       if (existingId) {
         handleSelectChat(existingId);
         setSearchQuery("");
@@ -371,7 +440,7 @@ export default function ChatApp({
       // 2. Create new conversation
       const { data: conv, error: convErr } = await supabase
         .from("conversations")
-        .insert([{}]) 
+        .insert([{}])
         .select()
         .single();
 
@@ -380,7 +449,7 @@ export default function ChatApp({
       // 3. Add participants
       await supabase.from("conversation_participants").insert([
         { conversation_id: conv.id, user_id: userId },
-        { conversation_id: conv.id, user_id: otherUser.id }
+        { conversation_id: conv.id, user_id: otherUser.id },
       ]);
 
       const newContact = {
@@ -390,7 +459,7 @@ export default function ChatApp({
         lastMessage: "Mulai percakapan baru...",
         time: "Baru saja",
         last_message_at: new Date().toISOString(),
-        unread: 0
+        unread: 0,
       };
 
       setConversations([newContact, ...conversations]);
@@ -404,13 +473,12 @@ export default function ChatApp({
     }
   };
 
-
   // Function to fetch messages when a chat is selected
   const handleSelectChat = async (id: string) => {
     setActiveChat(id);
     const { createClientClient } = await import("@/utils/supabase/client");
     const supabase = createClientClient();
-    
+
     // 1. Fetch messages
     const { data, error } = await supabase
       .from("messages")
@@ -426,11 +494,10 @@ export default function ChatApp({
     await markMessagesAsReadClient(id, userId!);
 
     // 3. Update Sidebar unread count locally
-    setConversations((prev) => 
-      prev.map(c => c.id === id ? { ...c, unread: 0 } : c)
+    setConversations((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, unread: 0 } : c)),
     );
   };
-
 
   const handleSendMessage = async () => {
     if (!messageInput.trim() || !activeChat || !userId) return;
@@ -456,11 +523,13 @@ export default function ChatApp({
 
     const { data, error } = await supabase
       .from("messages")
-      .insert([{
-        conversation_id: activeChat,
-        sender_id: userId,
-        content: content,
-      }])
+      .insert([
+        {
+          conversation_id: activeChat,
+          sender_id: userId,
+          content: content,
+        },
+      ])
       .select()
       .single();
 
@@ -470,10 +539,8 @@ export default function ChatApp({
       alert("Gagal mengirim pesan. Silakan coba lagi.");
     } else if (data) {
       // Replace optimistic message with real data
-      setMessagesList((prev) => 
-        prev.map((m) => (m.id === tempId ? data : m))
-      );
-      
+      setMessagesList((prev) => prev.map((m) => (m.id === tempId ? data : m)));
+
       // Update Sidebar with unified logic
       setConversations((prev) => {
         const updated = prev.map((c) => {
@@ -483,37 +550,20 @@ export default function ChatApp({
               lastMessage: data.content,
               time: "Baru saja",
               last_message_at: data.created_at,
-              unread: 0 // Reset unread when I send a message
+              unread: 0, // Reset unread when I send a message
             };
           }
           return c;
         });
-        
-        return [...updated].sort((a, b) => 
-          new Date(b.last_message_at || 0).getTime() - new Date(a.last_message_at || 0).getTime()
+
+        return [...updated].sort(
+          (a, b) =>
+            new Date(b.last_message_at || 0).getTime() -
+            new Date(a.last_message_at || 0).getTime(),
         );
       });
     }
   };
-
-
-  // Keyboard auto-focus logic
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (
-        activeChat && 
-        document.activeElement?.tagName !== "INPUT" && 
-        document.activeElement?.tagName !== "TEXTAREA" &&
-        !e.ctrlKey && !e.metaKey && !e.altKey &&
-        e.key.length === 1 
-      ) {
-        inputRef.current?.focus();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [activeChat]);
 
   return (
     <div className="flex-1 w-full flex flex-col bg-white font-['DM_Sans',sans-serif] overflow-hidden">
@@ -532,7 +582,7 @@ export default function ChatApp({
             value={searchQuery}
             onChange={(e) => handleSearchUsers(e.target.value)}
           />
-          
+
           {/* Search Results Dropdown */}
           {searchResults.length > 0 && (
             <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-100 rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-1">
@@ -542,16 +592,25 @@ export default function ChatApp({
                   onClick={() => startNewConversation(user)}
                   className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left border-b border-gray-50 last:border-0"
                 >
-                  <div className="w-9 h-9 rounded-full bg-primaryTint/10 flex items-center justify-center text-primaryTint text-xs font-bold">
+                  <div className="w-9 h-9 rounded-full bg-primaryTint/10 flex items-center justify-center text-primaryTint text-xs font-bold relative overflow-hidden">
                     {user.avatar_url ? (
-                      <img src={user.avatar_url} className="w-full h-full rounded-full object-cover" />
+                      <Image
+                        src={user.avatar_url}
+                        alt="avatar"
+                        fill
+                        className="object-cover"
+                      />
                     ) : (
                       user.first_name[0]
                     )}
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-gray-800">{user.first_name} {user.last_name}</p>
-                    <p className="text-[10px] text-gray-400">Klik untuk mulai chat</p>
+                    <p className="text-sm font-bold text-gray-800">
+                      {user.first_name} {user.last_name}
+                    </p>
+                    <p className="text-[10px] text-gray-400">
+                      Klik untuk mulai chat
+                    </p>
                   </div>
                 </button>
               ))}
@@ -562,7 +621,6 @@ export default function ChatApp({
           <Filter size={16} className="text-gray-500" />
         </button>
       </div>
-
 
       {/* ── Body ── */}
       <div className="flex flex-1 overflow-hidden">
@@ -592,10 +650,10 @@ export default function ChatApp({
               <div className="space-y-1">
                 {conversations.map((c) => (
                   <ContactItem
-                    key={c.id}
-                    contact={c}
+                    key={c.id as string}
+                    contact={c as unknown as Contact}
                     active={activeChat === c.id}
-                    onClick={() => handleSelectChat(c.id)}
+                    onClick={() => handleSelectChat(c.id as string)}
                   />
                 ))}
               </div>
@@ -620,19 +678,26 @@ export default function ChatApp({
             </button>
 
             {activeContact && (
-              <div className="w-10 h-10 bg-primaryTint/10 rounded-full flex items-center justify-center text-primaryTint font-bold overflow-hidden">
+              <div className="w-10 h-10 bg-primaryTint/10 rounded-full flex items-center justify-center text-primaryTint font-bold overflow-hidden relative">
                 {activeContact.avatar ? (
-                  <img src={activeContact.avatar} className="w-full h-full object-cover" />
+                  <Image
+                    src={activeContact.avatar as string}
+                    alt={activeContact.name as string}
+                    fill
+                    className="object-cover"
+                  />
                 ) : (
-                  activeContact.name.charAt(0)
+                  (activeContact.name as string).charAt(0)
                 )}
               </div>
             )}
             <div className="flex-1 min-w-0">
               <h2 className="text-base font-black text-gray-800 truncate">
-                {activeContact?.name ?? "Pilih percakapan"}
+                {(activeContact?.name as string) ?? "Pilih percakapan"}
               </h2>
-              <p className="text-[10px] font-bold text-green-500 uppercase">Online</p>
+              <p className="text-[10px] font-bold text-green-500 uppercase">
+                Online
+              </p>
             </div>
           </div>
 
@@ -642,7 +707,9 @@ export default function ChatApp({
               <div className="w-24 h-24 bg-primaryTint/5 rounded-full flex items-center justify-center mb-4">
                 <Mic size={40} className="text-primaryTint/20" />
               </div>
-              <h3 className="text-lg font-black text-gray-800 mb-2">Pesan Anda</h3>
+              <h3 className="text-lg font-black text-gray-800 mb-2">
+                Pesan Anda
+              </h3>
               <p className="text-sm text-gray-400 max-w-[240px]">
                 Kirim foto dan pesan pribadi ke teman atau grup.
               </p>
@@ -655,47 +722,65 @@ export default function ChatApp({
           {/* Messages & Input Area */}
           {activeContact && (
             <>
-              <div 
-                ref={scrollRef} 
+              <div
+                ref={scrollRef}
                 className="flex-1 overflow-y-auto px-4 md:px-8 py-6 space-y-2 bg-gray-50/30 scroll-smooth"
               >
                 {messagesList.length === 0 ? (
                   <div className="h-full flex items-center justify-center">
-                    <p className="text-gray-400 text-sm italic">Belum ada pesan. Mulai percakapan sekarang!</p>
+                    <p className="text-gray-400 text-sm italic">
+                      Belum ada pesan. Mulai percakapan sekarang!
+                    </p>
                   </div>
                 ) : (
                   messagesList.map((msg, idx) => {
                     const prevMsg = messagesList[idx - 1];
-                    const isNewGroup = !prevMsg || prevMsg.sender_id !== msg.sender_id || 
-                                     (new Date(msg.created_at).getTime() - new Date(prevMsg.created_at).getTime() > 300000); 
-                    
+                    const isNewGroup =
+                      !prevMsg ||
+                      prevMsg.sender_id !== msg.sender_id ||
+                      new Date(msg.created_at as string).getTime() -
+                        new Date(prevMsg.created_at as string).getTime() >
+                        300000;
+
                     return (
-                      <MessageBubble 
-                        key={msg.id} 
+                      <MessageBubble
+                        key={msg.id as string}
                         isNewGroup={isNewGroup}
                         msg={{
                           ...msg,
                           isMine: msg.sender_id === userId,
-                          sender: msg.sender_name || (msg.sender_id === userId ? "Me" : activeContact.name),
-                          time: new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                          type: msg.type || "text"
-                        }} 
+                          sender:
+                            msg.sender_name ||
+                            (msg.sender_id === userId
+                              ? "Me"
+                              : activeContact.name),
+                          time: new Date(
+                            msg.created_at as string,
+                          ).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          }),
+                          type: msg.type || "text",
+                        }}
                       />
                     );
                   })
                 )}
               </div>
- 
+
               {/* Input Area */}
               <div className="bg-white border-t border-gray-100 px-4 md:px-8 py-5 flex-shrink-0">
-                <form 
+                <form
                   onSubmit={(e) => {
                     e.preventDefault();
                     handleSendMessage();
                   }}
                   className="flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-4 py-2 focus-within:ring-4 focus-within:ring-primaryTint/5 focus-within:border-primaryTint/20 transition-all shadow-sm"
                 >
-                  <button type="button" className="p-2 text-gray-400 hover:text-primaryTint transition-colors">
+                  <button
+                    type="button"
+                    className="p-2 text-gray-400 hover:text-primaryTint transition-colors"
+                  >
                     <Paperclip size={20} />
                   </button>
                   <input
@@ -707,21 +792,39 @@ export default function ChatApp({
                     onChange={(e) => setMessageInput(e.target.value)}
                   />
                   <div className="flex items-center gap-1">
-                    <button type="button" className="p-2 text-gray-400 hover:text-primaryTint transition-colors">
+                    <button
+                      type="button"
+                      className="p-2 text-gray-400 hover:text-primaryTint transition-colors"
+                    >
                       <Mic size={20} />
                     </button>
-                    <button type="button" className="p-2 text-gray-400 hover:text-primaryTint transition-colors">
+                    <button
+                      type="button"
+                      className="p-2 text-gray-400 hover:text-primaryTint transition-colors"
+                    >
                       <Camera size={20} />
                     </button>
-                    <button 
-                      type="submit" 
+                    <button
+                      type="submit"
                       disabled={!messageInput.trim()}
                       className={`bg-primaryTint text-white p-2.5 rounded-xl transition-all shadow-md shadow-primaryTint/20 ${
-                        messageInput.trim() ? "hover:scale-105 active:scale-95 opacity-100" : "opacity-50 cursor-not-allowed"
+                        messageInput.trim()
+                          ? "hover:scale-105 active:scale-95 opacity-100"
+                          : "opacity-50 cursor-not-allowed"
                       }`}
                     >
-                      <svg className="w-5 h-5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                      <svg
+                        className="w-5 h-5 rotate-90"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2.5"
+                          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                        />
                       </svg>
                     </button>
                   </div>
@@ -729,7 +832,6 @@ export default function ChatApp({
               </div>
             </>
           )}
-
         </div>
       </div>
     </div>

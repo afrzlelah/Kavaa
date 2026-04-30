@@ -1,5 +1,6 @@
 import React from "react";
 import { AvatarProps } from "@/types";
+import Image from "next/image";
 
 const sizeClasses = {
   sm: "w-8 h-8 text-[10px]",
@@ -19,11 +20,14 @@ export function Avatar({
 
   if (src) {
     return (
-      <img
-        src={src}
-        alt={alt}
-        className={`${sizeClass} rounded-full object-cover shrink-0 ${className}`}
-      />
+      <div className={`${sizeClass} rounded-full overflow-hidden shrink-0 relative ${className}`}>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          className="object-cover"
+        />
+      </div>
     );
   }
 

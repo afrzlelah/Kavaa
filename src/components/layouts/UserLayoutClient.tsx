@@ -5,6 +5,10 @@ import { Menu, X } from "lucide-react";
 import SidebarKiri from "@/components/layouts/SidebarKiri";
 import SidebarKanan from "@/components/layouts/SidebarKanan";
 import { usePathname } from "next/navigation";
+import type { UserData } from "@/types";
+
+
+type Friend = { avatar_url?: string; first_name?: string; last_name?: string; role?: string };
 
 export default function UserLayoutClient({
   children,
@@ -13,9 +17,9 @@ export default function UserLayoutClient({
   friends = []
 }: {
   children: React.ReactNode;
-  user: any;
+  user: UserData & { id?: string };
   slug: string;
-  friends?: any[];
+  friends?: Friend[];
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();

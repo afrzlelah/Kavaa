@@ -5,15 +5,16 @@ import { redirect } from "next/navigation";
 import { Card } from "@/components/shared/ui/Card";
 import { Button } from "@/components/shared/ui/Button";
 import { CheckCircle2, Circle, Clock, AlertCircle, Plus } from "lucide-react";
+import type { Task } from "@/types";
 
-const STATUS_STYLES: Record<string, { label: string; icon: any; color: string; bg: string }> = {
+const STATUS_STYLES: Record<string, { label: string; icon: React.ElementType; color: string; bg: string }> = {
   selesai:   { label: "Selesai",       icon: CheckCircle2,  color: "text-emerald-600", bg: "bg-emerald-50" },
   berjalan:  { label: "Sedang Dikerjakan", icon: Clock,     color: "text-blue-600",    bg: "bg-blue-50"    },
   tertunda:  { label: "Tertunda",      icon: AlertCircle,   color: "text-amber-600",   bg: "bg-amber-50"   },
   belum:     { label: "Belum Dimulai", icon: Circle,        color: "text-slate-400",   bg: "bg-slate-50"   },
 };
 
-const FALLBACK_TASKS = [
+const FALLBACK_TASKS: Task[] = [
   { id: 1, title: "Review Pull Request Tim A",    category: "Kolaborasi", status: "berjalan",  due_date: "2026-04-28", priority: "Tinggi"  },
   { id: 2, title: "Buat Mockup Halaman Dashboard", category: "Desain",    status: "belum",     due_date: "2026-04-30", priority: "Sedang"  },
   { id: 3, title: "Selesaikan Modul React Dasar",  category: "Learning",  status: "selesai",   due_date: "2026-04-25", priority: "Rendah"  },
@@ -41,10 +42,10 @@ export default async function Task() {
 
 
   const grouped = {
-    berjalan: tasks.filter((t: any) => t.status === "berjalan"),
-    belum:    tasks.filter((t: any) => t.status === "belum"),
-    tertunda: tasks.filter((t: any) => t.status === "tertunda"),
-    selesai:  tasks.filter((t: any) => t.status === "selesai"),
+    berjalan: tasks.filter((t: Task) => t.status === "berjalan"),
+    belum:    tasks.filter((t: Task) => t.status === "belum"),
+    tertunda: tasks.filter((t: Task) => t.status === "tertunda"),
+    selesai:  tasks.filter((t: Task) => t.status === "selesai"),
   };
 
   return (
@@ -88,12 +89,12 @@ export default async function Task() {
                 <Icon size={14} className={s.color} />
                 <span className={`text-sm font-bold ${s.color}`}>{s.label}</span>
                 <span className="ml-auto text-xs font-bold text-slate-500 bg-white rounded-full px-2 py-0.5">
-                  {(items as any[]).length}
+                  {(items as Task[]).length}
                 </span>
               </div>
 
               <div className="flex flex-col gap-3">
-                {(items as any[]).map((task: any) => {
+                {(items as Task[]).map((task: Task) => {
                   const priorityClass = PRIORITY_COLOR[task.priority] ?? PRIORITY_COLOR.Rendah;
                   return (
                     <Card key={task.id} className="p-4 hover:shadow-md transition-shadow cursor-pointer group">

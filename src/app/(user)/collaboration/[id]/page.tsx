@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Card, CardHeader } from "@/components/shared/ui/Card";
 import { ProgressBar } from "@/components/shared/ui/ProgressBar";
+import Image from "next/image";
 
 export default function ProjectDetailsPage() {
   const params = useParams();
@@ -238,10 +239,11 @@ export default function ProjectDetailsPage() {
               </p>
               
               <div className="relative bg-slate-50 border border-slate-100 rounded-2xl h-40 flex items-center justify-center overflow-hidden mb-4 group cursor-pointer">
-                <img 
+                <Image 
                    src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80" 
                    alt="Travel Planner Preview" 
-                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                   fill
+                   className="object-cover group-hover:scale-110 transition-transform duration-500" 
                 />
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
                 <div className="absolute inset-0 flex items-center justify-center">

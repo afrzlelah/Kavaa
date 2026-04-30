@@ -2,6 +2,7 @@ import { getChallenges } from "@/services/challengeService";
 import { Card } from "@/components/shared/ui/Card";
 import { Button } from "@/components/shared/ui/Button";
 import { Target, Clock, Users, Trophy } from "lucide-react";
+import type { Challenge } from "@/types";
 
 const DIFFICULTY_COLOR: Record<string, string> = {
   Mudah: "text-emerald-600 bg-emerald-50",
@@ -59,7 +60,7 @@ export default async function Challenge() {
 
       {/* Challenge Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {challenges.map((challenge: any) => {
+        {challenges.map((challenge: Challenge) => {
           const diffClass = DIFFICULTY_COLOR[challenge.difficulty] ?? "text-slate-600 bg-slate-100";
           return (
             <Card key={challenge.id} className="flex flex-col hover:shadow-lg transition-shadow">

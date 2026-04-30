@@ -8,6 +8,12 @@ export async function updateUserProfile(userId: string, formData: FormData) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
+  // Verify the authenticated user matches the requested userId
+  const { data: { user: authUser } } = await supabase.auth.getUser();
+  if (!authUser || authUser.id !== userId) {
+    return { success: false, error: "Unauthorized: you can only update your own profile." };
+  }
+
   const firstName = formData.get("firstName") as string;
   const lastName = formData.get("lastName") as string;
   const bio = formData.get("bio") as string;
@@ -39,6 +45,10 @@ export async function updatePassword(formData: FormData) {
   const password = formData.get("password") as string;
   const confirmPassword = formData.get("confirmPassword") as string;
 
+  if (!password || password.length < 6) {
+    return { success: false, error: "Password must be at least 6 characters" };
+  }
+
   if (password !== confirmPassword) {
     return { success: false, error: "Passwords do not match" };
   }
@@ -54,3 +64,4 @@ export async function updatePassword(formData: FormData) {
 
   return { success: true };
 }
+

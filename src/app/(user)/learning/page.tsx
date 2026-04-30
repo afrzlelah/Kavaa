@@ -4,7 +4,7 @@ import { LearningSidebar } from "@/components/features/learning/LearningSidebar"
 import { RecentLearningActivity } from "@/components/features/learning/RecentLearningActivity";
 import { FeedbackSection } from "@/components/features/learning/FeedbackSection";
 import { PortfolioBuilding } from "@/components/features/learning/PortfolioBuilding";
-import { Computer, Plus } from "lucide-react";
+import { Computer } from "lucide-react";
 import { Button } from "@/components/shared/ui/Button";
 import { getLearningPaths } from "@/services/courseService";
 import { createClient } from "@/utils/supabase/server";
@@ -37,7 +37,7 @@ export default async function LearningPage() {
   const learningPaths = await Promise.all(
     pathsData.map(async (path) => {
       const coursesWithProgress = await Promise.all(
-        path.courses.slice(0, 3).map(async (c: any) => {
+        path.courses.slice(0, 3).map(async (c: { id: string; title: string }) => {
           const progress = user
             ? await import("@/services/courseService").then((m) =>
                 m.getCourseProgress(c.id, user.id),
@@ -104,15 +104,15 @@ export default async function LearningPage() {
 
             <div className="flex flex-wrap items-center gap-6">
               {learningPaths.map((path, idx) => (
-                <LearningPathCard key={idx} {...(path as any)} />
+                <LearningPathCard key={idx} {...path} />
               ))}
             </div>
           </div>
 
           {/* Bottom Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6  xl:w-6xl  ">
-            <RecentLearningActivity activities={recentActivity as any} />
-            <FeedbackSection feedback={recentFeedback as any} />
+            <RecentLearningActivity activities={recentActivity as never} />
+            <FeedbackSection feedback={recentFeedback as never} />
             <PortfolioBuilding />
           </div>
         </div>

@@ -1,8 +1,9 @@
 import { Card, CardHeader } from "@/components/shared/ui/Card";
 import { ProgressBar } from "@/components/shared/ui/ProgressBar";
 import { Users, Target, Activity } from "lucide-react";
+import Image from "next/image";
 
-export function CollaborationProgress({ data }: { data?: any[] }) {
+export function CollaborationProgress({ data }: { data?: { id: number; title: string; progress: number }[] }) {
   const hasData = data && data.length > 0;
 
   return (
@@ -16,10 +17,11 @@ export function CollaborationProgress({ data }: { data?: any[] }) {
         {/* Left: Stats & Image */}
         <div className="lg:w-2/5 flex flex-col gap-4">
           <div className="relative h-48 rounded-3xl overflow-hidden shadow-lg border border-slate-100">
-            <img 
+            <Image 
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop&q=80" 
               alt="Team Collaboration" 
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              fill
+              className="object-cover group-hover:scale-110 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent"></div>
             <div className="absolute bottom-4 left-4 text-white">
@@ -48,7 +50,7 @@ export function CollaborationProgress({ data }: { data?: any[] }) {
 
         {/* Right: Progress List */}
         <div className="lg:w-3/5 flex flex-col justify-between py-1 gap-6">
-          {!hasData ? (
+          {hasData ? (
              <div className="flex-1 flex flex-col justify-center gap-6">
                 <div>
                   <div className="flex justify-between text-xs font-black uppercase tracking-wider mb-2">

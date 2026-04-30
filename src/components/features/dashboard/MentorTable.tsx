@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar } from "@/components/shared/ui/Avatar";
+import Image from "next/image";
 
 export function MentorTable() {
   const mentors = [
@@ -36,8 +37,8 @@ export function MentorTable() {
             <tr key={i} className="group hover:bg-slate-50 transition-colors">
               <td className="px-8 py-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-sm">
-                    <img src={m.avatar} alt={m.name} className="w-full h-full object-cover" />
+                  <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border-2 border-white shadow-sm relative">
+                    <Image src={m.avatar} alt={m.name} fill className="object-cover" />
                   </div>
                   <div>
                     <h4 className="text-[12px]  text-slate-800">{m.name}</h4>

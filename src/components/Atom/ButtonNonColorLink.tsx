@@ -1,4 +1,4 @@
-import { ButtonColorComponentsType } from "@/type";
+import { ButtonColorComponentsType } from "@/types";
 import Link from "next/link";
 
 export default function ButtonNonColorLink({

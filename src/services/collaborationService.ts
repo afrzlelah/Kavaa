@@ -36,36 +36,20 @@ export async function getTeamRequests(): Promise<TeamRequest[]> {
     return [];
   }
 
-  return data.map((req: any) => ({
+  return (data as any[]).map((req) => ({
     id: req.id,
-    title: req.teams.project_name,
+    title: req.teams?.project_name || "Proyek",
     initials:
-      req.users.first_name.charAt(0) + (req.users.last_name?.charAt(0) || ""),
+      (req.users?.first_name?.charAt(0) || "") + (req.users?.last_name?.charAt(0) || ""),
     time_ago: "Baru saja", // Could calculate from created_at if added to schema
     status: req.status,
   }));
 }
 
-/**
- * Fetch challenges from the 'challenges' table.
- */
-export async function getChallenges() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+export { getChallenges } from "./challengeService";
 
-  const { data, error } = await supabase
-    .from("challenges")
-    .select("*")
-    .order("deadline", { ascending: true });
-
-  if (error) {
-    console.error("Error fetching challenges:", error);
-    return [];
-  }
-  return data;
-}
-
-const isUuid = (id: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+const isUuid = (id: string) =>
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
 
 /**
  * Fetch teams created by the user or where they are a participant.
@@ -119,10 +103,10 @@ export async function getRecentActivities() {
     return [];
   }
 
-  return data.map((team: any) => ({
+  return (data as any[]).map((team) => ({
     id: team.id,
-    user_name: team.users.first_name,
-    initials: team.users.first_name.charAt(0),
+    user_name: team.users?.first_name || "User",
+    initials: team.users?.first_name?.charAt(0) || "?",
     action: `membuat proyek ${team.project_name}`,
     time_ago: "Baru saja",
     color: "bg-primary",

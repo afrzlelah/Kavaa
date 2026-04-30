@@ -18,8 +18,8 @@ export default function SidebarKiri({
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (open: boolean) => void;
   userId: string;
-  user: any;
-  friendsList?: any[];
+  user: { id?: string; user_metadata?: { first_name?: string; last_name?: string } };
+  friendsList?: { avatar_url?: string; first_name?: string; last_name?: string; role?: string }[];
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -27,18 +27,14 @@ export default function SidebarKiri({
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
     const supabase = createClientClient();
-    
-    // Matikan loading atau beri feedback jika perlu
     try {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-      
-      // Redirect ke login dan pastikan session bersih
       router.push("/login");
-      router.refresh(); // Memaksa refresh untuk membersihkan server cache
-    } catch (error: any) {
-      console.error("Gagal keluar:", error.message);
-      // Fallback redirect
+      router.refresh();
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : "Terjadi kesalahan";
+      console.error("Gagal keluar:", msg);
       window.location.href = "/login";
     }
   };
@@ -47,7 +43,7 @@ export default function SidebarKiri({
     <aside
       className={`${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 fixed lg:static top-0 left-0 h-full w-64 bg-white border-r border-slate-100 flex flex-col transition-transform duration-300 z-40`}
     >
-      {/* Logo bjir anjir*/}
+      {/* Logo */}
       <div className="p-8 hidden lg:flex items-center gap-2">
         <Link href="/" className="flex flex-col leading-none">
           <Image
@@ -117,12 +113,12 @@ export default function SidebarKiri({
                 >
                   <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-transparent group-hover:ring-blue-100 transition-all bg-slate-100 flex items-center justify-center">
                     {friend.avatar_url ? (
-                      <img
+                      <Image
                         src={friend.avatar_url}
-                        alt={friend.first_name}
-                        className="w-full h-full object-cover"
-                        width={100}
-                        height={100}
+                        alt={friend.first_name ?? ""}
+                        width={40}
+                        height={40}
+                        className="w-full h-full object-cover rounded-full"
                       />
                     ) : (
                       <span className="text-xs font-bold text-slate-400">

@@ -1,7 +1,13 @@
 import { Bell, MoreVertical } from "lucide-react";
 import { Card } from "@/components/shared/ui/Card";
 
-export function QuickStatCards({ stats = [] }: { stats?: any[] }) {
+type QuickStat = {
+  title: string;
+  stat: string;
+  icon?: React.ElementType | string;
+};
+
+export function QuickStatCards({ stats = [] }: { stats?: QuickStat[] }) {
   const defaultStats = [
     { title: "Product Design", stat: "2/8 Watched", icon: Bell },
     { title: "Web Development", stat: "1/5 Watched", icon: Bell },
@@ -17,11 +23,15 @@ export function QuickStatCards({ stats = [] }: { stats?: any[] }) {
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {displayStats.map((item, idx) => (
-        <Card key={idx} className="flex-row items-center justify-between p-6 hover:shadow-lg hover:translate-y-[-2px] transition-all cursor-pointer rounded-[2rem] border-slate-50">
+        <Card
+          key={idx}
+          className="flex-row items-center justify-between p-6 hover:shadow-lg hover:translate-y-[-2px] transition-all cursor-pointer rounded-[2rem] border-slate-50"
+        >
           <div className="flex items-center gap-5">
             <div className="w-14 h-14 bg-primaryTint/50 rounded-full flex items-center justify-center text-primary shrink-0 shadow-sm">
               {(() => {
-                const Icon = item.icon && typeof item.icon !== 'string' ? item.icon : Bell;
+                const Icon =
+                  item.icon && typeof item.icon !== "string" ? item.icon : Bell;
                 return <Icon size={24} className="fill-blue-100" />;
               })()}
             </div>
@@ -38,7 +48,6 @@ export function QuickStatCards({ stats = [] }: { stats?: any[] }) {
             <MoreVertical size={18} />
           </button>
         </Card>
-        
       ))}
     </section>
   );

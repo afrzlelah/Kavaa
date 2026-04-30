@@ -25,7 +25,7 @@ export default async function CheckDbPage() {
         </tbody>
       </table>
       <p className="mt-5 text-slate-500">
-        If the list above is empty, you need to add data to the "courses" table in Supabase.
+        If the list above is empty, you need to add data to the &quot;courses&quot; table in Supabase.
       </p>
     </div>
   );

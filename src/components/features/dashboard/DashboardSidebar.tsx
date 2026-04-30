@@ -1,11 +1,14 @@
 "use client";
 
+import type { UserData } from "@/types";
+import Image from "next/image";
+
 import { Avatar } from "@/components/shared/ui/Avatar";
 import { Bell, Mail, Settings, Plus, MoreVertical } from "lucide-react";
 import { Card } from "@/components/shared/ui/Card";
 import { Button } from "@/components/shared/ui/Button";
 
-export function DashboardSidebar({ user }: { user?: any }) {
+export function DashboardSidebar({ user }: { user?: UserData }) {
   const educators = [
     { name: "WPU", role: "Software Developer", avatar: "https://ui-avatars.com/api/?name=WPU&background=random" },
     { name: "Study With Student", role: "Software Developer", avatar: "https://ui-avatars.com/api/?name=SWS&background=random" },
@@ -49,11 +52,12 @@ export function DashboardSidebar({ user }: { user?: any }) {
             />
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
-              <img 
+            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg relative">
+              <Image 
                 src={user?.avatar_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&q=80"} 
                 alt="profile" 
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
             </div>
           </div>
@@ -110,8 +114,8 @@ export function DashboardSidebar({ user }: { user?: any }) {
         <div className="space-y-4">
           {educators.map((ed, idx) => (
             <div key={idx} className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-100 shrink-0">
-                <img src={ed.avatar} alt={ed.name} className="w-full h-full object-cover" />
+              <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-100 shrink-0 relative">
+                <Image src={ed.avatar} alt={ed.name} fill className="object-cover" />
               </div>
               <div className="flex-1 min-w-0">
                 <h4 className="text-[11px] font-black text-slate-800 truncate">{ed.name}</h4>

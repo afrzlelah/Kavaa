@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Menu, X, Search, Bell } from "lucide-react";
 
-import { NavProps } from "@/type";
+import { NavProps } from "@/types";
 import Link from "next/link";
 import ButtonNonColorLink from "@/components/Atom/ButtonNonColorLink";
 import ButtonColorLink from "@/components/Atom/ButtonColorLink";

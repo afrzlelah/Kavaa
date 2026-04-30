@@ -1,7 +1,8 @@
 import { Button } from "@/components/shared/ui/Button";
 import { Play } from "lucide-react";
+import type { UserData } from "@/types";
 
-export function DashboardBanner({ user }: { user?: any }) {
+export function DashboardBanner({ user: _user }: { user?: UserData }) {
   return (
     <section className="relative w-full rounded-[2.5rem] bg-gradient-to-r from-blue-600 to-blue-500 p-10 md:px-14 md:py-12 text-white shadow-xl shadow-blue-500/10 overflow-hidden">
       {/* Dekorasi Latar Belakang - Bintang/Sparkles */}

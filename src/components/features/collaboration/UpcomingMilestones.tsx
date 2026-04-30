@@ -22,7 +22,7 @@ export async function UpcomingMilestones() {
       <div className="flex flex-col gap-5 relative mt-2">
         <div className="absolute left-[7px] top-2 bottom-4 w-0.5 bg-slate-100 rounded-full"></div>
         
-        {displayItems.map((item: any) => (
+        {displayItems.map((item: { id: number; title: string; company_name?: string; deadline?: string; difficulty?: string }) => (
           <div key={item.id} className="relative pl-7 group cursor-pointer">
             <div className={`absolute left-0 top-1.5 w-4 h-4 rounded-full border-4 border-white shadow-sm transition-all group-hover:scale-125 z-10 ${
               item.difficulty === "Hard" ? "bg-rose-500" : "bg-primary"
