@@ -1,84 +1,55 @@
-import { Card, CardHeader } from "@/components/shared/ui/Card";
-import { Avatar } from "@/components/shared/ui/Avatar";
-import { getTeamRequests } from "@/services/collaborationService";
-import { ArrowRight, UserPlus } from "lucide-react";
+import { Card } from "@/components/shared/ui/Card";
+import Image from "next/image";
 import Link from "next/link";
-import { TeamRequest } from "@/types";
 
 export async function TeamFinderRequests() {
-  let requests = await getTeamRequests();
-  const hasData = requests && requests.length > 0;
-
-  if (!hasData) {
-    requests = [
-      {
-        id: 1,
-        initials: "AW",
-        title: "Dibutuhkan Front-end untuk FreshMart",
-        time_ago: "4 mnt yang lalu",
-        color: "bg-indigo-500",
-      },
-      {
-        id: 2,
-        initials: "CM",
-        title: "Back-end untuk SkillLink",
-        time_ago: "12 mnt yang lalu",
-        color: "bg-amber-500",
-      },
-      {
-        id: 3,
-        initials: "JS",
-        title: "UI Designer untuk EduApp",
-        time_ago: "1 jam yang lalu",
-        color: "bg-emerald-500",
-      },
-    ];
-  }
+  const requests = [
+    {
+      id: "1",
+      title: "Front-end needed for FreshMart",
+      time: "4 minutes ago",
+      avatar: "https://ui-avatars.com/api/?name=FM&background=random"
+    },
+    {
+      id: "2",
+      title: "Back-end for SkillLink",
+      time: "3 minutes ago",
+      avatar: "https://ui-avatars.com/api/?name=SL&background=random"
+    },
+    {
+      id: "3",
+      title: "Looking for UI/UX (EduOnnech)",
+      time: "3 minutes ago",
+      avatar: "https://ui-avatars.com/api/?name=EO&background=random"
+    }
+  ];
 
   return (
-    <Card className="h-full border-none shadow-xl shadow-slate-200/50">
-      <CardHeader
-        title="Pencarian Tim Baru"
-        subtitle="Permintaan pencarian tim terbaru"
-      />
-      <div className="flex flex-col gap-4 mt-2">
-        {requests.map((req: TeamRequest) => (
-          <div
-            key={req.id}
-            className="flex gap-4 items-center justify-between p-3 rounded-2xl border border-transparent hover:border-slate-100 hover:bg-slate-50 transition-all group"
-          >
-            <div className="flex gap-3 items-center min-w-0">
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-black shadow-sm group-hover:scale-110 transition-transform ${req.color || "bg-primary"}`}
-              >
-                {req.initials}
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-black text-slate-800 truncate group-hover:text-primary transition-colors">
-                  {req.title}
-                </p>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
-                  {req.time_ago}
-                </p>
-              </div>
+    <Card className="h-full border border-slate-100 shadow-sm p-8 rounded-[2rem]">
+      <h3 className="text-[16px] font-black text-slate-900 mb-2 leading-none">Permintaan Pencarian Tim Baru</h3>
+      <p className="text-[10px] font-bold text-slate-400 mb-8 uppercase tracking-tighter">New Team Finder Requests</p>
+      
+      <div className="space-y-6">
+        {requests.map((req) => (
+          <div key={req.id} className="flex items-center justify-between gap-4 group">
+            <div className="flex items-center gap-3 min-w-0">
+               <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 overflow-hidden relative">
+                  <Image src={req.avatar} alt={req.title} fill className="object-cover" />
+               </div>
+               <div className="min-w-0">
+                  <h4 className="text-[12px] font-medium text-slate-800 truncate">{req.title}</h4>
+                  <p className="text-[10px] font-bold text-slate-400 mt-1">{req.time}</p>
+               </div>
             </div>
-            <Link
-              href={`/collaboration/${req.id}`}
-              className="p-2 rounded-xl bg-slate-100 text-slate-400 group-hover:bg-primary group-hover:text-white transition-all"
+            
+            <Link 
+              href={`/collaboration/team-finder/${req.id}`}
+              className="px-4 py-2 border border-blue-100 text-blue-600 text-[10px] font-black rounded-lg hover:bg-blue-50 transition-all whitespace-nowrap"
             >
-              <ArrowRight size={14} />
+              View Details
             </Link>
           </div>
         ))}
-
-        {!hasData && (
-          <button className="w-full mt-2 py-3 border-2 border-dashed border-slate-200 rounded-2xl flex items-center justify-center gap-2 text-slate-400 hover:border-primary hover:text-primary transition-all">
-            <UserPlus size={16} />
-            <span className="text-[10px] font-black uppercase tracking-widest">
-              Cari Tim Sekarang
-            </span>
-          </button>
-        )}
       </div>
     </Card>
   );

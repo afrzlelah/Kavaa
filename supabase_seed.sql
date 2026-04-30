@@ -118,12 +118,26 @@ CREATE TABLE public.challenges (
 
 CREATE TABLE public.tasks (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
     title TEXT NOT NULL,
-    status TEXT DEFAULT 'todo',
+    category TEXT DEFAULT 'Umum',
+    status TEXT DEFAULT 'belum', -- selesai, berjalan, tertunda, belum
+    priority TEXT DEFAULT 'Sedang',
+    due_date DATE DEFAULT CURRENT_DATE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 5. Create and Seed CERTIFICATES Table
+-- 5. Create course_modules table
+CREATE TABLE public.course_modules (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    course_id UUID REFERENCES public.courses(id) ON DELETE CASCADE,
+    title TEXT NOT NULL,
+    order_index INTEGER NOT NULL,
+    is_completed BOOLEAN DEFAULT false,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 6. Create and Seed CERTIFICATES Table
 CREATE TABLE public.certificates (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID,
