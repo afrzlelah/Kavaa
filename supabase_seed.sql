@@ -2,8 +2,19 @@
 -- KAVAA SEED DATA (Execute in Supabase SQL Editor)
 -- =======================================================
 
+-- 0. Clean up existing tables to ensure schema updates are applied
+DROP TABLE IF EXISTS public.team_requests CASCADE;
+DROP TABLE IF EXISTS public.certificates CASCADE;
+DROP TABLE IF EXISTS public.tasks CASCADE;
+DROP TABLE IF EXISTS public.challenges CASCADE;
+DROP TABLE IF EXISTS public.user_courses CASCADE;
+DROP TABLE IF EXISTS public.courses CASCADE;
+DROP TABLE IF EXISTS public.teams CASCADE;
+DROP TABLE IF EXISTS public.projects CASCADE;
+DROP TABLE IF EXISTS public.mentors CASCADE;
+
 -- 1. Create and Seed MENTORS Table
-CREATE TABLE IF NOT EXISTS public.mentors (
+CREATE TABLE public.mentors (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     avatar TEXT,
@@ -25,7 +36,7 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- 2. Create and Seed PROJECTS & TEAMS Table
-CREATE TABLE IF NOT EXISTS public.projects (
+CREATE TABLE public.projects (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title TEXT NOT NULL,
     description TEXT,
@@ -38,7 +49,7 @@ CREATE TABLE IF NOT EXISTS public.projects (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS public.teams (
+CREATE TABLE public.teams (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     project_name TEXT NOT NULL,
     status TEXT DEFAULT 'active',
@@ -62,17 +73,33 @@ VALUES
 ON CONFLICT DO NOTHING;
 
 -- 3. Create and Seed COURSES & USER_COURSES
-CREATE TABLE IF NOT EXISTS public.courses (
+CREATE TABLE public.courses (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title TEXT NOT NULL,
+    description TEXT,
     category TEXT,
     instructor TEXT,
-    thumbnail_url TEXT,
+    participants INTEGER DEFAULT 0,
+    rating NUMERIC(2,1) DEFAULT 0.0,
+    duration TEXT,
+    level TEXT,
+    is_free BOOLEAN DEFAULT true,
     theme TEXT,
+    price NUMERIC DEFAULT 0.0,
+    thumbnail_url TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS public.user_courses (
+INSERT INTO public.courses (title, description, category, instructor, participants, rating, duration, level, is_free, theme, price)
+VALUES
+    ('React for Beginners', 'Belajar React dari nol sampai bisa bikin project.', 'Development', 'John Doe', 1200, 4.7, '8 jam', 'Beginner', true, 'from-orange-400 to-rose-400', 0),
+    ('UI/UX Fundamentals', 'Dasar desain UI/UX untuk produk digital.', 'Design', 'Jane Smith', 850, 4.5, '6 jam', 'Intermediate', true, 'from-blue-400 to-cyan-400', 0),
+    ('Digital Marketing 101', 'Strategi pemasaran digital untuk pemula.', 'Marketing', 'Alex Johnson', 500, 4.8, '10 jam', 'Beginner', true, 'from-purple-400 to-indigo-400', 0),
+    ('Business Strategy', 'Membangun bisnis yang berkelanjutan.', 'Business', 'Sarah Wilson', 300, 4.9, '12 jam', 'Advanced', false, 'from-emerald-400 to-teal-400', 150000),
+    ('Fullstack Web Dev', 'Menjadi fullstack developer dalam 3 bulan.', 'Development', 'Mike Ross', 2000, 4.6, '40 jam', 'Intermediate', false, 'from-blue-600 to-indigo-600', 500000)
+ON CONFLICT DO NOTHING;
+
+CREATE TABLE public.user_courses (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID,
     course_id UUID REFERENCES public.courses(id),
@@ -81,7 +108,7 @@ CREATE TABLE IF NOT EXISTS public.user_courses (
 );
 
 -- 4. Create and Seed CHALLENGES & TASKS
-CREATE TABLE IF NOT EXISTS public.challenges (
+CREATE TABLE public.challenges (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title TEXT NOT NULL,
     description TEXT,
@@ -89,7 +116,7 @@ CREATE TABLE IF NOT EXISTS public.challenges (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS public.tasks (
+CREATE TABLE public.tasks (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title TEXT NOT NULL,
     status TEXT DEFAULT 'todo',
@@ -97,7 +124,7 @@ CREATE TABLE IF NOT EXISTS public.tasks (
 );
 
 -- 5. Create and Seed CERTIFICATES Table
-CREATE TABLE IF NOT EXISTS public.certificates (
+CREATE TABLE public.certificates (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID,
     course_id UUID REFERENCES public.courses(id),
@@ -105,8 +132,9 @@ CREATE TABLE IF NOT EXISTS public.certificates (
     issued_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     is_earned BOOLEAN DEFAULT true
 );
+
 -- 6. Create and Seed TEAM_REQUESTS Table
-CREATE TABLE IF NOT EXISTS public.team_requests (
+CREATE TABLE public.team_requests (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     team_id UUID REFERENCES public.teams(id),
     user_id UUID,

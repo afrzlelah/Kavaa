@@ -1,11 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CourseCard from "@/components/shared/Cards/CourseCard";
-import { courses } from "@/constants";
+import { createClientClient } from "@/utils/supabase/client";
 
 export default function Catalog() {
   const [activeTab, setActiveTab] = useState("Development");
+  const [courses, setCourses] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const tabs = [
     "Development",
     "Design",
@@ -14,6 +17,27 @@ export default function Catalog() {
     "IT & Software",
     "Personal Development",
   ];
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      setLoading(true);
+      const supabase = createClientClient();
+      const { data, error } = await supabase
+        .from("courses")
+        .select("*")
+        .eq("category", activeTab);
+      console.log(data);
+
+      if (error) {
+        console.error("Error fetching courses:", error);
+      } else {
+        setCourses(data || []);
+      }
+      setLoading(false);
+    };
+
+    fetchCourses();
+  }, [activeTab]);
 
   return (
     <section
@@ -32,7 +56,7 @@ export default function Catalog() {
         </header>
 
         <nav
-          className="flex items-center  gap-2 mb-10 overflow-x-auto pb-4 pl-4 snap-x scrollbar-hide"
+          className="flex items-center gap-2 mb-10 overflow-x-auto pb-4 pl-4 snap-x scrollbar-hide"
           aria-label="Kategori Kursus"
         >
           {tabs.map((tab) => (
@@ -49,25 +73,38 @@ export default function Catalog() {
             </button>
           ))}
         </nav>
-        <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-6 w-full">
-          {courses.map((course, idx) => (
-            <CourseCard
-              key={idx}
-              category={course.category}
-              title={course.title}
-              description={course.description}
-              instructor={course.instructor}
-              participants={course.participants}
-              rating={course.rating}
-              duration={course.duration}
-              level={course.level}
-              progress={course.progress}
-              isFree={course.isFree}
-              theme={course.theme}
-              price={course.price}
-            />
-          ))}
-        </div>
+
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primaryTint"></div>
+          </div>
+        ) : courses.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-6 w-full">
+            {courses.map((course, idx) => (
+              <CourseCard
+                key={course.id || idx}
+                category={course.category}
+                title={course.title}
+                description={course.description}
+                instructor={course.instructor}
+                participants={course.participants}
+                rating={Number(course.rating)}
+                duration={course.duration}
+                level={course.level}
+                progress={0} // Catalog usually shows 0% progress for new users
+                isFree={course.is_free}
+                theme={course.theme}
+                price={course.price}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-300">
+            <p className="text-slate-400 font-medium">
+              Belum ada kursus untuk kategori ini.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
