@@ -174,12 +174,6 @@ export default function FooterHome() {
             >
               <Globe size={16} /> Indonesia (ID)
             </button>
-            <button
-              aria-label="Ubah Mata Uang"
-              className="hover:text-slate-700 transition-colors font-bold"
-            >
-              IDR (Rp)
-            </button>
           </div>
         </div>
       </div>

@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react";
 import CourseCard from "@/components/shared/Cards/CourseCard";
 import { createClientClient } from "@/utils/supabase/client";
+import { Course } from "@/types";
 
 export default function Catalog() {
   const [activeTab, setActiveTab] = useState("Development");
-  const [courses, setCourses] = useState<any[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
 
   const tabs = [
@@ -26,7 +27,6 @@ export default function Catalog() {
         .from("courses")
         .select("*")
         .eq("category", activeTab);
-      console.log(data);
 
       if (error) {
         console.error("Error fetching courses:", error);

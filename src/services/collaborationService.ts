@@ -36,7 +36,23 @@ export async function getTeamRequests(): Promise<TeamRequest[]> {
     return [];
   }
 
-  return (data as any[]).map((req) => ({
+  interface TeamRequestData {
+    id: string;
+    status: string;
+    message: string;
+    teams: {
+      id: string;
+      project_name: string;
+    } | null;
+    users: {
+      id: string;
+      first_name: string;
+      last_name: string;
+      avatar_url: string | null;
+    } | null;
+  }
+
+  return (data as unknown as TeamRequestData[]).map((req) => ({
     id: req.id,
     title: req.teams?.project_name || "Proyek",
     initials:
@@ -103,7 +119,17 @@ export async function getRecentActivities() {
     return [];
   }
 
-  return (data as any[]).map((team) => ({
+  interface TeamActivityData {
+    id: string;
+    project_name: string;
+    status: string;
+    users: {
+      first_name: string;
+      last_name: string;
+    } | null;
+  }
+
+  return (data as unknown as TeamActivityData[]).map((team) => ({
     id: team.id,
     user_name: team.users?.first_name || "User",
     initials: team.users?.first_name?.charAt(0) || "?",

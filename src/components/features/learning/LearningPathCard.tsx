@@ -1,5 +1,5 @@
+import Image from "next/image";
 import { Card } from "@/components/shared/ui/Card";
-import { ProgressBar } from "@/components/shared/ui/ProgressBar";
 import { Button } from "@/components/shared/ui/Button";
 import Link from "next/link";
 
@@ -32,12 +32,13 @@ export function LearningPathCard({
         {icons.map((icon, idx) => (
           <div
             key={idx}
-            className="w-8 h-8 rounded-lg bg-white border border-slate-100 flex items-center justify-center p-1.5 shadow-sm"
+            className="w-8 h-8 rounded-lg bg-white border border-slate-100 flex items-center justify-center p-1.5 shadow-sm relative overflow-hidden"
           >
-            <img
+            <Image
               src={icon}
               alt="tech"
-              className="w-full h-full object-contain"
+              fill
+              className="object-contain p-1"
             />
           </div>
         ))}

@@ -2,7 +2,7 @@ import { Button } from "@/components/shared/ui/Button";
 import { Play } from "lucide-react";
 import type { UserData } from "@/types";
 
-export function DashboardBanner({ user: _user }: { user?: UserData }) {
+export function DashboardBanner({ user }: { user?: UserData }) {
   return (
     <section className="relative w-full rounded-[2.5rem] bg-gradient-to-r from-blue-600 to-blue-500 p-10 md:px-14 md:py-12 text-white shadow-xl shadow-blue-500/10 overflow-hidden">
       {/* Dekorasi Latar Belakang - Bintang/Sparkles */}
@@ -20,9 +20,8 @@ export function DashboardBanner({ user: _user }: { user?: UserData }) {
           KURSUS ONLINE
         </p>
         <h1 className="text-[28px] md:text-[36px] font-black mb-10 leading-[1.2] tracking-tight">
+          Halo {user?.first_name || "Mahasiswa"},<br />
           Wujudkan Karir Profesionalmu
-          <br />
-          Dengan Kursus Online Terbaik
         </h1>
         <button className="flex items-center gap-4 bg-slate-900 text-white pl-6 pr-2 py-2 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-black transition-all group">
           Join Now

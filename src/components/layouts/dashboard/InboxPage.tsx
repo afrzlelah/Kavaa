@@ -11,8 +11,6 @@ import {
   FileText,
   ChevronDown,
   ArrowLeft,
-  Phone,
-  Video,
 } from "lucide-react";
 import Image from "next/image";
 import { createClientClient } from "@/utils/supabase/client";
@@ -113,8 +111,34 @@ function ContactItem({
   );
 }
 
+interface MessageData {
+  id: string;
+  conversation_id: string;
+  sender_id: string;
+  content: string;
+  created_at: string;
+  sender_name?: string;
+  sender_avatar?: string;
+  sender?: string;
+  isMine?: boolean;
+  type?: "text" | "audio" | "files";
+  time?: string;
+  files?: { name: string; size: string }[];
+  isOptimistic?: boolean;
+}
+
+interface ConversationData {
+  id: string;
+  name: string;
+  avatar?: string | null;
+  lastMessage: string;
+  time: string;
+  last_message_at: string;
+  unread: number;
+}
+
 // --- Message Bubble ---
-function MessageBubble({ msg, isNewGroup }: { msg: any; isNewGroup: boolean }) {
+function MessageBubble({ msg, isNewGroup }: { msg: MessageData; isNewGroup: boolean }) {
   const isMine = msg.isMine;
   const senderName = msg.sender || "Kavaa User";
 
@@ -212,7 +236,7 @@ function MessageBubble({ msg, isNewGroup }: { msg: any; isNewGroup: boolean }) {
             className={`flex flex-col gap-2 ${isNewGroup ? "rounded-tl-sm" : ""}`}
           >
             <div className="flex gap-2 flex-wrap">
-              {msg.files?.map((f: any, i: any) => (
+              {msg.files?.map((f, i) => (
                 <div
                   key={i}
                   className="flex items-center gap-3 bg-gray-50 border border-gray-100 rounded-xl px-4 py-2.5 shadow-sm transition-all hover:bg-white"
@@ -247,12 +271,12 @@ export default function ChatApp({
   initialConversations = [],
   userId,
 }: {
-  initialConversations?: any[];
+  initialConversations?: ConversationData[];
   userId?: string;
 }) {
   const [activeChat, setActiveChat] = useState<string | null>(null);
-  const [conversations, setConversations] = useState(initialConversations);
-  const [messagesList, setMessagesList] = useState<any[]>(
+  const [conversations, setConversations] = useState<ConversationData[]>(initialConversations);
+  const [messagesList, setMessagesList] = useState<MessageData[]>(
     [],
   );
   const [searchQuery, setSearchQuery] = useState("");
@@ -418,7 +442,7 @@ export default function ChatApp({
     }
   };
 
-  const startNewConversation = async (otherUser: any) => {
+  const startNewConversation = async (otherUser: { id: string; first_name: string; last_name: string; avatar_url?: string }) => {
     const { createClientClient } = await import("@/utils/supabase/client");
     const supabase = createClientClient();
 
@@ -650,10 +674,10 @@ export default function ChatApp({
               <div className="space-y-1">
                 {conversations.map((c) => (
                   <ContactItem
-                    key={c.id as string}
+                    key={c.id}
                     contact={c as unknown as Contact}
                     active={activeChat === c.id}
-                    onClick={() => handleSelectChat(c.id as string)}
+                    onClick={() => handleSelectChat(c.id)}
                   />
                 ))}
               </div>

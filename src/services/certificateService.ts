@@ -30,8 +30,19 @@ export async function getUserCertificates(
     return [];
   }
 
-  return (data as any[]).map((cert) => ({
-    id: cert.courses?.id || Math.random(),
+  interface DbCertificate {
+    issued_at: string;
+    certificate_url: string;
+    courses: {
+      id: string;
+      title: string;
+      thumbnail_url: string;
+      category: string;
+    } | null;
+  }
+
+  return (data as unknown as DbCertificate[]).map((cert) => ({
+    id: cert.courses?.id || Math.random().toString(),
     title: cert.courses?.title || "Sertifikat Tanpa Judul",
     provider: cert.courses?.category || "Penyedia Tidak Diketahui",
     category: cert.courses?.category || "Other",

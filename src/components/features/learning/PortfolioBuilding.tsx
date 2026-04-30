@@ -1,5 +1,6 @@
 import { Card } from "@/components/shared/ui/Card";
 import { Button } from "@/components/shared/ui/Button";
+import Image from "next/image";
 
 export function PortfolioBuilding() {
   const items = [
@@ -33,11 +34,12 @@ export function PortfolioBuilding() {
             key={item.id}
             className="flex flex-col border border-slate-100 p-2 rounded-md"
           >
-            <div className="aspect-[1.5] rounded-md overflow-hidden bg-slate-100 mb-3 shadow-sm">
-              <img
+            <div className="aspect-[1.5] rounded-md overflow-hidden bg-slate-100 mb-3 shadow-sm relative">
+              <Image
                 src={item.image}
                 alt="portfolio"
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
             </div>
             <h5 className="text-[10px] text-start  text-slate-800 leading-tight mb-1">

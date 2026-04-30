@@ -80,8 +80,15 @@ export interface UserData {
 export interface Course {
   id: string;
   title: string;
+  description: string;
   category: string;
   instructor: string;
+  participants: number | string;
+  rating: number | string;
+  duration: string;
+  level: string;
+  is_free: boolean;
+  price: number | string;
   thumbnail_url: string;
   theme: string;
   instructor_avatar_url?: string;
@@ -157,7 +164,7 @@ export interface Certificate {
 }
 
 export interface TeamRequest {
-  id: number;
+  id: number | string;
   title: string;
   initials: string;
   time_ago: string;

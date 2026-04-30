@@ -46,12 +46,14 @@ export default function Content1() {
             >
               Mulai Belajar Sekarang <ChevronRight size={20} />
             </Link>
-            <button
-              aria-label="Lihat Cara Kerja"
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold flex items-center justify-center gap-2 shadow-sm transition-colors"
+            <Link
+              href="/login?demo=true"
+              aria-label="Coba Demo Juri"
+              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white hover:bg-slate-50 border-2 border-primaryTint/20 text-primaryTint font-bold flex items-center justify-center gap-2 shadow-sm transition-all group"
             >
-              <CheckCircle size={20} className="text-primaryTint" /> Cara Kerja
-            </button>
+              <div className="w-2 h-2 rounded-full bg-primaryTint animate-pulse"></div>
+              Coba Demo (Juri)
+            </Link>
           </div>
 
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 md:gap-6 text-slate-600 text-sm font-medium">

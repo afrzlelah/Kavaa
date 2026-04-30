@@ -6,11 +6,14 @@ import { BsApple, BsGoogle, BsGithub } from "react-icons/bs";
 import SocialLogin from "@/components/layouts/SocialLogin";
 import KavaaBanner from "@/components/Atom/KavaaBanner";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { brandFeatures } from "@/constants";
 import { createClientClient } from "@/utils/supabase/client";
+import { Suspense } from "react";
 
-const LoginPage = () => {
+const LoginContent = () => {
+  const searchParams = useSearchParams();
+  const isDemo = searchParams.get("demo") === "true";
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -94,6 +97,13 @@ const LoginPage = () => {
     }, 3000);
     return () => clearInterval(timer);
   }, []);
+
+  // Auto-login for Jury Demo
+  useEffect(() => {
+    if (isDemo) {
+      AUTH({ email: "juri@kavaa.id", password: "kavaa2026" });
+    }
+  }, [isDemo]);
 
   return (
     <div className="min-h-screen w-full flex bg-white font-sans text-slate-900 overflow-hidden">
@@ -220,6 +230,15 @@ const LoginPage = () => {
             >
               Masuk
             </button>
+
+            <button
+              type="button"
+              onClick={() => AUTH({ email: "juri@kavaa.id", password: "kavaa2026" })}
+              className="w-full bg-white text-primaryTint py-3.5 rounded-xl font-bold border-2 border-primaryTint hover:bg-indigo-50 transition-all flex items-center justify-center gap-2"
+            >
+              <span className="w-2 h-2 bg-primaryTint rounded-full animate-pulse"></span>
+              Masuk sebagai Juri (Demo)
+            </button>
           </form>
 
           <p className="text-center mt-10 text-sm font-medium text-slate-600">
@@ -310,6 +329,18 @@ const LoginPage = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const LoginPage = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen w-full flex items-center justify-center bg-white">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primaryTint"></div>
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
   );
 };
 

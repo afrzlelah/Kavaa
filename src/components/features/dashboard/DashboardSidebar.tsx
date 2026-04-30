@@ -3,9 +3,7 @@
 import type { UserData } from "@/types";
 import Image from "next/image";
 
-import { Avatar } from "@/components/shared/ui/Avatar";
 import { Bell, Mail, Settings, Plus, MoreVertical } from "lucide-react";
-import { Card } from "@/components/shared/ui/Card";
 import { Button } from "@/components/shared/ui/Button";
 
 export function DashboardSidebar({ user }: { user?: UserData }) {

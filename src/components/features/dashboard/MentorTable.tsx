@@ -1,4 +1,3 @@
-import { Avatar } from "@/components/shared/ui/Avatar";
 import Image from "next/image";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
@@ -18,13 +17,15 @@ export async function MentorTable() {
       name: "Dr.Sarah Chen", 
       role: "FRONTEND", 
       created_at: new Date().toISOString(),
-      avatar: "https://ui-avatars.com/api/?name=Sarah+Chen&background=random"
+      avatar: "https://ui-avatars.com/api/?name=Sarah+Chen&background=random",
+      company: "TechCorp"
     },
     { 
       name: "Budi Santoso, M.Arch", 
       role: "FRONTEND", 
       created_at: new Date().toISOString(),
-      avatar: "https://ui-avatars.com/api/?name=Budi+Santoso&background=random"
+      avatar: "https://ui-avatars.com/api/?name=Budi+Santoso&background=random",
+      company: "DesignStudio"
     }
   ];
 
@@ -49,7 +50,7 @@ export async function MentorTable() {
                   </div>
                   <div>
                     <h4 className="text-[12px]  text-slate-800">{m.name}</h4>
-                    <p className="text-[10px]  text-slate-600">{new Date(m.created_at || Date.now()).toLocaleDateString()}</p>
+                    <p className="text-[10px]  text-slate-600">{new Date(m.created_at).toLocaleDateString()}</p>
                   </div>
                 </div>
               </td>
