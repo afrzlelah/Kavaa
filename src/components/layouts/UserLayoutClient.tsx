@@ -6,15 +6,20 @@ import SidebarKiri from "@/components/layouts/SidebarKiri";
 import SidebarKanan from "@/components/layouts/SidebarKanan";
 import { usePathname } from "next/navigation";
 import type { UserData } from "@/types";
+import Image from "next/image";
 
-
-type Friend = { avatar_url?: string; first_name?: string; last_name?: string; role?: string };
+type Friend = {
+  avatar_url?: string;
+  first_name?: string;
+  last_name?: string;
+  role?: string;
+};
 
 export default function UserLayoutClient({
   children,
   user,
   slug,
-  friends = []
+  friends = [],
 }: {
   children: React.ReactNode;
   user: UserData & { id?: string };
@@ -33,13 +38,12 @@ export default function UserLayoutClient({
       {/* TAMPILAN MOBILE: Header & Toggle Menu */}
       <div className="lg:hidden fixed top-0 left-0 w-full bg-white border-b border-slate-100 p-4 flex items-center justify-between z-50">
         <div className="flex items-center gap-2">
-          <div className="flex gap-1">
-            <div className="w-3 h-3 bg-primaryTint rounded-sm"></div>
-            <div className="w-3 h-3 bg-primaryTint rounded-sm"></div>
-          </div>
-          <span className="text-xl font-black text-primaryTint tracking-tight">
-            KAVA
-          </span>
+          <Image
+            src="/assets/logo_kava_text_biru.png"
+            alt="Logo"
+            width={120}
+            height={100}
+          />
         </div>
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
