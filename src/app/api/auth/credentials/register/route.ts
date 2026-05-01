@@ -1,5 +1,5 @@
 // app/api/register/route.ts
-import { createClient } from "@/utils/supabase/server"; // Pastikan pakai utilitas server
+import { createClient } from "@/utilitas/supabase/server"; // Pastikan pakai utilitas server
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 

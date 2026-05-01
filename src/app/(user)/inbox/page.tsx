@@ -1,6 +1,6 @@
-import InboxPage from "@/components/layouts/dashboard/InboxPage";
-import { getConversations } from "@/services/inboxService";
-import { createClient } from "@/utils/supabase/server";
+import InboxPage from "@/components/TataLetak/dashboard/InboxPage";
+import { ambilSemuaPercakapan } from "@/services/layananPesan";
+import { createClient } from "@/utilitas/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -13,7 +13,7 @@ export default async function Inbox() {
     redirect("/login");
   }
 
-  const initialConversations = await getConversations(user.id);
+  const initialConversations = await ambilSemuaPercakapan(user.id);
 
   return <InboxPage initialConversations={initialConversations} userId={user.id} />;
 }

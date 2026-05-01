@@ -1,8 +1,8 @@
-import { getUserCertificates } from "@/services/certificateService";
-import { createClient } from "@/utils/supabase/server";
+import { ambilSertifikatPengguna } from "@/services/layananSertifikat";
+import { createClient } from "@/utilitas/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import RewardCertificateClient from "./RewardCertificateClient";
+import KlienSertifikatHadiah from "./KlienSertifikatHadiah";
 
 export default async function RewardCertificatePage() {
   const cookieStore = await cookies();
@@ -15,7 +15,7 @@ export default async function RewardCertificatePage() {
     redirect("/login");
   }
 
-  let certificates = await getUserCertificates(user.id);
+  let certificates = await ambilSertifikatPengguna(user.id);
 
   // Fallback data for testing if database is empty
   // Adding missing properties to match the expected type
@@ -54,5 +54,5 @@ export default async function RewardCertificatePage() {
     ];
   }
 
-  return <RewardCertificateClient initialCertificates={certificates} />;
+  return <KlienSertifikatHadiah initialCertificates={certificates} />;
 }

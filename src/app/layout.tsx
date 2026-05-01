@@ -8,9 +8,26 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Kavaa",
+  title: "Kavaa | Elevasi Karir & Pembelajaran Masa Depan",
   description:
-    "Temukan jalur belajar yang dipersonalisasi dari ribuan kursus, sertifikasi global, dan program dari institusi ternama untuk mencapai potensi penuh Anda.",
+    "Temukan jalur belajar yang dipersonalisasi dari ribuan kursus, sertifikasi global, dan program dari institusi ternama untuk mencapai potensi penuh Anda bersama Kavaa.",
+  keywords: ["e-learning", "pembelajaran online", "kursus gratis", "sertifikasi IT", "karir masa depan", "Kavaa", "kolaborasi proyek"],
+  authors: [{ name: "Kavaa Team" }],
+  openGraph: {
+    title: "Kavaa | Platform Pembelajaran & Kolaborasi",
+    description: "Tingkatkan skill dan bangun portfolio bersama komunitas Kavaa.",
+    url: "https://kavaa.vercel.app",
+    siteName: "Kavaa",
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kavaa | Where Learning Meets Evolution",
+    description: "Platform edukasi masa depan untuk generasi inovatif.",
+  },
+  viewport: "width=device-width, initial-scale=1",
+  robots: "index, follow",
 };
 
 export default function RootLayout({

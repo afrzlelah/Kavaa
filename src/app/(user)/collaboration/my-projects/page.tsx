@@ -1,6 +1,6 @@
 "use client";
 
-import { Card } from "@/components/shared/ui/Card";
+import { Card } from "@/components/Bersama/ui/Card";
 import { Folder, MoreVertical, Users, Clock, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";

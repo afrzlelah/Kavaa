@@ -15,7 +15,7 @@ import {
   MessageCircle,
   ChevronRight
 } from "lucide-react";
-import { Card } from "@/components/shared/ui/Card";
+import { Card } from "@/components/Bersama/ui/Card";
 import Image from "next/image";
 
 export default async function ProjectDetailsPage({ params }: { params: { id: string } }) {

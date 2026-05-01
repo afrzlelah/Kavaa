@@ -1,10 +1,10 @@
-import { ButtonColorComponentsType } from "@/types";
+import { TipeKomponenTombolWarna } from "@/types";
 import Link from "next/link";
 
 export default function ButtonColorLink({
   name,
   href,
-}: ButtonColorComponentsType) {
+}: TipeKomponenTombolWarna) {
   return (
     <Link
       href={href}

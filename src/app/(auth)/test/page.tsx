@@ -1,7 +1,7 @@
-import { getAllUsers } from "@/services/getAllUser";
+import { ambilSemuaPengguna } from "@/services/layananPengguna";
 
 export default async function Page() {
-  const data = await getAllUsers();
+  const data = await ambilSemuaPengguna();
 
   return (
     <ul>

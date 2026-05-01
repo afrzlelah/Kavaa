@@ -1,6 +1,6 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utilitas/supabase/server";
 import { cookies } from "next/headers";
-import UserLayoutClient from "@/components/layouts/UserLayoutClient";
+import UserLayoutClient from "@/components/TataLetak/UserLayoutClient";
 import { redirect } from "next/navigation";
 
 export default async function UserLayout({

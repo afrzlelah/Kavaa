@@ -1,6 +1,6 @@
 import React from "react";
 import { Flag } from "lucide-react";
-import { Card } from "@/components/shared/ui/Card";
+import { Card } from "@/components/Bersama/ui/Card";
 
 export default function MilestonesPage() {
   return (

@@ -3,51 +3,50 @@
 import { useState, useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { BsApple, BsGoogle, BsGithub } from "react-icons/bs";
-import SocialLogin from "@/components/layouts/SocialLogin";
+import SocialLogin from "@/components/TataLetak/SocialLogin";
 import KavaaBanner from "@/components/Atom/KavaaBanner";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { brandFeatures } from "@/constants";
-import { createClientClient } from "@/utils/supabase/client";
+import { brandFeatures } from "@/konstanta";
+import { createClientClient } from "@/utilitas/supabase/client";
 import { Suspense } from "react";
 
 const LoginContent = () => {
-  const searchParams = useSearchParams();
-  const isDemo = searchParams.get("demo") === "true";
-  const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [messageLogin, setMessageLogin] = useState<string | null>("");
-  // data
-  const [dataLogin, setDataLogin] = useState({
+  const paramsPencarian = useSearchParams();
+  const apakahDemo = paramsPencarian.get("demo") === "true";
+  const [tampilkanSandi, setTampilkanSandi] = useState(false);
+  const [ingatSaya, setIngatSaya] = useState(false);
+  const [slideSaatIni, setSlideSaatIni] = useState(0);
+  const [pesanMasuk, setPesanMasuk] = useState<string | null>("");
+  
+  const [dataMasuk, setDataMasuk] = useState({
     email: "",
     password: "",
   });
-  const route = useRouter();
+  const navigasi = useRouter();
 
-  const handleSocialLogin = async (platform: string) => {
-    const supabase = createClientClient();
-    const provider = platform.toLowerCase() as "google" | "github";
+  const tanganiMasukSosial = async (platform: string) => {
+    const klienSupabase = createClientClient();
+    const penyedia = platform.toLowerCase() as "google" | "github";
     
-    if (provider !== "google" && provider !== "github") {
+    if (penyedia !== "google" && penyedia !== "github") {
       alert("Hanya Google dan GitHub yang tersedia saat ini.");
       return;
     }
 
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider,
+    const { error } = await klienSupabase.auth.signInWithOAuth({
+      provider: penyedia,
       options: {
         redirectTo: `${window.location.origin}/api/auth/callback`,
       },
     });
 
     if (error) {
-      setMessageLogin("Gagal login dengan " + platform + ": " + error.message);
+      setPesanMasuk("Gagal masuk dengan " + platform + ": " + error.message);
     }
   };
 
-  // AUTH
-  const AUTH = async ({
+  const OTENTIKASI = async ({
     email,
     password,
   }: {
@@ -56,9 +55,9 @@ const LoginContent = () => {
   }) => {
     if (!email || !password) {
       setTimeout(() => {
-        setMessageLogin("");
+        setPesanMasuk("");
       }, 3000);
-      setMessageLogin("Email dan Password harus diisi!");
+      setPesanMasuk("Email dan Kata Sandi harus diisi!");
       return;
     }
     try {
@@ -70,40 +69,38 @@ const LoginContent = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      const result = await response.json();
+      const hasil = await response.json();
 
-      if (response.ok && result.user) {
-        route.push(`/dashboard/${result.user.id}`);
+      if (response.ok && hasil.user) {
+        navigasi.push(`/dashboard/${hasil.user.id}`);
       } else {
         setTimeout(() => {
-          setMessageLogin("");
+          setPesanMasuk("");
         }, 3000);
-        setMessageLogin(
-          "Login Gagal: " + (result.error || "Kata Sandi atau Email Salah"),
+        setPesanMasuk(
+          "Masuk Gagal: " + (hasil.error || "Email atau Kata Sandi Salah"),
         );
       }
     } catch (err) {
-      setMessageLogin("Terjadi kesalahan jaringan.");
+      setPesanMasuk("Terjadi kesalahan jaringan.");
     }
   };
 
 
-  // Efek untuk auto-scroll saben 3 detik
   useEffect(() => {
     if (brandFeatures.length <= 1) return;
     
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % brandFeatures.length);
+    const pengaturWaktu = setInterval(() => {
+      setSlideSaatIni((prev) => (prev + 1) % brandFeatures.length);
     }, 3000);
-    return () => clearInterval(timer);
+    return () => clearInterval(pengaturWaktu);
   }, []);
 
-  // Auto-login for Jury Demo
   useEffect(() => {
-    if (isDemo) {
-      AUTH({ email: "juri@kavaa.id", password: "kavaa2026" });
+    if (apakahDemo) {
+      OTENTIKASI({ email: "juri@kavaa.id", password: "kavaa2026" });
     }
-  }, [isDemo]);
+  }, [apakahDemo]);
 
   return (
     <div className="min-h-screen w-full flex bg-white font-sans text-slate-900 overflow-hidden">
@@ -114,7 +111,7 @@ const LoginContent = () => {
         <div className="xl:max-w-xl max-w-md w-full mx-auto lg:mx-0">
           <div className="mb-8 text-center lg:text-left">
             <h1 className="text-3xl font-bold text-slate-900">
-              Sign in to Kava
+              Masuk ke Kavaa
             </h1>
             <p className="text-slate-500 text-sm mt-1">
               Raih Potensi Terbaikmu Bersama Kami
@@ -124,7 +121,7 @@ const LoginContent = () => {
           <div className="flex justify-center mb-8 ">
             <SocialLogin
               platforms={["Google", "Github"]}
-              onSelectPlatform={handleSocialLogin}
+              onSelectPlatform={tanganiMasukSosial}
               icons={[
                 <BsGoogle key="Google" size={18} />,
                 <BsGithub key="Github" size={18} />,
@@ -147,37 +144,37 @@ const LoginContent = () => {
           <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-700 ml-1">
-                Email Address
+                Alamat Email
               </label>
               <input
                 type="email"
                 onChange={(e) =>
-                  setDataLogin({ ...dataLogin, email: e.target.value })
+                  setDataMasuk({ ...dataMasuk, email: e.target.value })
                 }
-                placeholder="rizalabraka@mail.com"
+                placeholder="pengguna@mail.com"
                 className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primaryTint/20 focus:border-primaryTint transition-all text-sm bg-slate-50/50"
               />
             </div>
 
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-700 ml-1">
-                Password
+                Kata Sandi
               </label>
               <div className="relative">
                 <input
                   onChange={(e) =>
-                    setDataLogin({ ...dataLogin, password: e.target.value })
+                    setDataMasuk({ ...dataMasuk, password: e.target.value })
                   }
-                  type={showPassword ? "text" : "password"}
+                  type={tampilkanSandi ? "text" : "password"}
                   placeholder="••••••••"
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primaryTint/20 focus:border-primaryTint transition-all text-sm bg-slate-50/50"
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => setTampilkanSandi(!tampilkanSandi)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {tampilkanSandi ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
@@ -186,16 +183,16 @@ const LoginContent = () => {
               <label className="flex items-center gap-2 cursor-pointer group">
                 <div
                   className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
-                    rememberMe
+                    ingatSaya
                       ? "bg-primaryTint border-primaryTint"
                       : "border-slate-300 group-hover:border-primaryTint"
                   }`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setRememberMe(!rememberMe);
+                    setIngatSaya(!ingatSaya);
                   }}
                 >
-                  {rememberMe && (
+                  {ingatSaya && (
                     <svg
                       className="w-2.5 h-2.5 text-white"
                       fill="none"
@@ -212,20 +209,20 @@ const LoginContent = () => {
                   )}
                 </div>
                 <span className="text-xs font-semibold text-slate-600 select-none">
-                  Remember me
+                  Ingat saya
                 </span>
               </label>
               <a
                 href="#"
                 className="text-xs font-bold text-primaryTint hover:text-indigo-800"
               >
-                Forgot Password?
+                Lupa Kata Sandi?
               </a>
             </div>
-            <p className="text-red-500  ">{messageLogin || " ."}</p>
+            <p className="text-red-500  ">{pesanMasuk || " ."}</p>
 
             <button
-              onClick={() => AUTH(dataLogin)}
+              onClick={() => OTENTIKASI(dataMasuk)}
               className="w-full bg-primaryTint text-white py-3.5 rounded-xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-200 active:scale-[0.98] transition-all"
             >
               Masuk
@@ -233,7 +230,7 @@ const LoginContent = () => {
 
             <button
               type="button"
-              onClick={() => AUTH({ email: "juri@kavaa.id", password: "kavaa2026" })}
+              onClick={() => OTENTIKASI({ email: "juri@kavaa.id", password: "kavaa2026" })}
               className="w-full bg-white text-primaryTint py-3.5 rounded-xl font-bold border-2 border-primaryTint hover:bg-indigo-50 transition-all flex items-center justify-center gap-2"
             >
               <span className="w-2 h-2 bg-primaryTint rounded-full animate-pulse"></span>
@@ -242,7 +239,7 @@ const LoginContent = () => {
           </form>
 
           <p className="text-center mt-10 text-sm font-medium text-slate-600">
-            Don&apos;t have an account?{" "}
+            Belum punya akun?{" "}
             <Link
               href="/register"
               className="text-primaryTint font-bold hover:underline decoration-2 underline-offset-4"
@@ -254,7 +251,7 @@ const LoginContent = () => {
 
         <div className="flex items-center justify-between mt-12 pt-8 border-t border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
           <a href="#" className="hover:text-slate-600">
-            Privacy Policy
+            Kebijakan Privasi
           </a>
           <span>Copyright © 2026 Kava</span>
         </div>
@@ -268,11 +265,11 @@ const LoginContent = () => {
 
         {/* Konten Slider dengan Animasi */}
         <div className="relative w-full max-w-md h-[400px] flex items-center justify-center">
-          {brandFeatures.map((feature, index) => (
+          {brandFeatures.map((fitur, index) => (
             <div
-              key={feature.id}
+              key={fitur.id}
               className={`absolute inset-0 flex flex-col items-center justify-center text-center transition-all duration-1000 ease-in-out ${
-                index === currentSlide
+                index === slideSaatIni
                   ? "opacity-100 translate-y-0 scale-100"
                   : "opacity-0 translate-y-12 scale-90 pointer-events-none"
               }`}
@@ -292,12 +289,12 @@ const LoginContent = () => {
                   />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold mb-4">{feature.title}</h2>
+              <h2 className="text-2xl font-bold mb-4">{fitur.title}</h2>
               <h3 className="text-lg font-medium mb-6 text-indigo-100">
-                {feature.subtitle}
+                {fitur.subtitle}
               </h3>
               <p className="text-sm leading-relaxed opacity-70 font-medium px-8">
-                {feature.description}
+                {fitur.description}
               </p>
             </div>
           ))}
@@ -308,13 +305,13 @@ const LoginContent = () => {
           {brandFeatures.map((_, index) => (
             <button
               key={index}
-              onClick={() => setCurrentSlide(index)}
+              onClick={() => setSlideSaatIni(index)}
               className={`transition-all duration-700 rounded-full h-1.5 ${
-                currentSlide === index
+                slideSaatIni === index
                   ? "w-10 bg-white"
                   : "w-2 bg-white/30 hover:bg-white/50"
               }`}
-              aria-label={`Go to slide ${index + 1}`}
+              aria-label={`Ke slide ${index + 1}`}
             />
           ))}
         </div>
@@ -332,7 +329,7 @@ const LoginContent = () => {
   );
 };
 
-const LoginPage = () => {
+const HalamanMasuk = () => {
   return (
     <Suspense fallback={
       <div className="min-h-screen w-full flex items-center justify-center bg-white">
@@ -344,4 +341,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default HalamanMasuk;

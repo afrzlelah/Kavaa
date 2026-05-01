@@ -1,7 +1,7 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utilitas/supabase/server";
 import { cookies } from "next/headers";
-import { ProfileForm } from "@/components/features/settings/ProfileForm";
-import { SecurityForm } from "@/components/features/settings/SecurityForm";
+import { FormulirProfil } from "@/components/Fitur/settings/FormulirProfil";
+import { FormulirKeamanan } from "@/components/Fitur/settings/FormulirKeamanan";
 import { Settings as SettingsIcon, User, Shield, Bell, Palette } from "lucide-react";
 import { redirect } from "next/navigation";
 
@@ -69,7 +69,7 @@ export default async function SettingsPage() {
               <h2 className="text-lg font-black text-slate-800 uppercase tracking-tight mb-1">Profil Saya</h2>
               <p className="text-xs font-bold text-slate-400">Perbarui informasi dasar dan identitas visual Anda.</p>
             </div>
-            <ProfileForm user={userWithEmail} />
+            <FormulirProfil user={userWithEmail} />
           </div>
 
           {/* Security Section */}
@@ -78,7 +78,7 @@ export default async function SettingsPage() {
               <h2 className="text-lg font-black text-slate-800 uppercase tracking-tight mb-1">Keamanan & Password</h2>
               <p className="text-xs font-bold text-slate-400">Pastikan akun Anda tetap aman dengan kredensial terbaru.</p>
             </div>
-            <SecurityForm />
+            <FormulirKeamanan />
           </div>
         </div>
       </div>

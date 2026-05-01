@@ -4,7 +4,8 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import { ChevronRight, Star } from "lucide-react";
 import KavaaBanner from "@/components/Atom/KavaaBanner";
 import Link from "next/link";
-interface FormData {
+
+interface DataFormulir {
   first_name?: string;
   last_name?: string;
   email?: string;
@@ -14,10 +15,9 @@ interface FormData {
   password?: string;
 }
 
-const RegisterPage: React.FC = () => {
-  const [messageRegist, setMessageRegist] = useState<string>("");
-  // Inisialisasi state dengan tipe data yang sudah didefinisikan
-  const [formData, setFormData] = useState<FormData>({
+const HalamanDaftar: React.FC = () => {
+  const [pesanDaftar, setPesanDaftar] = useState<string>("");
+  const [dataFormulir, setDataFormulir] = useState<DataFormulir>({
     first_name: "",
     last_name: "",
     email: "",
@@ -27,63 +27,61 @@ const RegisterPage: React.FC = () => {
     password: "",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [sedangMemuat, setSedangMemuat] = useState(false);
+  const [apakahBerhasil, setApakahBerhasil] = useState(false);
 
-  const handleChange = (
+  const tanganiPerubahan = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setDataFormulir((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const tanganiSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    // Client-side validation
-    if (!formData.first_name || !formData.last_name) {
-      setMessageRegist("Nama depan dan belakang wajib diisi.");
+    if (!dataFormulir.first_name || !dataFormulir.last_name) {
+      setPesanDaftar("Nama depan dan belakang wajib diisi.");
       return;
     }
 
-    if (!formData.password || formData.password.length < 6) {
-      setMessageRegist("Password minimal 6 karakter.");
+    if (!dataFormulir.password || dataFormulir.password.length < 6) {
+      setPesanDaftar("Kata sandi minimal 6 karakter.");
       return;
     }
 
-    setIsLoading(true);
-    setMessageRegist("");
+    setSedangMemuat(true);
+    setPesanDaftar("");
     
     try {
-      const Response = await fetch("/api/auth/credentials/register", {
+      const response = await fetch("/api/auth/credentials/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataFormulir),
       });
 
-      const result = await Response.json();
+      const hasil = await response.json();
 
-      if (!Response.ok) {
-        setMessageRegist(result.error || "Registration failed");
+      if (!response.ok) {
+        setPesanDaftar(hasil.error || "Pendaftaran gagal");
         return;
       }
 
-      setIsSuccess(true);
-      setMessageRegist(result.message || "Registration successful!");
+      setApakahBerhasil(true);
+      setPesanDaftar(hasil.message || "Pendaftaran berhasil!");
       
-      // Redirect to login after 2 seconds
       setTimeout(() => {
         window.location.href = "/login";
       }, 2000);
     } catch (err) {
-      setMessageRegist("Terjadi kesalahan jaringan.");
+      setPesanDaftar("Terjadi kesalahan jaringan.");
     } finally {
-      setIsLoading(false);
+      setSedangMemuat(false);
     }
   };
 
@@ -101,31 +99,31 @@ const RegisterPage: React.FC = () => {
 
           {/* Headline */}
           <h1 className="text-4xl md:text-6xl font-bold leading-[1.1] mb-6">
-            Let&apos;s <br />
-            Improve <br />
-            Your Skills
+            Ayo <br />
+            Tingkatkan <br />
+            Keahlianmu
           </h1>
           <p className="text-blue-100 text-lg max-w-xs leading-relaxed opacity-80">
-            a solution for you to improve your skills and gain experience
-            working in a team
+            solusi bagi Anda untuk meningkatkan keterampilan dan pengalaman
+            bekerja dalam tim
           </p>
         </div>
 
         {/* Testimonial Card */}
         <div className="mt-12 bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl relative z-10 shadow-2xl">
           <p className="font-semibold text-lg mb-2 italic">
-            &quot;Solusi terbaik buat yang mau stress&quot;
+            &quot;Solusi terbaik buat yang mau berkembang&quot;
           </p>
           <p className="text-sm text-blue-50 leading-relaxed mb-6 opacity-90">
             Berhasil menyelesaikan proyek bareng tim lewat platform ini.
-            Pengalamannya bener-benar mirip dengan lingkungan kerja profesional.
+            Pengalamannya benar-benar mirip dengan lingkungan kerja profesional.
             Sangat merekomendasikan!
           </p>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-linear-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center font-bold text-[10px] uppercase shadow-inner tracking-tighter"></div>
               <div>
-                <p className="text-sm font-bold">Apip Alay kyubi rawwrr</p>
+                <p className="text-sm font-bold">Afrizal Abraka</p>
                 <div className="flex text-yellow-400">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={14} fill="currentColor" />
@@ -159,37 +157,37 @@ const RegisterPage: React.FC = () => {
 
         <div className="max-w-xl mx-auto md:mx-0 w-full">
           <h2 className="text-3xl font-bold mb-10 tracking-tight text-slate-900">
-            Let&apos;s get started
+            Mulai Sekarang
           </h2>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={tanganiSubmit}>
             {/* First & Last Name Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-500 ml-1">
-                  First name
+                  Nama Depan
                 </label>
                 <input
                   required
                   type="text"
                   name="first_name"
-                  value={formData.first_name}
-                  onChange={handleChange}
-                  placeholder="e.g. John"
+                  value={dataFormulir.first_name}
+                  onChange={tanganiPerubahan}
+                  placeholder="misal: John"
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
                 />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-500 ml-1">
-                  Last name
+                  Nama Belakang
                 </label>
                 <input
                   required
                   type="text"
                   name="last_name"
-                  value={formData.last_name}
-                  onChange={handleChange}
-                  placeholder="e.g. Doe"
+                  value={dataFormulir.last_name}
+                  onChange={tanganiPerubahan}
+                  placeholder="misal: Doe"
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
                 />
               </div>
@@ -204,9 +202,9 @@ const RegisterPage: React.FC = () => {
                 required
                 type="email"
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="name@company.com"
+                value={dataFormulir.email}
+                onChange={tanganiPerubahan}
+                placeholder="nama@email.com"
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
               />
             </div>
@@ -215,17 +213,17 @@ const RegisterPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-500 ml-1">
-                  Country of residence
+                  Negara Domisili
                 </label>
                 <div className="relative">
                   <select
                     required
                     name="country"
-                    value={formData.country}
-                    onChange={handleChange}
+                    value={dataFormulir.country}
+                    onChange={tanganiPerubahan}
                     className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none appearance-none cursor-pointer"
                   >
-                    <option value="">Select country</option>
+                    <option value="">Pilih negara</option>
                     <option value="ID">Indonesia</option>
                     <option value="MY">Malaysia</option>
                     <option value="SG">Singapore</option>
@@ -237,15 +235,15 @@ const RegisterPage: React.FC = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-500 ml-1">
-                  State
+                  Provinsi
                 </label>
                 <input
                   required
                   type="text"
                   name="state"
-                  value={formData.state}
-                  onChange={handleChange}
-                  placeholder="e.g. Central Java"
+                  value={dataFormulir.state}
+                  onChange={tanganiPerubahan}
+                  placeholder="misal: Jawa Tengah"
                   className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
                 />
               </div>
@@ -254,18 +252,15 @@ const RegisterPage: React.FC = () => {
             {/* Phone Number */}
             <div className="space-y-2">
               <label className="text-sm font-semibold text-slate-500 ml-1">
-                Phone number
+                Nomor Telepon
               </label>
               <div className="relative flex items-center">
-                {/* <div className="absolute left-4 flex items-center gap-2 pointer-events-none border-r pr-3 border-slate-200">
-                  <span className="text-lg">🇮🇩</span>
-                </div> */}
                 <input
                   type="tel"
                   name="phone"
                   placeholder="+6281234567891"
-                  value={formData.phone}
-                  onChange={handleChange}
+                  value={dataFormulir.phone}
+                  onChange={tanganiPerubahan}
                   required
                   className="w-full pl-5  py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
                 />
@@ -275,27 +270,27 @@ const RegisterPage: React.FC = () => {
             {/* Password */}
             <div className="space-y-2">
               <label className="text-sm font-semibold text-slate-500 ml-1">
-                Password
+                Kata Sandi
               </label>
               <input
                 type="password"
                 name="password"
-                value={formData.password}
-                onChange={handleChange}
+                value={dataFormulir.password}
+                onChange={tanganiPerubahan}
                 placeholder="••••••••"
                 required
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none"
               />
             </div>
-            <p className="text-red-600">{messageRegist}</p>
+            <p className="text-red-600">{pesanDaftar}</p>
 
             {/* Submit Button */}
             <button
-              disabled={isLoading || isSuccess}
+              disabled={sedangMemuat || apakahBerhasil}
               type="submit"
-              className={`w-full ${isSuccess ? "bg-green-600" : "bg-[#1D61D8] hover:bg-blue-700"} text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-200 flex items-center justify-center gap-2 transition-all transform active:scale-[0.98] mt-8 group disabled:opacity-70 disabled:cursor-not-allowed`}
+              className={`w-full ${apakahBerhasil ? "bg-green-600" : "bg-[#1D61D8] hover:bg-blue-700"} text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-200 flex items-center justify-center gap-2 transition-all transform active:scale-[0.98] mt-8 group disabled:opacity-70 disabled:cursor-not-allowed`}
             >
-              {isLoading ? (
+              {sedangMemuat ? (
                 <span className="flex items-center gap-2">
                   <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -303,7 +298,7 @@ const RegisterPage: React.FC = () => {
                   </svg>
                   Memproses...
                 </span>
-              ) : isSuccess ? (
+              ) : apakahBerhasil ? (
                 "Berhasil!"
               ) : (
                 <>
@@ -320,7 +315,7 @@ const RegisterPage: React.FC = () => {
               href="/login"
               className="text-sm text-primaryTint/80 hover:text-primaryTint transition-colors"
             >
-              Already have an account? Sign in
+              Sudah punya akun? Masuk
             </Link>
           </form>
         </div>
@@ -329,4 +324,4 @@ const RegisterPage: React.FC = () => {
   );
 };
 
-export default RegisterPage;
+export default HalamanDaftar;

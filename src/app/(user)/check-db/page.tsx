@@ -1,11 +1,11 @@
-import { getCourses } from "@/services/courseService";
+import { ambilSemuaKursus } from "@/services/layananKursus";
 
 export default async function CheckDbPage() {
-  const courses = await getCourses();
+  const courses = await ambilSemuaKursus();
   
   return (
     <div className="p-10 bg-white min-h-screen font-mono text-xs">
-      <h1 className="text-xl font-bold mb-5">Database Course List</h1>
+      <h1 className="text-xl font-bold mb-5">Database Kursus List</h1>
       <table className="w-full border-collapse border border-slate-200">
         <thead>
           <tr className="bg-slate-100">

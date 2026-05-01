@@ -1,16 +1,15 @@
-// Consolidated types and interfaces for the Kavaa project
-
-export interface NavProps {
+// Tipe dan interface yang dikonsolidasikan untuk proyek Kavaa
+export interface PropertiNavigasi {
   lists: { label: string; href: string }[];
   isLive: boolean;
 }
 
-export type ButtonColorComponentsType = {
+export type TipeKomponenTombolWarna = {
   name: string;
   href: string;
 };
 
-export interface CourseCardProps {
+export interface PropertiKartuKursus {
   key: number | string;
   category: string;
   title: string;
@@ -27,7 +26,7 @@ export interface CourseCardProps {
   price: number | string;
 }
 
-export interface FormData {
+export interface DataFormulir {
   first_name: string;
   last_name: string;
   email: string;
@@ -37,7 +36,7 @@ export interface FormData {
   password: string;
 }
 
-export interface Contact {
+export interface Kontak {
   id: string;
   name: string;
   avatar: string;
@@ -50,7 +49,7 @@ export interface Contact {
   type: "group" | "person";
 }
 
-export interface Message {
+export interface Pesan {
   id: string;
   sender: string;
   senderAvatar?: string;
@@ -62,7 +61,7 @@ export interface Message {
   subMessages?: { content: string; isMine: boolean }[];
 }
 
-export interface AvatarProps {
+export interface PropertiAvatar {
   src?: string;
   initials?: string;
   alt?: string;
@@ -70,14 +69,14 @@ export interface AvatarProps {
   className?: string;
 }
 
-export interface UserData {
+export interface DataPengguna {
   first_name: string;
   last_name: string;
   email: string;
   avatar_url?: string;
 }
 
-export interface Course {
+export interface Kursus {
   id: string;
   title: string;
   description: string;
@@ -96,27 +95,27 @@ export interface Course {
   total_hours?: number;
 }
 
-export interface CourseModule {
+export interface ModulKursus {
   id: string;
   title: string;
   order_index: number;
   is_completed: boolean;
 }
 
-export interface UserCourse {
+export interface KursusPengguna {
   progress: number;
-  courses: Course;
+  courses: Kursus;
 }
 
-// Flattened shape returned by getUserCourses (spread courses + computed fields)
-export interface FlatUserCourse extends Course {
+// Bentuk yang dikembalikan oleh ambilKursusPengguna
+export interface KursusPenggunaDatar extends Kursus {
   progress: number;
   tag: string;
   avatar: string;
   role: string;
 }
 
-export interface Task {
+export interface Tugas {
   id: number | string;
   title: string;
   category: string;
@@ -125,7 +124,7 @@ export interface Task {
   priority: "Tinggi" | "Sedang" | "Rendah";
 }
 
-export interface Activity {
+export interface Aktivitas {
   id: number;
   user_name: string;
   initials: string;
@@ -134,7 +133,7 @@ export interface Activity {
   color: string;
 }
 
-export interface Conversation {
+export interface Percakapan {
   id: string;
   name: string;
   avatar?: string;
@@ -144,7 +143,7 @@ export interface Conversation {
   unread: number;
 }
 
-export interface InboxMessage {
+export interface PesanMasuk {
   id: string;
   content: string;
   created_at: string;
@@ -152,7 +151,7 @@ export interface InboxMessage {
   sender_id: string;
 }
 
-export interface Certificate {
+export interface Sertifikat {
   id: number | string;
   title: string;
   category: string;
@@ -163,7 +162,7 @@ export interface Certificate {
   provider?: string;
 }
 
-export interface TeamRequest {
+export interface PermintaanTim {
   id: number | string;
   title: string;
   initials: string;
@@ -172,7 +171,7 @@ export interface TeamRequest {
   color?: string;
 }
 
-export interface Challenge {
+export interface Tantangan {
   id: number;
   title: string;
   category: string;

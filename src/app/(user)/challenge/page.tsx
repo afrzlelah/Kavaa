@@ -1,8 +1,8 @@
-import { getChallenges } from "@/services/challengeService";
-import { Card } from "@/components/shared/ui/Card";
-import { Button } from "@/components/shared/ui/Button";
+import { ambilSemuaTantangan } from "@/services/layananTantangan";
+import { Card } from "@/components/Bersama/ui/Card";
+import { Button } from "@/components/Bersama/ui/Button";
 import { Target, Clock, Users, Trophy } from "lucide-react";
-import type { Challenge } from "@/types";
+import type { Tantangan } from "@/types";
 
 const DIFFICULTY_COLOR: Record<string, string> = {
   Mudah: "text-emerald-600 bg-emerald-50",
@@ -17,8 +17,8 @@ const FALLBACK_CHALLENGES = [
   { id: 4, title: "Mobile App Prototype", category: "Mobile", difficulty: "Menengah", participants: 215, deadline: "7 hari lagi", reward: "750 XP", description: "Buat prototipe aplikasi mobile untuk manajemen keuangan pribadi." },
 ];
 
-export default async function Challenge() {
-  let challenges = await getChallenges();
+export default async function Tantangan() {
+  let challenges = await ambilSemuaTantangan();
 
   if (!challenges || challenges.length === 0) {
     challenges = FALLBACK_CHALLENGES;
@@ -58,9 +58,9 @@ export default async function Challenge() {
         ))}
       </div>
 
-      {/* Challenge Grid */}
+      {/* Tantangan Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {challenges.map((challenge: Challenge) => {
+        {challenges.map((challenge: Tantangan) => {
           const diffClass = DIFFICULTY_COLOR[challenge.difficulty] ?? "text-slate-600 bg-slate-100";
           return (
             <Card key={challenge.id} className="flex flex-col hover:shadow-lg transition-shadow">
