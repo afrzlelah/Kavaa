@@ -17,9 +17,10 @@ export default function KavaaBanner({
             <Image
               src={src}
               alt="Logo Kavaa"
-              width={250}
-              height={250}
+              width={48}
+              height={48}
               className="w-full h-full object-cover rounded-md"
+              priority
             />
           </div>
           <span

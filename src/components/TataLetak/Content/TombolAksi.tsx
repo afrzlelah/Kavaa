@@ -45,11 +45,11 @@ export default function TombolAksi() {
         <div className="lg:col-span-6 flex justify-center lg:justify-end">
           <div className="relative w-full max-w-md aspect-square md:aspect-[4/3] rounded-[2rem] overflow-hidden border-4 border-slate-800 shadow-2xl">
             <Image
-              width={250}
-              height={250}
               src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
               alt="Seorang ahli sedang mengajar dan berbagi pengetahuan"
+              fill
               className="w-full h-full object-cover opacity-90"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>

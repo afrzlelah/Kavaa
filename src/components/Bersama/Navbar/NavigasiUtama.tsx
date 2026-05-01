@@ -22,15 +22,15 @@ export default function NavigasiUtama({ lists, isLive }: PropertiNavigasi) {
             <Link
               href="/"
               className="flex items-center gap-2 cursor-pointer"
-              aria-label="Beranda Kavaa"
             >
               <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primaryTint flex items-center justify-center font-bold text-lg md:text-xl text-white shadow-md">
                 <Image
                   src={"/assets/icon.ico"}
-                  height={250}
-                  width={250}
+                  height={40}
+                  width={40}
                   alt="Logo Kavaa"
                   className="w-full rounded-full"
+                  priority
                 />
               </div>
               <span className="text-xl md:text-2xl font-bold text-primaryTint tracking-tight">
@@ -68,7 +68,6 @@ export default function NavigasiUtama({ lists, isLive }: PropertiNavigasi) {
               <input
                 type="search"
                 placeholder="Cari kursus..."
-                aria-label="Cari kursus"
                 className="pl-10 pr-4 py-2 w-64 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primaryTint focus:bg-white outline-none transition-all group-hover:border-primaryTint"
               />
               <Search
@@ -77,7 +76,6 @@ export default function NavigasiUtama({ lists, isLive }: PropertiNavigasi) {
               />
             </div>
             <button
-              aria-label="Notifikasi"
               className="text-slate-500 hover:text-primaryTint p-2 rounded-full hover:bg-slate-100 transition-all"
             >
               <Bell size={20} />
@@ -92,8 +90,6 @@ export default function NavigasiUtama({ lists, isLive }: PropertiNavigasi) {
           <button
             className="lg:hidden text-slate-600 hover:text-primaryTint p-2 focus:outline-none"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle Menu"
-            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>

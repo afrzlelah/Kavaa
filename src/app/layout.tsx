@@ -5,6 +5,7 @@ import "./globals.css";
 const inter = Inter({
   variable: "--font-inter-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -40,6 +41,10 @@ export default function RootLayout({
       lang="id"
       className={`${inter.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://hicicwwcehgpznjdtqry.supabase.co" />
+      </head>
       <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>
   );

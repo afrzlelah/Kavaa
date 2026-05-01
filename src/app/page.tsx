@@ -1,9 +1,20 @@
-import KatalogKursus from "@/components/TataLetak/Content/KatalogKursus";
+import dynamic from "next/dynamic";
 import KontenUtama from "@/components/TataLetak/Content/KontenUtama";
-import TombolAksi from "@/components/TataLetak/Content/TombolAksi";
-import DaftarFitur from "@/components/TataLetak/Content/DaftarFItur";
-import FooterHome from "@/components/TataLetak/Footer/KakiHalaman";
 import NavigasiUtama from "@/components/Bersama/Navbar/NavigasiUtama";
+
+// Dynamic imports for components below the fold
+const DaftarFitur = dynamic(() => import("@/components/TataLetak/Content/DaftarFItur"), {
+  loading: () => <div className="h-20" />,
+});
+const KatalogKursus = dynamic(() => import("@/components/TataLetak/Content/KatalogKursus"), {
+  loading: () => <div className="h-20" />,
+});
+const TombolAksi = dynamic(() => import("@/components/TataLetak/Content/TombolAksi"), {
+  loading: () => <div className="h-20" />,
+});
+const FooterHome = dynamic(() => import("@/components/TataLetak/Footer/KakiHalaman"), {
+  loading: () => <div className="h-20" />,
+});
 
 export default function Home() {
   return (

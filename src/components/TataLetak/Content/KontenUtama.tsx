@@ -80,7 +80,8 @@ export default function KontenUtama() {
               alt="Tim profesional sedang berkolaborasi di kantor"
               fill
               className="object-cover"
-              loading="eager"
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
         </div>
