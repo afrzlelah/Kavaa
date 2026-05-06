@@ -35,7 +35,6 @@ export default function TombolAksi() {
           </p>
 
           <button
-            aria-label="Mulai Mengajar Hari Ini"
             className="w-full sm:w-auto px-8 py-4 rounded-xl bg-primaryTint hover:bg-primaryTint/80 text-white font-black text-base flex items-center justify-center gap-3 transition-all shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:-translate-y-1 mx-auto lg:mx-0"
           >
             Mulai Mengajar Hari Ini <ChevronRight size={20} strokeWidth={3} />
@@ -46,7 +45,7 @@ export default function TombolAksi() {
           <div className="relative w-full max-w-md aspect-square md:aspect-[4/3] rounded-[2rem] overflow-hidden border-4 border-slate-800 shadow-2xl">
             <Image
               src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-              alt="Seorang ahli sedang mengajar dan berbagi pengetahuan"
+              alt="image"
               fill
               className="w-full h-full object-cover opacity-90"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

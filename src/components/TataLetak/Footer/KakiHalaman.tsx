@@ -10,7 +10,6 @@ export default function FooterHome() {
             <a
               href="#"
               className="flex items-center gap-2 mb-6"
-              aria-label="Beranda Kavaa"
             >
               <div className="w-10 h-10 rounded-full bg-primaryTint flex items-center justify-center font-bold text-xl text-white shadow-md">
                 K
@@ -27,14 +26,12 @@ export default function FooterHome() {
             <div className="flex items-center gap-4 text-slate-400">
               <a
                 href="#"
-                aria-label="LinkedIn"
                 className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center hover:bg-indigo-50 hover:text-primaryTint hover:border-indigo-200 transition-all"
               >
                 <Globe size={18} />
               </a>
               <a
                 href="#"
-                aria-label="Twitter"
                 className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center hover:bg-indigo-50 hover:text-primaryTint hover:border-indigo-200 transition-all"
               >
                 <MessageSquare size={18} />
@@ -42,7 +39,7 @@ export default function FooterHome() {
             </div>
           </div>
 
-          <nav aria-label="Tautan Kavaa">
+          <nav>
             <h4 className="font-black text-base mb-6 text-slate-900 uppercase tracking-wider">
               Kavaa
             </h4>
@@ -82,7 +79,7 @@ export default function FooterHome() {
             </ul>
           </nav>
 
-          <nav aria-label="Tautan Belajar">
+          <nav>
             <h4 className="font-black text-base mb-6 text-slate-900 uppercase tracking-wider">
               Belajar
             </h4>
@@ -122,7 +119,7 @@ export default function FooterHome() {
             </ul>
           </nav>
 
-          <nav aria-label="Tautan Bantuan">
+          <nav>
             <h4 className="font-black text-base mb-6 text-slate-900 uppercase tracking-wider">
               Bantuan
             </h4>
@@ -169,7 +166,6 @@ export default function FooterHome() {
           </p>
           <div className="flex items-center gap-6">
             <button
-              aria-label="Ubah Bahasa"
               className="flex items-center gap-2 hover:text-slate-700 transition-colors bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200"
             >
               <Globe size={16} /> Indonesia (ID)
